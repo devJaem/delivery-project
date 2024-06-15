@@ -142,12 +142,12 @@ model RefreshToken {
 }
 
 enum UserType {
-  Customer
-  Owner
+  CUSTOMER
+  OWNER
 }
 
 enum OrderStatus {
-  Preparing
-  Delivering
-  Completed
+  PREPARING
+  DELIVERING
+  COMPLETED
 }
