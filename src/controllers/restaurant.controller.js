@@ -9,10 +9,11 @@ class RestaurantController {
     // 목록 조회
     getAllRestaurant = async (req, res, next) => {
         try {
-            const restaurant = await this.restaurantService.getAllRestaurant();
+            let { sort } = req.query;
+            const restaurant = await this.restaurantService.getAllRestaurant(sort);
             return res.status(HTTP_STATUS.OK).json({
                 status: HTTP_STATUS.OK,
-                message: "음식점을 상세조회에 성공했습니다",
+                message: MESSAGES.RESTAURANT.GET_ALL.SUCCEED,
                 data: restaurant,
             })
         } catch (err) {
@@ -22,17 +23,13 @@ class RestaurantController {
     // 상세 조회
     getRestaurantById = async (req, res, next) => {
         try {
-
             const { id } = req.params;
             const restaurant = await this.restaurantService.getRestaurantById(id);
-            console.log(restaurant);
             return res.status(HTTP_STATUS.OK).json({
                 status: HTTP_STATUS.OK,
-                message: "음식점을 상세조회에 성공했습니다",
+                message: MESSAGES.RESTAURANT.GET_MORE.SUCCEED,
                 data: restaurant,
             })
-
-
         } catch (err) {
             next(err);
         }
@@ -45,7 +42,7 @@ class RestaurantController {
             const restaurant = await this.restaurantService.createRestaurant(user, createrestaurant);
             return res.status(HTTP_STATUS.CREATED).json({
                 status: HTTP_STATUS.CREATED,
-                message: "음식점을 생성했습니다",
+                message: MESSAGES.RESTAURANT.CREATE.SUCCEED,
                 data: restaurant,
             })
         } catch (err) {
@@ -61,7 +58,7 @@ class RestaurantController {
             const restaurant = await this.restaurantService.putRestaurant(id, user, changeRestaurant);
             return res.status(HTTP_STATUS.OK).json({
                 status: HTTP_STATUS.OK,
-                message: "음식점을 수정했습니다",
+                message: MESSAGES.RESTAURANT.UPDATE.SUCCEED,
                 data: restaurant,
             })
 
@@ -77,12 +74,9 @@ class RestaurantController {
             const restaurant = await this.restaurantService.deleteRestaurant(id, user);
             return res.status(HTTP_STATUS.OK).json({
                 status: HTTP_STATUS.OK,
-                message: "음식점을 삭제했습니다",
+                message: MESSAGES.RESTAURANT.DELETE.SUCCEED,
                 data: restaurant,
             })
-
-
-
         } catch (err) {
             next(err);
         }
