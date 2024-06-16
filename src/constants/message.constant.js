@@ -3,7 +3,7 @@ import { MIN_PASSWORD_LENGTH } from './auth.constant.js';
 export const MESSAGES = {
   S3: {
     WRONG_EXTENSION: '잘못된 확장자 입니다.',
-    UPLOADING_FAIL: '업로드 실패',
+    UPLOADING_FAIL: '업로드 실패, 관리자에게 문의해 주세요.',
   },
   AUTH: {
     COMMON: {

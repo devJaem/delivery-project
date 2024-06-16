@@ -58,7 +58,7 @@ class AuthService {
     const accessToken = jwt.sign(
       {
         userId: user.userId,
-        role: user.userType,
+        userType: user.userType,
       },
       ENV.ACCESS_KEY,
       {
@@ -69,7 +69,7 @@ class AuthService {
     const refreshToken = jwt.sign(
       {
         userId: user.userId,
-        role: user.userType,
+        userType: user.userType,
       },
       ENV.REFRESH_KEY,
       {

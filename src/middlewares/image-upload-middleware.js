@@ -4,7 +4,7 @@ import multer from 'multer';
 import path from 'path';
 import { ENV } from '../constants/env.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
-import { UnauthorizedError } from '../errors/http.error.js';
+import { BadRequestError, InternalServerError } from '../errors/http.error.js';
 
 const s3 = new S3Client({
   region: ENV.AWS_REGION,
@@ -24,7 +24,7 @@ const imageUploader = multer({
     const extension = path.extname(file.originalname).toLowerCase();
 
     if (!allowedExtensions.includes(extension)) {
-      return callback(new UnauthorizedError(MESSAGES.S3.WRONG_EXTENSION), false);
+      return callback(new BadRequestError(MESSAGES.S3.WRONG_EXTENSION), false);
     }
 
     callback(null, true);
@@ -49,7 +49,7 @@ const uploadToS3 = async (file) => {
     const data = await upload.done();
     return data.Location;
   } catch (error) {
-    throw new UnauthorizedError(MESSAGES.S3.UPLOADING_FAIL);
+    throw new InternalServerError(MESSAGES.S3.UPLOADING_FAIL);
   }
 };
 
