@@ -15,7 +15,6 @@ class RestaurantRepository {
         const restaurant = await this.prisma.Restaurant.findUnique({
             where: { restaurantId: +id }
         })
-
         return restaurant;
     }
     // 생성
