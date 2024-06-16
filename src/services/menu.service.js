@@ -21,7 +21,7 @@ class MenuService {
     // 음식점 내에 같은 이름의 메뉴 존재하는지 확인
     const menu = await this.menuRepository.findAllMenu(restaurantId);
     if (menu.map((cur) => cur.name).includes(createMenu.menuName)) {
-      throw new ConflictError(MESSAGES.MENU.CREATE_MENU.DUPLICATED);
+      throw new ConflictError(MESSAGES.MENU.COMMON.MENU_NAME.DUPLICATED);
     }
 
     // 메뉴 생성 및 반환

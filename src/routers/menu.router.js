@@ -1,4 +1,7 @@
 import express from 'express';
+import { createMenuSchema } from '../middlewares/vaildators/menu.validation.middleware.js';
+import { createOptionSchema } from '../middlewares/vaildators/option.validation.middleware.js';
+import { imageUploader } from '../middlewares/image-upload-middleware.js';
 import MenuController from '../controllers/menu.controller.js';
 import MenuService from '../services/menu.service.js';
 import MenuRepository from '../repositories/menu.repository.js';
@@ -16,11 +19,23 @@ const menuRepository = new MenuRepository(prisma);
 const menuService = new MenuService(menuRepository /*, restaurantRepository*/);
 const menuController = new MenuController(menuService);
 
+// 메뉴 생성
 menuRouter.post(
   '/:restaurantId',
   authMiddleware(userRepository),
   requireRoles([USER_TYPE.OWNER]),
+  createMenuSchema,
+  imageUploader.single('menuImage'),
   menuController.createMenu,
+);
+
+// 옵션 생성
+menuRouter.post(
+  '/option/:menuId',
+  authMiddleware(userRepository),
+  requireRoles([USER_TYPE.OWNER]),
+  createOptionSchema,
+  menuController.createOption,
 );
 
 export default menuRouter;
