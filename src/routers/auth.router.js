@@ -1,6 +1,7 @@
 import express from 'express';
-import { userCreateSchema } from '../middlewares/validators/sign-up.validation.middleware.js';
-import { userLoginSchema } from '../middlewares/validators/sign-in.validation.middleware.js';
+import { userCreateSchema } from '../middlewares/vaildators/sign-up.validation.middleware.js';
+import { userLoginSchema } from '../middlewares/vaildators/sign-in.validation.middleware.js';
+import { imageUploader } from '../middlewares/image-upload-middleware.js';
 import AuthController from '../controllers/auth.controller.js';
 import AuthService from '../services/auth.service.js';
 import UserRepository from '../repositories/user.repository.js';
@@ -14,8 +15,7 @@ const authService = new AuthService(authRepository, userRepository);
 const authController = new AuthController(authService);
 
 /* 회원가입 API */
-authRouter.post('/sign-up', userCreateSchema, authController.signUp);
-
+authRouter.post('/sign-up',imageUploader.single('profilePicture'), userCreateSchema, authController.signUp);
 /* 로그인 API */
 authRouter.post('/sign-in', userLoginSchema, authController.signIn);
 
