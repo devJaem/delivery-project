@@ -14,7 +14,6 @@ export const createMenuSchema = async (req, res, next) => {
         .min(100)
         .max(100000)
         .required()
-        .empty()
         .messages({
           'any.required': MESSAGES.MENU.COMMON.PRICE.REQUIRED,
           'number.integer': MESSAGES.MENU.COMMON.PRICE.IS_NOT_NUM,

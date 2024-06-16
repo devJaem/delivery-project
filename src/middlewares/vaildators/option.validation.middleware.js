@@ -14,7 +14,7 @@ export const createOptionSchema = async (req, res, next) => {
         'string.empty': MESSAGES.OPTION.COMMON.DESCRIPTION.REQUIRED,
         'string.max': MESSAGES.OPTION.COMMON.DESCRIPTION.MAX,
       }),
-      select: Joi.array().required().empty([]).min(2).max(10).messages({
+      select: Joi.array().required().min(2).max(10).messages({
         'any.required': MESSAGES.OPTION.COMMON.SELECT.REQUIRED,
         'array.max': MESSAGES.OPTION.COMMON.SELECT.MAX,
         'array.min': MESSAGES.OPTION.COMMON.SELECT.MIN,
