@@ -58,10 +58,14 @@ export const MESSAGES = {
   },
   MENU: {
     CREATE_MENU: {
+      NOT_FOUND: '해당 가게가 존재하지 않습니다.',
+      DUPLICATED: '이미 존재하는 메뉴입니다.',
       SUCCEED: '메뉴 생성을 완료했습니다.',
     },
     CREATE_OPTION: {
+      NOT_FOUND: '해당 메뉴가 존재하지 않습니다.',
+      DUPLICATED: '이미 존재하는 옵션입니다.',
       SUCCEED: '옵션 생성을 완료했습니다.',
-    }
-  }
+    },
+  },
 };
