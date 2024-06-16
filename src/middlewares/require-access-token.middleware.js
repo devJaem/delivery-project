@@ -24,6 +24,7 @@ const validateToken = async (token, secretKey) => {
 const authMiddleware = (userRepository) => async (req, res, next) => {
   try {
     const authorizationHeader = req.headers.authorization;
+
     if (!authorizationHeader) {
       throw new BadRequestError(MESSAGES.AUTH.COMMON.JWT.NO_TOKEN);
     }
@@ -34,6 +35,7 @@ const authMiddleware = (userRepository) => async (req, res, next) => {
     }
 
     const payload = await validateToken(token, ENV.ACCESS_KEY);
+    console.log(payload);
     if (payload === 'expired') {
       throw new UnauthorizedError(MESSAGES.AUTH.COMMON.JWT.EXPIRED);
     } else if (payload === 'JsonWebTokenError') {
