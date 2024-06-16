@@ -2,7 +2,7 @@ import Joi from 'joi';
 import { MESSAGES } from '../../constants/message.constant.js';
 import { MIN_PASSWORD_LENGTH } from '../../constants/auth.constant.js';
 /** 유저 회원가입 joi **/
-export const userCreateSchema = async(req, res, next) => {
+export const userCreateSchema = async (req, res, next) => {
   try {
     const userSchema = Joi.object({
       email: Joi.string()
@@ -28,15 +28,15 @@ export const userCreateSchema = async(req, res, next) => {
         .required()
         .empty('')
         .messages({
-          'any.only': MESSAGES.AUTH.COMMON.PASSWORD_CONFIRM.NOT_MATCHED_WITH_PASSWORD,
+          'any.only':
+            MESSAGES.AUTH.COMMON.PASSWORD_CONFIRM.NOT_MATCHED_WITH_PASSWORD,
           'any.required': MESSAGES.AUTH.COMMON.PASSWORD_CONFIRM.REQUIRED,
         }),
-      nickName: Joi.string().required().empty('')
-      .messages({
-          'any.required': MESSAGES.AUTH.COMMON.NICKNAME.REQUIRED,
-        }),
+      nickName: Joi.string().required().empty('').messages({
+        'any.required': MESSAGES.AUTH.COMMON.NICKNAME.REQUIRED,
+      }),
 
-        userType: Joi.string()
+      userType: Joi.string()
         .valid('CUSTOMER', 'OWNER')
         .required()
         .empty('')
@@ -44,7 +44,7 @@ export const userCreateSchema = async(req, res, next) => {
           'any.only': MESSAGES.AUTH.COMMON.USER_TYPE.INVALID,
           'any.required': MESSAGES.AUTH.COMMON.USER_TYPE.REQUIRED,
         }),
-    });  
+    });
 
     await userSchema.validateAsync(req.body);
     next();
