@@ -9,11 +9,11 @@ const PORT = ENV.PORT;
 
 app.use(requestLogger);
 app.use(express.json());
-app.use('/api/v1',[router]);
+app.use('/api/v1', [router]);
 app.use(globalErrorHandler);
 
 app.get('/', async (req, res) => {
-  res.status(200).json({ message: '서버 정상 동작중'});
+  res.status(200).json({ message: '서버 정상 동작중' });
 });
 
 app.listen(PORT, () => {

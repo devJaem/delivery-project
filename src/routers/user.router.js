@@ -17,21 +17,21 @@ const userController = new UserController(userService);
 userRouter.get(
   '/profile',
   authMiddleware(userRepository),
-  userController.getProfile
+  userController.getProfile,
 );
 
 /* RefreshToken 재발급 API */
 userRouter.post(
   '/token',
   refreshMiddleware(userRepository, authRepository),
-  userController.refreshToken
+  userController.refreshToken,
 );
 
 /* 로그아웃 API */
 userRouter.get(
   '/logout',
   authMiddleware(userRepository),
-  userController.logout
+  userController.logout,
 );
 
 export default userRouter;
