@@ -19,7 +19,6 @@ model User {
   updatedAt       DateTime     @updatedAt
   restaurants     Restaurant[]
   orders          Order[]
-  dibs            Dibs[]
   reviews         Review[]
   notifications   Notification[]
   refreshTokens   RefreshToken[]
@@ -37,75 +36,44 @@ model Restaurant {
   owner          User         @relation(fields: [ownerId], references: [userId])
   menus          Menu[]
   orders         Order[]
-  dibs           Dibs[]
   reviews        Review[]
   notifications  Notification[]
 }
 
-model Dibs {
-  dibsId        Int          @id @default(autoincrement())
-  customerId    Int
-  restaurantId  Int
-  islike        Boolean
-  createdAt     DateTime     @default(now())
-  customer      User         @relation(fields: [customerId], references: [userId])
-  restaurant    Restaurant   @relation(fields: [restaurantId], references: [restaurantId])
-}
-
 model Menu {
-  menuId        Int          @id @default(autoincrement())
+  menuId        Int            @id @default(autoincrement())
   restaurantId  Int
   name          String
   imageURL      String
   price         Int
   description   String?
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  restaurant    Restaurant   @relation(fields: [restaurantId], references: [restaurantId])
-  options       Option[]
-  orderItems    OrderItem[]
-}
-
-model Option {
-  optionId      Int          @id @default(autoincrement())
-  menuId        Int
-  name          String
-  description   String?
-  menu          Menu         @relation(fields: [menuId], references: [menuId])
-  selects       Select[]
-}
-
-model Select {
-  selectId      Int          @id @default(autoincrement())
-  optionId      Int
-  name          String
-  option        Option       @relation(fields: [optionId], references: [optionId])
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  restaurant    Restaurant     @relation(fields: [restaurantId], references: [restaurantId])
   orderItems    OrderItem[]
 }
 
 model Order {
-  orderId       Int          @id @default(autoincrement())
+  orderId       Int            @id @default(autoincrement())
   customerId    Int
   restaurantId  Int
   totalPrice    Int
   orderStatus   OrderStatus
-  createdAt     DateTime     @default(now())
-  customer      User         @relation(fields: [customerId], references: [userId])
-  restaurant    Restaurant   @relation(fields: [restaurantId], references: [restaurantId])
+  createdAt     DateTime       @default(now())
+  customer      User           @relation(fields: [customerId], references: [userId])
+  restaurant    Restaurant     @relation(fields: [restaurantId], references: [restaurantId])
   orderItems    OrderItem[]
 }
 
 model OrderItem {
-  orderItemId   Int          @id @default(autoincrement())
+  orderItemId   Int            @id @default(autoincrement())
   orderId       Int
   menuId        Int
-  selectId      Int
   quantity      Int
   price         Int
-  createdAt     DateTime     @default(now())
-  order         Order        @relation(fields: [orderId], references: [orderId])
-  menu          Menu         @relation(fields: [menuId], references: [menuId])
-  select        Select       @relation(fields: [selectId], references: [selectId])
+  createdAt     DateTime       @default(now())
+  order         Order          @relation(fields: [orderId], references: [orderId])
+  menu          Menu           @relation(fields: [menuId], references: [menuId])
 }
 
 model Review {
