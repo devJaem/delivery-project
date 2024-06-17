@@ -10,9 +10,6 @@ export const createMenuSchema = async (req, res, next) => {
         'string.max': MESSAGES.MENU.COMMON.MENU_NAME.MAX,
       }),
       price: Joi.string().regex(/^\d+$/)
-        // .integer()
-        // .min(100)
-        // .max(100000)
         .required()
         .messages({
           'any.required': MESSAGES.MENU.COMMON.PRICE.REQUIRED,
