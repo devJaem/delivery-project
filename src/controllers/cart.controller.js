@@ -15,11 +15,27 @@ class CartController {
 
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
-        message: "카트담기성공",
+        message: '카트담기성공',
         data: cartItem,
       });
     } catch (error) {
       next(error);
+    }
+  };
+
+  getAllCartItemById = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+
+      const cartItem = await this.cartService.getAllCartItemById(userId);
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: '카트조회완료',
+        data: cartItem,
+      });
+    } catch (err) {
+      next(err);
     }
   };
 }

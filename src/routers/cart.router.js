@@ -25,4 +25,12 @@ cartRouter.post(
   cartController.createCartItem,
 );
 
+//장바구니 조회
+cartRouter.get(
+  '/',
+  authMiddleware(userRepository),
+  requireType([USER_TYPE.CUSTOMER]),
+  cartController.getAllCartItemById,
+);
+
 export default cartRouter;

@@ -24,7 +24,6 @@ class CartRepository {
         },
       },
     });
-
     const cartItem = await this.prisma.cartItem.upsert({
       where: {
         cartId_menuId: {
@@ -68,6 +67,30 @@ class CartRepository {
     return await this.prisma.cart.findFirst({
       where: {
         userId,
+      },
+      include: {
+        restaurant: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+  };
+
+  // 카트 아이템 조회
+  getAllCartItemById = async (cartId) => {
+    return await this.prisma.cartItem.findMany({
+      where: {
+        cartId,
+      },
+      include: {
+        menu: {
+          select: {
+            name: true,
+            price: true,
+          },
+        },
       },
     });
   };
