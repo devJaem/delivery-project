@@ -17,7 +17,7 @@ class UserService {
     this.authRepository = authRepository;
   }
 
-  getUserProfile = async (userId) => {
+  getMyProfile = async (userId) => {
     const user = await this.userRepository.findById(userId);
     if (!user) {
       throw new NotFoundError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
@@ -25,13 +25,26 @@ class UserService {
     const { email, nickName, userType, profilePicture, createdAt, updatedAt } =
       user;
     return {
-      userId,
       email,
       nickName,
       profilePicture,
       userType,
       createdAt,
       updatedAt,
+    };
+  };
+
+  getUserProfile = async (userId) => {
+    const user = await this.userRepository.findById(userId);
+    if (!user) {
+      throw new NotFoundError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
+    }
+    const { nickName, userType, profilePicture, createdAt } = user;
+    return {
+      nickName,
+      profilePicture,
+      userType,
+      createdAt,
     };
   };
 
@@ -64,6 +77,20 @@ class UserService {
       throw new BadRequestError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
     }
     return result;
+  };
+
+  updateMyProfile = async (userId, updatedData) => {
+    const user = await this.userRepository.updateUser(userId, updatedData);
+    if (!user) {
+      throw new NotFoundError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
+    }
+    const { nickName, userType, profilePicture, updatedAt } = user;
+    return {
+      nickName,
+      profilePicture,
+      userType,
+      updatedAt,
+    };
   };
 }
 
