@@ -90,25 +90,34 @@ export const MESSAGES = {
       SUCCEED: '메뉴 조회에 성공했습니다.',
     },
     GET_MENU: {
-      NOT_FOUND: '해당 메뉴가 존재하지 않습니다.',
+      NOT_FOUND: '존재하지 않는 메뉴입니다.',
       SUCCEED: '메뉴 상세조회에 성공했습니다.',
+    },
+    UPDATE_MENU: {
+      REQUIRED: '수정 내용을 입력해주세요.',
+      NOT_FOUND: '존재하지 않는 메뉴입니다.',
+      SUCCEED: '메뉴 수정이 완료되었습니다.',
+    },
+    DELETE_MENU: {
+      NOT_FOUND: '존재하지 않는 메뉴입니다.',
+      SUCCEED: '메뉴 삭제가 완료되었습니다.',
     },
   },
   RESTAURANT: {
     GET_ALL: {
-      SUCCEED: '음식점 목록조회에 성공했습니다.'
+      SUCCEED: '음식점 목록조회에 성공했습니다.',
     },
     GET_MORE: {
-      SUCCEED: '음식점 상세조회에 성공했습니다.'
+      SUCCEED: '음식점 상세조회에 성공했습니다.',
     },
     CREATE: {
-      SUCCEED: '음식점 생성에 성공했습니다.'
+      SUCCEED: '음식점 생성에 성공했습니다.',
     },
     UPDATE: {
-      SUCCEED: '음식점 수정에 성공했습니다.'
+      SUCCEED: '음식점 수정에 성공했습니다.',
     },
     DELETE: {
-      SUCCEED: '음식점 삭제에 성공했습니다.'
-    }
-  }
+      SUCCEED: '음식점 삭제에 성공했습니다.',
+    },
+  },
 };
