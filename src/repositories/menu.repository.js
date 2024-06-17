@@ -11,4 +11,4 @@ class MenuRepository {
 
   }
   
-  export default AuthRepository;
+  export default MenuRepository;
