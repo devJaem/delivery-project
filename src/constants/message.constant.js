@@ -56,4 +56,21 @@ export const MESSAGES = {
       SUCCEED: '내 정보 조회에 성공했습니다.',
     },
   },
+  RESTAURANT: {
+    GET_ALL: {
+      SUCCEED: '음식점 목록조회에 성공했습니다.'
+    },
+    GET_MORE: {
+      SUCCEED: '음식점 상세조회에 성공했습니다.'
+    },
+    CREATE: {
+      SUCCEED: '음식점 생성에 성공했습니다.'
+    },
+    UPDATE: {
+      SUCCEED: '음식점 수정에 성공했습니다.'
+    },
+    DELETE: {
+      SUCCEED: '음식점 삭제에 성공했습니다.'
+    }
+  }
 };
