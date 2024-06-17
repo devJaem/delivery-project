@@ -19,7 +19,7 @@ const refreshMiddleware =
       const token = authorizationHeader.split(' ')[1];
       if (!token) {
         throw new UnauthorizedError(
-          MESSAGES.AUTH.COMMON.JWT.NOT_SUPPORTED_TYPE
+          MESSAGES.AUTH.COMMON.JWT.NOT_SUPPORTED_TYPE,
         );
       }
 
@@ -31,7 +31,7 @@ const refreshMiddleware =
       }
 
       const tokenData = await authRepository.findRefreshTokenByUserId(
-        payload.userId
+        payload.userId,
       );
       if (!tokenData) {
         throw new BadRequestError(MESSAGES.AUTH.COMMON.JWT.DISCARDED_TOKEN);
