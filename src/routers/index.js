@@ -11,5 +11,4 @@ route.use('/users', usersRouter);
 route.use('/menu', menuRouter);
 route.use('/restaurant', restaurantRouter);
 
-
 export default route;
