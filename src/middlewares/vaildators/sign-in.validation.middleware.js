@@ -13,14 +13,10 @@ export const userLoginSchema = async (req, res, next) => {
           'any.required': MESSAGES.AUTH.COMMON.EMAIL.REQUIRED,
         }),
 
-      password: Joi.string()
-        .min(6) 
-        .required()
-        .empty('')
-        .messages({
-          'string.min': MESSAGES.AUTH.COMMON.PASSWORD.MIN_LENGTH,
-          'any.required': MESSAGES.AUTH.COMMON.PASSWORD.REQUIRED,
-        }),
+      password: Joi.string().min(6).required().empty('').messages({
+        'string.min': MESSAGES.AUTH.COMMON.PASSWORD.MIN_LENGTH,
+        'any.required': MESSAGES.AUTH.COMMON.PASSWORD.REQUIRED,
+      }),
     });
     await userSchema.validateAsync(req.body);
     next();

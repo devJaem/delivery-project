@@ -24,6 +24,7 @@ const validateToken = async (accessToken, secretKey) => {
 const authMiddleware = (userRepository) => async (req, res, next) => {
   try {
     const authorizationHeader = req.headers.authorization;
+
     if (!authorizationHeader) {
       throw new BadRequestError(MESSAGES.AUTH.COMMON.JWT.NO_TOKEN);
     }

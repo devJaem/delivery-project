@@ -24,9 +24,11 @@ const imageUploader = multer({
     const extension = path.extname(file.originalname).toLowerCase();
 
     if (!allowedExtensions.includes(extension)) {
-      return callback(new BadRequestError(MESSAGES.S3.WRONG_EXTENSION), false);
+      return callback(
+        new UnauthorizedError(MESSAGES.S3.WRONG_EXTENSION),
+        false,
+      );
     }
-
     callback(null, true);
   },
 });

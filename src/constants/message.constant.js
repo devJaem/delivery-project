@@ -64,4 +64,51 @@ export const MESSAGES = {
       SUCCEED: '사용자 정보 조회에 성공했습니다.',
     },
   },
+  MENU: {
+    COMMON: {
+      MENU_NAME: {
+        REQUIRED: '메뉴 이름을 입력해주세요.',
+        DUPLICATED: '이미 존재하는 메뉴입니다.',
+        MAX: '메뉴 이름은 20자 이내로 입력해주세요.',
+      },
+      PRICE: {
+        REQUIRED: '가격을 입력해주세요.',
+        IS_NOT_NUM: '가격은 숫자로 입력해주세요.',
+        MIN_MAX: '가격은 100원 이상 10만원 이하로 입력해주세요.',
+      },
+      DESCRIPTION: {
+        REQUIRED: '메뉴 설명 입력해주세요.',
+        MAX: '메뉴 설명은 50자 이내로 입력해주세요.',
+      },
+    },
+    CREATE_MENU: {
+      NOT_FOUND: '해당 가게가 존재하지 않습니다.',
+      SUCCEED: '메뉴 생성을 완료했습니다.',
+    },
+    GET_ALL_MENU: {
+      NOT_FOUND: '해당 가게가 존재하지 않습니다.',
+      SUCCEED: '메뉴 조회에 성공했습니다.',
+    },
+    GET_MENU: {
+      NOT_FOUND: '해당 메뉴가 존재하지 않습니다.',
+      SUCCEED: '메뉴 상세조회에 성공했습니다.',
+    },
+  },
+  RESTAURANT: {
+    GET_ALL: {
+      SUCCEED: '음식점 목록조회에 성공했습니다.'
+    },
+    GET_MORE: {
+      SUCCEED: '음식점 상세조회에 성공했습니다.'
+    },
+    CREATE: {
+      SUCCEED: '음식점 생성에 성공했습니다.'
+    },
+    UPDATE: {
+      SUCCEED: '음식점 수정에 성공했습니다.'
+    },
+    DELETE: {
+      SUCCEED: '음식점 삭제에 성공했습니다.'
+    }
+  }
 };
