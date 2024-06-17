@@ -21,7 +21,8 @@ export const userUpdateSchema = async (req, res, next) => {
         .optional()
         .empty('')
         .messages({
-          'any.only': MESSAGES.AUTH.COMMON.PASSWORD_CONFIRM.NOT_MATCHED_WITH_PASSWORD,
+          'any.only':
+            MESSAGES.AUTH.COMMON.PASSWORD_CONFIRM.NOT_MATCHED_WITH_PASSWORD,
           'any.required': MESSAGES.AUTH.COMMON.PASSWORD_CONFIRM.REQUIRED,
         }),
 

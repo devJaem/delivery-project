@@ -25,7 +25,7 @@ class MenuService {
     }
 
     //음식점 내에 같은 이름의 메뉴 존재하는지 검증
-    const menu = await this.menuRepository.findAllMenu(restaurantId);
+    const menu = await this.menuRepository.getAllMenu(restaurantId);
     if (menu.map((cur) => cur.name).includes(createMenu.menuName)) {
       throw new ConflictError(MESSAGES.MENU.COMMON.MENU_NAME.DUPLICATED);
     }
@@ -97,11 +97,19 @@ class MenuService {
       throw new NotFoundError(MESSAGES.MENU.UPDATE_MENU.NOT_FOUND);
     }
     //수정할 내용이 모두 없을 경우 에러
-    if (!updateMenu.menuName && !updateMenu.price && !updateMenu.description && !imageURL) {
+    if (
+      !updateMenu.menuName &&
+      !updateMenu.price &&
+      !updateMenu.description &&
+      !imageURL
+    ) {
       throw new BadRequestError(MESSAGES.MENU.UPDATE_MENU.REQUIRED);
     }
     //가격 범위 비교
-    if (updateMenu.price && (+updateMenu.price > 100000 || +updateMenu.price < 100)) {
+    if (
+      updateMenu.price &&
+      (+updateMenu.price > 100000 || +updateMenu.price < 100)
+    ) {
       throw new BadRequestError(MESSAGES.MENU.COMMON.PRICE.MIN_MAX);
     }
 
@@ -133,7 +141,7 @@ class MenuService {
       createdAt,
       updatedAt,
     };
-  }
+  };
 
   deleteMenu = async (userId, menuId) => {
     //해당 메뉴가 없을 경우 에러
@@ -143,14 +151,15 @@ class MenuService {
     }
 
     //사장 본인의 음식점이 맞는지 검증
-    const restaurant =
-      await this.restaurantRepository.getRestaurantById(menu.restaurantId);
+    const restaurant = await this.restaurantRepository.getRestaurantById(
+      menu.restaurantId,
+    );
     if (!restaurant || restaurant.ownerId != userId) {
-      throw new NotFoundError(MESSAGES.MENU.CREATE_MENU.NOT_FOUND);
+      throw new NotFoundError(MESSAGES.MENU.DELETE_MENU.NOT_FOUND);
     }
     const deletedMenu = await this.menuRepository.deleteMenu(menuId);
     return { menuId: deletedMenu.menuId };
-  }
+  };
 }
 
 export default MenuService;

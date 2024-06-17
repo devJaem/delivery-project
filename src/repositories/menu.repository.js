@@ -68,15 +68,15 @@ class MenuRepository {
         },
       },
     });
-  }
+  };
 
-  deleteMenu = async(menuId) => {
+  deleteMenu = async (menuId) => {
     return await this.prisma.menu.delete({
       where: {
         menuId,
-      }
-    })
-  }
+      },
+    });
+  };
 }
 
 export default MenuRepository;

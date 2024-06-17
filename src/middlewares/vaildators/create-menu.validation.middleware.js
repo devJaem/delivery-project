@@ -9,12 +9,10 @@ export const createMenuSchema = async (req, res, next) => {
         'string.empty': MESSAGES.MENU.COMMON.MENU_NAME.REQUIRED,
         'string.max': MESSAGES.MENU.COMMON.MENU_NAME.MAX,
       }),
-      price: Joi.string().regex(/^\d+$/)
-        .required()
-        .messages({
-          'any.required': MESSAGES.MENU.COMMON.PRICE.REQUIRED,
-          'string.pattern.base': MESSAGES.MENU.COMMON.PRICE.IS_NOT_NUM,
-        }),
+      price: Joi.string().regex(/^\d+$/).required().messages({
+        'any.required': MESSAGES.MENU.COMMON.PRICE.REQUIRED,
+        'string.pattern.base': MESSAGES.MENU.COMMON.PRICE.IS_NOT_NUM,
+      }),
       description: Joi.string().required().empty('').max(50).messages({
         'any.required': MESSAGES.MENU.COMMON.DESCRIPTION.REQUIRED,
         'string.empty': MESSAGES.MENU.COMMON.DESCRIPTION.REQUIRED,

@@ -20,7 +20,7 @@ const menuController = new MenuController(menuService);
 
 // 메뉴 생성
 menuRouter.post(
-  '/:restaurantId',
+  '/:restaurantId/menu',
   authMiddleware(userRepository),
   requireType([USER_TYPE.OWNER]),
   imageUploader.single('menuImage'),
@@ -42,6 +42,7 @@ menuRouter.get(
   menuController.getMenuById,
 );
 
+//메뉴 수정
 menuRouter.patch(
   '/menu/:menuId',
   authMiddleware(userRepository),
@@ -50,6 +51,7 @@ menuRouter.patch(
   menuController.updateMenu,
 );
 
+//메뉴 삭제
 menuRouter.delete(
   '/menu/:menuId',
   authMiddleware(userRepository),

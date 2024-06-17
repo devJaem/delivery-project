@@ -38,7 +38,7 @@ class MenuController {
 
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
-        message: MESSAGES.MENU.GET_MENU.SUCCEED,
+        message: MESSAGES.MENU.GET_ALL_MENU.SUCCEED,
         data: menu,
       });
     } catch (err) {
@@ -88,16 +88,20 @@ class MenuController {
   };
 
   deleteMenu = async (req, res, next) => {
-    const { userId } = req.user;
-    const { menuId } = req.params;
+    try {
+      const { userId } = req.user;
+      const { menuId } = req.params;
 
-    const menu = await this.menuService.deleteMenu(userId, +menuId);
+      const menu = await this.menuService.deleteMenu(userId, +menuId);
 
-    return res.status(HTTP_STATUS.OK).json({
-      status: HTTP_STATUS.OK,
-      message: MESSAGES.MENU.GET_MENU.SUCCEED,
-      data: menu,
-    });
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.MENU.DELETE_MENU.SUCCEED,
+        data: menu,
+      });
+    } catch (err) {
+      next(err);
+    }
   };
 }
 
