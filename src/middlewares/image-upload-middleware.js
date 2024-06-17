@@ -25,7 +25,7 @@ const imageUploader = multer({
 
     if (!allowedExtensions.includes(extension)) {
       return callback(
-        new UnauthorizedError(MESSAGES.S3.WRONG_EXTENSION),
+        new BadRequestError(MESSAGES.S3.WRONG_EXTENSION),
         false,
       );
     }
