@@ -21,7 +21,7 @@ class MenuController {
       );
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,
-        message: MESSAGES.AUTH.SIGN_UP.SUCCEED,
+        message: MESSAGES.MENU.CREATE_MENU.SUCCEED,
         data: menu,
       });
     } catch (error) {
@@ -29,25 +29,31 @@ class MenuController {
     }
   };
 
-  createOption = async (req, res, next) => {
-    try {
-      const { userId } = req.user;
-      const { menuId } = req.params;
-      const createOption = req.body;
-      const option = await this.menuService.createOption(
-        userId,
-        +menuId,
-        createOption,
-      );
-      return res.status(HTTP_STATUS.CREATED).json({
-        status: HTTP_STATUS.CREATED,
-        message: MESSAGES.AUTH.SIGN_UP.SUCCEED,
-        data: option,
-      });
-    } catch (error) {
-      next(error);
-    }
+  getAllMenu = async (req, res, next) => {
+    const { userId } = req.user;
+    const { restaurantId } = req.params;
+
+    const menu = await this.menuService.getAllMenu(+restaurantId);
+
+    return res.status(HTTP_STATUS.OK).json({
+      status: HTTP_STATUS.OK,
+      message: MESSAGES.MENU.GET_MENU.SUCCEED,
+      data: menu,
+    });
   };
+
+  getMenuById = async (req, res, next) => {
+    const { userId } = req.user;
+    const { menuId } = req.params;
+
+    const menu = await this.menuService.getMenuById(+menuId);
+
+    return res.status(HTTP_STATUS.OK).json({
+      status: HTTP_STATUS.OK,
+      message: MESSAGES.MENU.GET_MENU.SUCCEED,
+      data: menu,
+    });
+  }
 }
 
 export default MenuController;

@@ -9,16 +9,14 @@ export const createMenuSchema = async (req, res, next) => {
         'string.empty': MESSAGES.MENU.COMMON.MENU_NAME.REQUIRED,
         'string.max': MESSAGES.MENU.COMMON.MENU_NAME.MAX,
       }),
-      price: Joi.number()
-        .integer()
-        .min(100)
-        .max(100000)
+      price: Joi.string().regex(/^\d+$/)
+        // .integer()
+        // .min(100)
+        // .max(100000)
         .required()
         .messages({
           'any.required': MESSAGES.MENU.COMMON.PRICE.REQUIRED,
-          'number.integer': MESSAGES.MENU.COMMON.PRICE.IS_NOT_NUM,
-          'number.max': MESSAGES.MENU.COMMON.PRICE.MAX,
-          'number.min': MESSAGES.MENU.COMMON.PRICE.MIN,
+          'string.pattern.base': MESSAGES.MENU.COMMON.PRICE.IS_NOT_NUM,
         }),
       description: Joi.string().required().empty('').max(50).messages({
         'any.required': MESSAGES.MENU.COMMON.DESCRIPTION.REQUIRED,
