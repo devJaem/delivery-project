@@ -43,7 +43,7 @@ class RestaurantService {
         const existedRestaurant = await this.restaurantRepository.existedRestaurant(user);
         // if (existedRestaurant >= 1) throw new Error('2개 이상의 업장을 가질 수 없습니다.');
         if (existedRestaurant >= 1) throw new Error('2개 이상의 업장을 가질 수 없습니다.');
-        if (user.role !== "OWNER") throw new Error('사장님만 접근할수 있습니다.');
+        // if (user.role !== "OWNER") throw new Error('사장님만 접근할수 있습니다.');
         const restaurant = await this.restaurantRepository.createRestaurant(user, createrestaurant);
         return {
             ownerId: restaurant.ownerId,

@@ -17,20 +17,34 @@ class UserService {
     this.authRepository = authRepository;
   }
 
-  getUserProfile = async (userId) => {
+  getMyProfile = async (userId) => {
     const user = await this.userRepository.findById(userId);
     if (!user) {
       throw new NotFoundError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
     }
-    const { email, nickName, userType, profilePicture, createdAt, updatedAt } = user;
+    const { email, nickName, userType, profilePicture, createdAt, updatedAt } =
+      user;
     return {
-      userId,
       email,
       nickName,
       profilePicture,
       userType,
       createdAt,
       updatedAt,
+    };
+  };
+
+  getUserProfile = async (userId) => {
+    const user = await this.userRepository.findById(userId);
+    if (!user) {
+      throw new NotFoundError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
+    }
+    const { nickName, userType, profilePicture, createdAt } = user;
+    return {
+      nickName,
+      profilePicture,
+      userType,
+      createdAt,
     };
   };
 
@@ -43,13 +57,13 @@ class UserService {
     const accessToken = jwt.sign(
       { userId: user.userId, userType: user.userType },
       ENV.ACCESS_KEY,
-      { expiresIn: ACCESS_TOKEN_EXPIRES_IN }
+      { expiresIn: ACCESS_TOKEN_EXPIRES_IN },
     );
 
     const refreshToken = jwt.sign(
       { userId: user.userId, userType: user.userType },
       ENV.REFRESH_KEY,
-      { expiresIn: REFRESH_TOKEN_EXPIRES_IN }
+      { expiresIn: REFRESH_TOKEN_EXPIRES_IN },
     );
 
     await this.authRepository.updateOrCreateToken(user.userId, refreshToken);
@@ -63,6 +77,20 @@ class UserService {
       throw new BadRequestError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
     }
     return result;
+  };
+
+  updateMyProfile = async (userId, updatedData) => {
+    const user = await this.userRepository.updateUser(userId, updatedData);
+    if (!user) {
+      throw new NotFoundError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
+    }
+    const { nickName, userType, profilePicture, updatedAt } = user;
+    return {
+      nickName,
+      profilePicture,
+      userType,
+      updatedAt,
+    };
   };
 }
 
