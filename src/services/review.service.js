@@ -63,7 +63,7 @@ class ReviewService {
     // 리뷰 수정
     putReview = async (reviewId, user, changereview) => {
         //해당 리뷰가 없을 시에
-        const reviewExisted = await this.reviewRepository.getReviewById(reviewId);
+        const reviewExisted = await this.reviewRepository.existedReview(user);
         if (!reviewExisted) throw new NotFoundError(MESSAGES.REVIEW.GET_MORE.NOT_FOUND);
         const review = await this.reviewRepository.putReview(reviewId, user, changereview);
         return {
@@ -80,12 +80,11 @@ class ReviewService {
     // 리뷰 삭제
     deleteReview = async (reviewId, user) => {
         //해당 리뷰가 없을 시에
-        const reviewExisted = await this.reviewRepository.getReviewById(reviewId);
+        const reviewExisted = await this.reviewRepository.existedReview(user);
         if (!reviewExisted) throw new NotFoundError(MESSAGES.REVIEW.GET_MORE.NOT_FOUND);
         const review = await this.reviewRepository.deleteReview(reviewId, user);
         return { review };
     }
 }
-
 
 export default ReviewService;
