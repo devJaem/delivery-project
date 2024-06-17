@@ -1,5 +1,4 @@
-import { S3Client } from '@aws-sdk/client-s3';
-import { Upload } from '@aws-sdk/lib-storage';
+import { S3Client ,PutObjectCommand } from '@aws-sdk/client-s3';
 import multer from 'multer';
 import path from 'path';
 import { ENV } from '../constants/env.constant.js';
@@ -37,20 +36,18 @@ const uploadToS3 = async (file) => {
   const uploadDirectory = 'profileImages';
   const key = `${uploadDirectory}/${Date.now()}_${file.originalname}`;
 
-  const upload = new Upload({
-    client: s3,
-    params: {
+  try {
+    const uploadParams = {
       Bucket: ENV.AWS_BUCKET_NAME,
       Key: key,
       Body: file.buffer,
       ACL: 'public-read',
-    },
-  });
+    };
 
-  try {
-    const data = await upload.done();
-    return data.Location;
+    await s3.send(new PutObjectCommand(uploadParams));
+    return `https://${ENV.AWS_BUCKET_NAME}.s3.${ENV.AWS_REGION}.amazonaws.com/${key}`;
   } catch (error) {
+    console.error('Error uploading file to S3:', error);
     throw new InternalServerError(MESSAGES.S3.UPLOADING_FAIL);
   }
 };
