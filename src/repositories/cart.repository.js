@@ -8,7 +8,6 @@ class CartRepository {
     const cart = await this.prisma.cart.upsert({
       where: {
         userId,
-        restaurantId,
       },
       create: {
         restaurantId,
@@ -75,7 +74,7 @@ class CartRepository {
 
   //카트 삭제
   deleteCart = async (cartId) => {
-    const deletedCartItem = await this.prisma.cartItem.delete({
+    const deletedCartItem = await this.prisma.cartItem.deleteMany({
       where: {
         cartId,
       },
