@@ -35,6 +35,21 @@ class AuthController {
       next(error);
     }
   };
+
+  logout = async (req, res, next) => {
+    try{
+      const { userId } = req.user;
+      const result = await this.authService.deleteToken(userId);
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.AUTH.SIGN_OUT.SUCCEED,
+        data: result,
+      });
+    }catch (error) {
+      next(error);
+    }
+  };
+
 }
 
 export default AuthController;

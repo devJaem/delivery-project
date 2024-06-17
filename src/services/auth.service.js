@@ -88,6 +88,15 @@ class AuthService {
       refreshToken,
     };
   };
+
+  deleteToken = async (userId) => {
+    const result = await this.authRepository.deleteTokenByUserId(userId);
+    if (!result) {
+      throw new BadRequestError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
+    }
+    return result;
+  };
+  
 }
 
 export default AuthService;
