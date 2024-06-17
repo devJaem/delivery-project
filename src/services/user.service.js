@@ -17,20 +17,33 @@ class UserService {
     this.authRepository = authRepository;
   }
 
-  getUserProfile = async (userId) => {
+  getMyProfile = async (userId) => {
     const user = await this.userRepository.findById(userId);
     if (!user) {
       throw new NotFoundError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
     }
     const { email, nickName, userType, profilePicture, createdAt, updatedAt } = user;
     return {
-      userId,
       email,
       nickName,
       profilePicture,
       userType,
       createdAt,
       updatedAt,
+    };
+  };
+
+  getUserProfile = async (userId) => {
+    const user = await this.userRepository.findById(userId);
+    if (!user) {
+      throw new NotFoundError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
+    }
+    const { nickName, userType, profilePicture, createdAt } = user;
+    return {
+      nickName,
+      profilePicture,
+      userType,
+      createdAt,
     };
   };
 

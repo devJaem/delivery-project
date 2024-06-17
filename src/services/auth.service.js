@@ -47,12 +47,12 @@ class AuthService {
   signIn = async (loginUser) => {
     const user = await this.userRepository.findOne(loginUser.email);
     if (!user) {
-      throw new UnauthorizedError(MESSAGES.AUTH.COMMON.UNAUTHORIZED);
+      throw new UnauthorizedError(MESSAGES.AUTH.COMMON.INVALID_ACCOUNT_INFORMATION);
     }
 
     const match = await bcrypt.compare(loginUser.password, user.password);
     if (!match) {
-      throw new UnauthorizedError(MESSAGES.AUTH.COMMON.UNAUTHORIZED);
+      throw new UnauthorizedError(MESSAGES.AUTH.COMMON.INVALID_ACCOUNT_INFORMATION);
     }
 
     const accessToken = jwt.sign(

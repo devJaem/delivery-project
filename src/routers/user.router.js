@@ -13,11 +13,17 @@ const authRepository = new AuthRepository(prisma);
 const userService = new UserService(userRepository, authRepository);
 const userController = new UserController(userService);
 
-/* 사용자 정보 조회 API */
+/* 내 정보 조회 API */
 userRouter.get(
   '/profile',
   authMiddleware(userRepository),
-  userController.getProfile
+  userController.getMyProfile
+);
+
+/* 사용자 정보 조회 API */
+userRouter.get(
+  '/:userId',
+  userController.getUserProfile
 );
 
 /* RefreshToken 재발급 API */

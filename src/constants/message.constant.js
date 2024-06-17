@@ -28,6 +28,7 @@ export const MESSAGES = {
         REQUIRED: '사용자 유형을 입력해 주세요.',
       },
       UNAUTHORIZED: '인증 정보가 유효하지 않습니다.',
+      INVALID_ACCOUNT_INFORMATION: '잘못된 계정 정보입니다.',
       FORBIDDEN: '접근 권한이 없습니다.',
       JWT: {
         NO_TOKEN: '인증 정보가 없습니다.',
@@ -54,6 +55,9 @@ export const MESSAGES = {
   USERS: {
     READ_ME: {
       SUCCEED: '내 정보 조회에 성공했습니다.',
+    },
+    READ_USER: {
+      SUCCEED: '사용자 정보 조회에 성공했습니다.',
     },
   },
 };
