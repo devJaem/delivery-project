@@ -7,7 +7,7 @@ import MenuRepository from '../repositories/menu.repository.js';
 import UserRepository from '../repositories/user.repository.js';
 import RestaurantRepository from '../repositories/restaurant.repository.js';
 import { authMiddleware } from '../middlewares/require-access-token.middleware.js';
-import { requireRoles } from '../middlewares/require-roles.middleware.js';
+import { requireType } from '../middlewares/require-user-type.middleware.js';
 import { prisma } from '../utils/prisma.util.js';
 import { USER_TYPE } from '../constants/user.constant.js';
 
@@ -22,7 +22,7 @@ const menuController = new MenuController(menuService);
 menuRouter.post(
   '/:restaurantId',
   authMiddleware(userRepository),
-  requireRoles([USER_TYPE.OWNER]),
+  requireType([USER_TYPE.OWNER]),
   imageUploader.single('menuImage'),
   createMenuSchema,
   menuController.createMenu,

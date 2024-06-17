@@ -1,7 +1,7 @@
 import express from 'express';
 import RestaurantController from '../controllers/restaurant.controller.js';
 import RestaurantService from '../services/restaurant.service.js';
-import { requireRoles } from '../middlewares/require-roles.middleware.js';
+import { requireType } from '../middlewares/require-user-type.middleware.js';
 import RestaurantRepository from '../repositories/restaurant.repository.js';
 import UserRepository from '../repositories/user.repository.js';
 import { prisma } from '../utils/prisma.util.js';
@@ -27,21 +27,21 @@ restaurantRouter.get(
 restaurantRouter.post(
     '/restaurants',
     authMiddleware(userRepository),
-    requireRoles([USER_TYPE.OWNER]),
+    requireType([USER_TYPE.OWNER]),
     restaurantController.createRestaurant
 )
 // 음식점 수정
 restaurantRouter.put(
     '/restaurants/:id',
     authMiddleware(userRepository),
-    requireRoles([USER_TYPE.OWNER]),
+    requireType([USER_TYPE.OWNER]),
     restaurantController.putRestaurant
 )
 // 음식점 삭제
 restaurantRouter.delete(
     '/restaurants/:id',
     authMiddleware(userRepository),
-    requireRoles([USER_TYPE.OWNER]),
+    requireType([USER_TYPE.OWNER]),
     restaurantController.deleteRestaurant
 )
 export default restaurantRouter;
