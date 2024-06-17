@@ -40,9 +40,7 @@ class RestaurantController {
         try {
             const user = req.user;
             const restaurantPictureUrl = req.file ? await uploadToS3(req.file) : undefined;
-            const createrestaurant = { ...req.body, restaurantPictureUrl };
-            console.log("zzzzzzzz");
-            console.log(createrestaurant);
+            const createrestaurant = { ...req.body, restaurantPicture: restaurantPictureUrl };
             const restaurant = await this.restaurantService.createRestaurant(user, createrestaurant);
             return res.status(HTTP_STATUS.CREATED).json({
                 status: HTTP_STATUS.CREATED,
@@ -59,7 +57,7 @@ class RestaurantController {
             const { restaurantId } = req.params;
             const user = req.user;
             const restaurantPictureUrl = req.file ? await uploadToS3(req.file) : undefined;
-            const changeRestaurant = { ...req.body, restaurantPicture: restaurantPictureUrl }
+            const changeRestaurant = { ...req.body, restaurantPicture: restaurantPictureUrl };
             const restaurant = await this.restaurantService.putRestaurant(restaurantId, user, changeRestaurant);
             return res.status(HTTP_STATUS.OK).json({
                 status: HTTP_STATUS.OK,

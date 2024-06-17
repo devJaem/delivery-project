@@ -20,7 +20,7 @@ class RestaurantService {
                 address: restaurant.address,
                 category: restaurant.category,
                 description: restaurant.description,
-                //"restaurantProfile": "파일",
+                restaurantPicture: restaurant.restaurantPicture,
                 createdAt: restaurant.createdAt,
                 updatedAt: restaurant.updatedAt,
             }
@@ -37,7 +37,7 @@ class RestaurantService {
             address: restaurant.address,
             category: restaurant.category,
             description: restaurant.description,
-            // "restaurantProfile": "파일",
+            restaurantPicture: restaurant.restaurantPicture,
             createdAt: restaurant.createdAt,
             updatedAt: restaurant.updatedAt,
         };
@@ -55,7 +55,7 @@ class RestaurantService {
             address: restaurant.address,
             category: restaurant.category,
             description: restaurant.description,
-            restaurantProfile: restaurant.restaurantProfile,
+            restaurantPicture: restaurant.restaurantPicture,
             createdAt: restaurant.createdAt,
             updatedAt: restaurant.updatedAt,
         };

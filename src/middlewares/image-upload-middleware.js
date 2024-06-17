@@ -22,7 +22,6 @@ const imageUploader = multer({
   storage,
   fileFilter: (req, file, callback) => {
     const extension = path.extname(file.originalname).toLowerCase();
-
     if (!allowedExtensions.includes(extension)) {
       return callback(
         new BadRequestError(MESSAGES.S3.WRONG_EXTENSION),
@@ -36,7 +35,6 @@ const imageUploader = multer({
 const uploadToS3 = async (file) => {
   const uploadDirectory = 'profileImages';
   const key = `${uploadDirectory}/${Date.now()}_${file.originalname}`;
-
   const upload = new Upload({
     client: s3,
     params: {
@@ -46,7 +44,6 @@ const uploadToS3 = async (file) => {
       ACL: 'public-read',
     },
   });
-
   try {
     const data = await upload.done();
     return data.Location;

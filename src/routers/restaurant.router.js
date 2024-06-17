@@ -7,7 +7,7 @@ import UserRepository from '../repositories/user.repository.js';
 import { prisma } from '../utils/prisma.util.js';
 import { authMiddleware } from '../middlewares/require-access-token.middleware.js';
 import { USER_TYPE } from '../constants/user.constant.js';
-
+import { imageUploader } from '../middlewares/image-upload-middleware.js';
 const restaurantRouter = express.Router();
 const userRepository = new UserRepository(prisma);
 const restaurantRepository = new RestaurantRepository(prisma);
@@ -26,6 +26,7 @@ restaurantRouter.get(
 // 음식점 생성
 restaurantRouter.post(
     '/',
+    imageUploader.single('restaurantPicture'),
     authMiddleware(userRepository),
     requireType([USER_TYPE.OWNER]),
     restaurantController.createRestaurant
@@ -34,6 +35,7 @@ restaurantRouter.post(
 restaurantRouter.put(
     '/:restaurantId',
     authMiddleware(userRepository),
+    imageUploader.single('restaurantPicture'),
     requireType([USER_TYPE.OWNER]),
     restaurantController.putRestaurant
 )
