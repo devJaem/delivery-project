@@ -25,8 +25,8 @@ class RestaurantService {
         });
     }
     // 상세 조회
-    getRestaurantById = async (id) => {
-        const restaurant = await this.restaurantRepository.getRestaurantById(id);
+    getRestaurantById = async (restaurantId) => {
+        const restaurant = await this.restaurantRepository.getRestaurantById(restaurantId);
         return {
             ownerId: restaurant.ownerId,
             name: restaurant.name,
@@ -56,10 +56,10 @@ class RestaurantService {
         };
     }
     // 수정
-    putRestaurant = async (id, user, changeRestaurant) => {
-        const existedRestaurant = await this.restaurantRepository.getRestaurantById(id);
+    putRestaurant = async (restaurantId, user, changeRestaurant) => {
+        const existedRestaurant = await this.restaurantRepository.getRestaurantById(restaurantId);
         if (!existedRestaurant) throw new Error('해당 음식점이 없습니다.');
-        const restaurant = await this.restaurantRepository.putRestaurant(id, user, changeRestaurant);
+        const restaurant = await this.restaurantRepository.putRestaurant(restaurantId, user, changeRestaurant);
         return {
             ownerId: restaurant.ownerId,
             name: restaurant.name,
@@ -71,10 +71,10 @@ class RestaurantService {
         };
     }
     // 삭제
-    deleteRestaurant = async (id, user) => {
+    deleteRestaurant = async (restaurantId, user) => {
         const existedRestaurant = await this.restaurantRepository.existedRestaurant(user);
         if (!existedRestaurant) throw new Error('해당 음식점이 없습니다.');
-        const restaurant = await this.restaurantRepository.deleteRestaurant(id, user);
+        const restaurant = await this.restaurantRepository.deleteRestaurant(restaurantId, user);
         return {
             restaurant
         }

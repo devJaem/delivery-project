@@ -12,9 +12,9 @@ class RestaurantRepository {
         return restaurants
     }
     // 상세 조회
-    getRestaurantById = async (id) => {
+    getRestaurantById = async (restaurantId) => {
         const restaurant = await this.prisma.Restaurant.findUnique({
-            where: { restaurantId: +id }
+            where: { restaurantId: +restaurantId }
         })
         return restaurant;
     }
@@ -37,11 +37,11 @@ class RestaurantRepository {
         return restaurant;
     }
     // 수정
-    putRestaurant = async (id, user, changeRestaurant) => {
+    putRestaurant = async (restaurantId, user, changeRestaurant) => {
         const { name, address, category, description } = changeRestaurant;
         const restaurant = await this.prisma.Restaurant.update({
             where: {
-                restaurantId: +id,
+                restaurantId: +restaurantId,
                 ownerId: user.userId
             },
             data: {
@@ -54,10 +54,10 @@ class RestaurantRepository {
         return restaurant
     }
     // 삭제
-    deleteRestaurant = async (id, user) => {
+    deleteRestaurant = async (restaurantId, user) => {
         const restaurant = await this.prisma.Restaurant.delete({
             where: {
-                restaurantId: +id,
+                restaurantId: +restaurantId,
                 ownerId: user.userId
             },
         })

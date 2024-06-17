@@ -13,29 +13,29 @@ const restaurantService = new RestaurantService(restaurantRepository);
 const restaurantController = new RestaurantController(restaurantService);
 // 음식점 목록 조회
 restaurantRouter.get(
-    '/restaurants',
+    '/',
     restaurantController.getAllRestaurant
 )
 // 음식점 상세 조회
 restaurantRouter.get(
-    '/restaurants/:id',
+    '/:restaurantId',
     restaurantController.getRestaurantById
 )
 // 음식점 생성
 restaurantRouter.post(
-    '/restaurants',
+    '/',
     authMiddleware(userRepository),
     restaurantController.createRestaurant
 )
 // 음식점 수정
 restaurantRouter.put(
-    '/restaurants/:id',
+    '/:restaurantId',
     authMiddleware(userRepository),
     restaurantController.putRestaurant
 )
 // 음식점 삭제
 restaurantRouter.delete(
-    '/restaurants/:id',
+    '/:restaurantId',
     authMiddleware(userRepository),
     restaurantController.deleteRestaurant
 )

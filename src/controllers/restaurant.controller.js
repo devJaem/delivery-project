@@ -23,8 +23,8 @@ class RestaurantController {
     // 상세 조회
     getRestaurantById = async (req, res, next) => {
         try {
-            const { id } = req.params;
-            const restaurant = await this.restaurantService.getRestaurantById(id);
+            const { restaurantId } = req.params;
+            const restaurant = await this.restaurantService.getRestaurantById(restaurantId);
             return res.status(HTTP_STATUS.OK).json({
                 status: HTTP_STATUS.OK,
                 message: MESSAGES.RESTAURANT.GET_MORE.SUCCEED,
@@ -52,10 +52,10 @@ class RestaurantController {
     // 수정
     putRestaurant = async (req, res, next) => {
         try {
-            const { id } = req.params;
+            const { restaurantId } = req.params;
             const user = req.user;
             const changeRestaurant = req.body;
-            const restaurant = await this.restaurantService.putRestaurant(id, user, changeRestaurant);
+            const restaurant = await this.restaurantService.putRestaurant(restaurantId, user, changeRestaurant);
             return res.status(HTTP_STATUS.OK).json({
                 status: HTTP_STATUS.OK,
                 message: MESSAGES.RESTAURANT.UPDATE.SUCCEED,
@@ -69,9 +69,9 @@ class RestaurantController {
     // 삭제
     deleteRestaurant = async (req, res, next) => {
         try {
-            const { id } = req.params;
+            const { restaurantId } = req.params;
             const user = req.user;
-            const restaurant = await this.restaurantService.deleteRestaurant(id, user);
+            const restaurant = await this.restaurantService.deleteRestaurant(restaurantId, user);
             return res.status(HTTP_STATUS.OK).json({
                 status: HTTP_STATUS.OK,
                 message: MESSAGES.RESTAURANT.DELETE.SUCCEED,
