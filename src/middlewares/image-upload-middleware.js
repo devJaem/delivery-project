@@ -1,4 +1,4 @@
-import { S3Client ,PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import multer from 'multer';
 import path from 'path';
 import { ENV } from '../constants/env.constant.js';
@@ -19,6 +19,9 @@ const storage = multer.memoryStorage();
 
 const imageUploader = multer({
   storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024 // 10MB
+  },
   fileFilter: (req, file, callback) => {
     const extension = path.extname(file.originalname).toLowerCase();
 
