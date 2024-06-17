@@ -115,5 +115,13 @@ export const MESSAGES = {
     DELETE: {
       SUCCEED: '음식점 삭제에 성공했습니다.'
     }
+  },
+  MENU: {
+    CREATE_MENU: {
+      SUCCEED: '메뉴 생성을 완료했습니다.',
+    },
+    CREATE_OPTION: {
+      SUCCEED: '옵션 생성을 완료했습니다.',
+    }
   }
 };
