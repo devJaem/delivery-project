@@ -1,6 +1,6 @@
 import { HTTP_STATUS } from '../constants/http-status.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
-
+import { uploadToS3 } from '../middlewares/image-upload-middleware.js';
 class UserController {
   constructor(userService) {
     this.userService = userService;
@@ -61,22 +61,23 @@ class UserController {
       next(error);
     }
   };
+  updateMyProfile = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+      const profilePictureUrl = req.file ? await uploadToS3(req.file) : undefined;
+      const updatedData = { ...req.body, profilePicture: profilePictureUrl };
+      const user = await this.userService.updateMyProfile(userId, updatedData);
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.USERS.UPDATE_ME.SUCCEED,
+        data: user,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
-updateMyProfile = async (req, res, next) => {
-  try {
-    const { userId } = req.user;
-    const profilePictureUrl = req.file ? await uploadToS3(req.file) : undefined;
-    const updatedData = { ...req.body, profilePicture: profilePictureUrl };
-    const user = await this.userService.updateMyProfile(userId, updatedData);
-    return res.status(HTTP_STATUS.OK).json({
-      status: HTTP_STATUS.OK,
-      message: MESSAGES.USERS.UPDATE_ME.SUCCEED,
-      data: user,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+
 
 export default UserController;

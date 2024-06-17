@@ -9,6 +9,6 @@ const route = express.Router();
 route.use('/auth', authRouter);
 route.use('/users', usersRouter);
 route.use('/menu', menuRouter);
-route.use('/restaurant', restaurantRouter);
+route.use('/restaurants', restaurantRouter);
 
 export default route;

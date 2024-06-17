@@ -1,5 +1,6 @@
 import { MESSAGES } from '../constants/message.constant.js';
-import { HttpError } from '../errors/http.error.js';
+import { ConflictError, NotFoundError } from '../errors/http.error.js';
+
 class RestaurantService {
     constructor(restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
@@ -19,6 +20,7 @@ class RestaurantService {
                 address: restaurant.address,
                 category: restaurant.category,
                 description: restaurant.description,
+                //"restaurantProfile": "파일",
                 createdAt: restaurant.createdAt,
                 updatedAt: restaurant.updatedAt,
             }
@@ -27,45 +29,50 @@ class RestaurantService {
     // 상세 조회
     getRestaurantById = async (restaurantId) => {
         const restaurant = await this.restaurantRepository.getRestaurantById(restaurantId);
+        if (!restaurant) throw new NotFoundError(MESSAGES.RESTAURANT.GET_MORE.NOT_FOUND);
         return {
+            restaurantId: restaurant.restaurantId,
             ownerId: restaurant.ownerId,
             name: restaurant.name,
             address: restaurant.address,
             category: restaurant.category,
             description: restaurant.description,
+            // "restaurantProfile": "파일",
             createdAt: restaurant.createdAt,
             updatedAt: restaurant.updatedAt,
         };
     }
     // 생성
-    createRestaurant = async (user, createrestaurant) => {
+    createRestaurant = async (user, createrestaurant, profilePictureUrl) => {
         //사장님의 이름(아이디)을 가진 음식점이 2개 이상이라면 에러처리
         const existedRestaurant = await this.restaurantRepository.existedRestaurant(user);
-        // if (existedRestaurant >= 1) throw new Error('2개 이상의 업장을 가질 수 없습니다.');
-        if (existedRestaurant >= 1) throw new Error('2개 이상의 업장을 가질 수 없습니다.');
-        // if (user.role !== "OWNER") throw new Error('사장님만 접근할수 있습니다.');
+        if (existedRestaurant >= 1) throw new ConflictError(MESSAGES.RESTAURANT.MADE.FAILED.DUPLICATE);
         const restaurant = await this.restaurantRepository.createRestaurant(user, createrestaurant);
         return {
+            restaurantId: restaurant.restaurantId,
             ownerId: restaurant.ownerId,
             name: restaurant.name,
             address: restaurant.address,
             category: restaurant.category,
             description: restaurant.description,
+            //"restaurantProfile": "파일",
             createdAt: restaurant.createdAt,
             updatedAt: restaurant.updatedAt,
         };
     }
     // 수정
-    putRestaurant = async (restaurantId, user, changeRestaurant) => {
+    putRestaurant = async (restaurantId, user, changeRestaurant, profilePictureUrl) => {
         const existedRestaurant = await this.restaurantRepository.getRestaurantById(restaurantId);
-        if (!existedRestaurant) throw new Error('해당 음식점이 없습니다.');
+        if (!existedRestaurant) throw new NotFoundError(MESSAGES.RESTAURANT.GET_MORE.NOT_FOUND);
         const restaurant = await this.restaurantRepository.putRestaurant(restaurantId, user, changeRestaurant);
         return {
+            restaurantId: restaurant.restaurantId,
             ownerId: restaurant.ownerId,
             name: restaurant.name,
             address: restaurant.address,
             category: restaurant.category,
             description: restaurant.description,
+            //"restaurantProfile": "파일",
             createdAt: restaurant.createdAt,
             updatedAt: restaurant.updatedAt,
         };
@@ -73,7 +80,7 @@ class RestaurantService {
     // 삭제
     deleteRestaurant = async (restaurantId, user) => {
         const existedRestaurant = await this.restaurantRepository.existedRestaurant(user);
-        if (!existedRestaurant) throw new Error('해당 음식점이 없습니다.');
+        if (!existedRestaurant) throw new NotFoundError(MESSAGES.RESTAURANT.GET_MORE.NOT_FOUND);
         const restaurant = await this.restaurantRepository.deleteRestaurant(restaurantId, user);
         return {
             restaurant
