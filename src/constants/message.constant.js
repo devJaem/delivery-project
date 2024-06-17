@@ -56,6 +56,10 @@ export const MESSAGES = {
     READ_ME: {
       SUCCEED: '내 정보 조회에 성공했습니다.',
     },
+    UPDATE_ME: {
+      SUCCEED: '내 정보 수정에 성공했습니다.',
+      FAIL: '변경할수 없는 정보입니다.'
+    },
     READ_USER: {
       SUCCEED: '사용자 정보 조회에 성공했습니다.',
     },

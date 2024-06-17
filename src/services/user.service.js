@@ -77,6 +77,21 @@ class UserService {
     }
     return result;
   };
+
+  updateMyProfile = async (userId, updatedData) => {
+    const user = await this.userRepository.updateUser(userId, updatedData);
+    if (!user) {
+      throw new NotFoundError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
+    }
+    const { nickName, userType, profilePicture, updatedAt } = user;
+    return {
+      nickName,
+      profilePicture,
+      userType,
+      updatedAt,
+    };
+  };
+
 }
 
 export default UserService;
