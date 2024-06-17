@@ -22,6 +22,29 @@ model User {
   reviews         Review[]
   notifications   Notification[]
   refreshTokens   RefreshToken[]
+  carts           Cart[]
+}
+
+model Cart {
+  cartId        Int          @id @default(autoincrement())
+  restaurantId  Int
+  userId        Int
+  createdAt     DateTime     @default(now())
+  restaurant    Restaurant   @relation(fields: [restaurantId], references: [restaurantId])
+  user          User         @relation(fields: [userId], references: [userId])
+  cartItems     CartItem[]
+  
+  @@unique([restaurantId, userId])
+}
+
+model CartItem {
+  cartItemId   Int          @id @default(autoincrement())
+  cartId       Int
+  menuId       Int
+  quantity     Int
+  createdAt    DateTime     @default(now())
+  cart         Cart         @relation(fields: [cartId], references: [cartId])
+  menu         Menu         @relation(fields: [menuId], references: [menuId])
 }
 
 model Restaurant {
@@ -39,6 +62,8 @@ model Restaurant {
   orders         Order[]
   reviews        Review[]
   notifications  Notification[]
+  carts          Cart[]
+  
   @@unique([ownerId, name])
 }
 
@@ -46,13 +71,15 @@ model Menu {
   menuId        Int            @id @default(autoincrement())
   restaurantId  Int
   name          String
-  imageURL      String
   price         Int
   description   String?
+  menuPicture   String?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   restaurant    Restaurant     @relation(fields: [restaurantId], references: [restaurantId])
   orderItems    OrderItem[]
+  cartItems     CartItem[]
+  
   @@unique([restaurantId, name])
 }
 
@@ -85,7 +112,7 @@ model Review {
   restaurantId  Int
   rating        Int
   comment       String
-  reviewImage   String?
+  reviewPicture String?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   customer      User         @relation(fields: [customerId], references: [userId])
@@ -105,11 +132,11 @@ model Notification {
 }
 
 model RefreshToken {
-  refreshTokenId  Int       @id @default(autoincrement())
-  userId          Int
-  refreshToken    String    @unique
-  createdAt       DateTime  @default(now())
-  user            User      @relation(fields: [userId], references: [userId])
+  refreshTokenId Int       @id @default(autoincrement())
+  userId         Int
+  refreshToken   String    @unique
+  createdAt      DateTime  @default(now())
+  user           User      @relation(fields: [userId], references: [userId])
 }
 
 enum UserType {
