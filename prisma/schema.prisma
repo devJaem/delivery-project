@@ -38,6 +38,7 @@ model Restaurant {
   orders         Order[]
   reviews        Review[]
   notifications  Notification[]
+  @@unique([ownerId, name])
 }
 
 model Menu {
@@ -51,6 +52,7 @@ model Menu {
   updatedAt     DateTime       @updatedAt
   restaurant    Restaurant     @relation(fields: [restaurantId], references: [restaurantId])
   orderItems    OrderItem[]
+  @@unique([restaurantId, name])
 }
 
 model Order {
@@ -102,11 +104,11 @@ model Notification {
 }
 
 model RefreshToken {
-  refreshTokenId      Int       @id @default(autoincrement())
-  userId       Int
-  refreshToken String    @unique
-  createdAt    DateTime  @default(now())
-  user         User      @relation(fields: [userId], references: [userId])
+  refreshTokenId  Int       @id @default(autoincrement())
+  userId          Int
+  refreshToken    String    @unique
+  createdAt       DateTime  @default(now())
+  user            User      @relation(fields: [userId], references: [userId])
 }
 
 enum UserType {
