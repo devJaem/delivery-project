@@ -32,20 +32,16 @@ userRouter.patch(
 );
 
 /* 사용자 정보 조회 API */
-userRouter.get('/:userId', userController.getUserProfile);
+userRouter.get(
+  '/:userId',
+  userController.getUserProfile
+);
 
 /* RefreshToken 재발급 API */
 userRouter.post(
   '/token',
   refreshMiddleware(userRepository, authRepository),
   userController.refreshToken,
-);
-
-/* 로그아웃 API */
-userRouter.get(
-  '/logout',
-  authMiddleware(userRepository),
-  userController.logout,
 );
 
 export default userRouter;
