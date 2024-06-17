@@ -4,7 +4,7 @@ import { ForbiddenError } from '../errors/http.error.js';
 const requireType = (allowedRoles) => {
   return (req, res, next) => {
     try {
-      const userType = req.userType;
+      const userType = req.user.userType;
       if (!allowedRoles.includes(userType)) {
         throw new ForbiddenError(MESSAGES.AUTH.COMMON.FORBIDDEN);
       }
