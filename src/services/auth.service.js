@@ -23,14 +23,14 @@ class AuthService {
 
     const hashPassword = await bcrypt.hash(
       createUser.password,
-      parseInt(HASH_SALT_ROUNDS)
+      parseInt(HASH_SALT_ROUNDS),
     );
     const newUser = await this.userRepository.createUser(
       createUser.email,
       hashPassword,
       createUser.nickName,
       profilePictureUrl,
-      createUser.userType
+      createUser.userType,
     );
 
     const { userId, email, nickName, createdAt, updatedAt } = newUser;
@@ -47,12 +47,16 @@ class AuthService {
   signIn = async (loginUser) => {
     const user = await this.userRepository.findOne(loginUser.email);
     if (!user) {
-      throw new UnauthorizedError(MESSAGES.AUTH.COMMON.INVALID_ACCOUNT_INFORMATION);
+      throw new UnauthorizedError(
+        MESSAGES.AUTH.COMMON.INVALID_ACCOUNT_INFORMATION,
+      );
     }
 
     const match = await bcrypt.compare(loginUser.password, user.password);
     if (!match) {
-      throw new UnauthorizedError(MESSAGES.AUTH.COMMON.INVALID_ACCOUNT_INFORMATION);
+      throw new UnauthorizedError(
+        MESSAGES.AUTH.COMMON.INVALID_ACCOUNT_INFORMATION,
+      );
     }
 
     const accessToken = jwt.sign(
@@ -63,7 +67,7 @@ class AuthService {
       ENV.ACCESS_KEY,
       {
         expiresIn: ACCESS_TOKEN_EXPIRES_IN,
-      }
+      },
     );
 
     const refreshToken = jwt.sign(
@@ -74,7 +78,7 @@ class AuthService {
       ENV.REFRESH_KEY,
       {
         expiresIn: REFRESH_TOKEN_EXPIRES_IN,
-      }
+      },
     );
 
     await this.authRepository.updateOrCreateToken(user.userId, refreshToken);

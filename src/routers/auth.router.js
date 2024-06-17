@@ -15,7 +15,12 @@ const authService = new AuthService(authRepository, userRepository);
 const authController = new AuthController(authService);
 
 /* 회원가입 API */
-authRouter.post('/sign-up',imageUploader.single('profilePicture'), userCreateSchema, authController.signUp);
+authRouter.post(
+  '/sign-up',
+  imageUploader.single('profilePicture'),
+  userCreateSchema,
+  authController.signUp,
+);
 /* 로그인 API */
 authRouter.post('/sign-in', userLoginSchema, authController.signIn);
 

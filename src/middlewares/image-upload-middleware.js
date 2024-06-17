@@ -28,7 +28,7 @@ const imageUploader = multer({
     }
 
     callback(null, true);
-  }
+  },
 });
 
 const uploadToS3 = async (file) => {

@@ -22,7 +22,8 @@ class UserService {
     if (!user) {
       throw new NotFoundError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
     }
-    const { email, nickName, userType, profilePicture, createdAt, updatedAt } = user;
+    const { email, nickName, userType, profilePicture, createdAt, updatedAt } =
+      user;
     return {
       email,
       nickName,
@@ -56,13 +57,13 @@ class UserService {
     const accessToken = jwt.sign(
       { userId: user.userId, userType: user.userType },
       ENV.ACCESS_KEY,
-      { expiresIn: ACCESS_TOKEN_EXPIRES_IN }
+      { expiresIn: ACCESS_TOKEN_EXPIRES_IN },
     );
 
     const refreshToken = jwt.sign(
       { userId: user.userId, userType: user.userType },
       ENV.REFRESH_KEY,
-      { expiresIn: REFRESH_TOKEN_EXPIRES_IN }
+      { expiresIn: REFRESH_TOKEN_EXPIRES_IN },
     );
 
     await this.authRepository.updateOrCreateToken(user.userId, refreshToken);
@@ -91,7 +92,6 @@ class UserService {
       updatedAt,
     };
   };
-
 }
 
 export default UserService;

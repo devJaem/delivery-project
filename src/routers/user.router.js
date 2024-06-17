@@ -3,7 +3,7 @@ import UserController from '../controllers/user.controller.js';
 import UserService from '../services/user.service.js';
 import UserRepository from '../repositories/user.repository.js';
 import AuthRepository from '../repositories/auth.repository.js';
-import { userUpdateSchema } from '../middlewares/vaildators/update.user.validation.middleware.js'
+import { userUpdateSchema } from '../middlewares/vaildators/update.user.validation.middleware.js';
 import { imageUploader } from '../middlewares/image-upload-middleware.js';
 import { authMiddleware } from '../middlewares/require-access-token.middleware.js';
 import { refreshMiddleware } from '../middlewares/require-refresh-token.middleware.js';
@@ -19,7 +19,7 @@ const userController = new UserController(userService);
 userRouter.get(
   '/me',
   authMiddleware(userRepository),
-  userController.getMyProfile
+  userController.getMyProfile,
 );
 
 /* 내 정보 수정 API */
@@ -28,27 +28,24 @@ userRouter.patch(
   authMiddleware(userRepository),
   imageUploader.single('profilePicture'),
   userUpdateSchema,
-  userController.updateMyProfile
+  userController.updateMyProfile,
 );
 
 /* 사용자 정보 조회 API */
-userRouter.get(
-  '/:userId',
-  userController.getUserProfile
-);
+userRouter.get('/:userId', userController.getUserProfile);
 
 /* RefreshToken 재발급 API */
 userRouter.post(
   '/token',
   refreshMiddleware(userRepository, authRepository),
-  userController.refreshToken
+  userController.refreshToken,
 );
 
 /* 로그아웃 API */
 userRouter.get(
   '/logout',
   authMiddleware(userRepository),
-  userController.logout
+  userController.logout,
 );
 
 export default userRouter;
