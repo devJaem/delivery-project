@@ -3,7 +3,6 @@ import authRouter from './auth.router.js';
 import usersRouter from './user.router.js';
 import menuRouter from './menu.router.js';
 import restaurantRouter from './restaurant.router.js';
-import menuRouter from './menu.router.js';
 
 const route = express.Router();
 
