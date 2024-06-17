@@ -20,13 +20,16 @@ class RestaurantRepository {
     }
     // 생성
     createRestaurant = async (user, createrestaurant) => {
-        const { name, address, category, description } = createrestaurant;
+        console.log("----")
+        console.log(createrestaurant);
+        const { name, address, category, description, restaurantPicture } = createrestaurant;
         const restaurant = await this.prisma.Restaurant.create({
             data: {
                 name,
                 address,
                 category,
                 description,
+                restaurantPicture,
                 owner: {
                     connect: {
                         userId: user.userId,
@@ -38,7 +41,7 @@ class RestaurantRepository {
     }
     // 수정
     putRestaurant = async (restaurantId, user, changeRestaurant) => {
-        const { name, address, category, description } = changeRestaurant;
+        const { name, address, category, description, restaurantPicture } = changeRestaurant;
         const restaurant = await this.prisma.Restaurant.update({
             where: {
                 restaurantId: +restaurantId,
@@ -49,6 +52,7 @@ class RestaurantRepository {
                 ...(address && { address }),
                 ...(category && { category }),
                 ...(description && { description }),
+                ...(restaurantPicture && { restaurantPicture })
             },
         })
         return restaurant

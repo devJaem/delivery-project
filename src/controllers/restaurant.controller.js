@@ -38,9 +38,11 @@ class RestaurantController {
     createRestaurant = async (req, res, next) => {
         try {
             const user = req.user;
-            const createrestaurant = req.body;
-            const profilePictureUrl = req.file ? await uploadToS3(req.file) : undefined;
-            const restaurant = await this.restaurantService.createRestaurant(user, createrestaurant, profilePictureUrl);
+            const restaurantPictureUrl = req.file ? await uploadToS3(req.file) : undefined;
+            const createrestaurant = { ...req.body, restaurantPictureUrl };
+            console.log("zzzzzzzz");
+            console.log(createrestaurant);
+            const restaurant = await this.restaurantService.createRestaurant(user, createrestaurant);
             return res.status(HTTP_STATUS.CREATED).json({
                 status: HTTP_STATUS.CREATED,
                 message: MESSAGES.RESTAURANT.CREATE.SUCCEED,
@@ -55,9 +57,9 @@ class RestaurantController {
         try {
             const { restaurantId } = req.params;
             const user = req.user;
-            const changeRestaurant = req.body;
-            const profilePictureUrl = req.file ? await uploadToS3(req.file) : undefined;
-            const restaurant = await this.restaurantService.putRestaurant(restaurantId, user, changeRestaurant, profilePictureUrl);
+            const restaurantPictureUrl = req.file ? await uploadToS3(req.file) : undefined;
+            const changeRestaurant = { ...req.body, restaurantPicture: restaurantPictureUrl }
+            const restaurant = await this.restaurantService.putRestaurant(restaurantId, user, changeRestaurant);
             return res.status(HTTP_STATUS.OK).json({
                 status: HTTP_STATUS.OK,
                 message: MESSAGES.RESTAURANT.UPDATE.SUCCEED,
