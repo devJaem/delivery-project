@@ -6,6 +6,7 @@ class RestaurantController {
     constructor(restaurantService) {
         this.restaurantService = restaurantService;
     }
+
     // 목록 조회
     getAllRestaurant = async (req, res, next) => {
         try {
@@ -85,6 +86,7 @@ class RestaurantController {
             next(err);
         }
     }
-}
+};
+
 
 export default RestaurantController;

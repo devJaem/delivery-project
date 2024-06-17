@@ -42,8 +42,38 @@ class MenuRepository {
         restaurant: {
           select: {
             name: true,
+            ownerId: true,
           },
         },
+      },
+    });
+  };
+
+  updateMenu = async (menuId, name, price, description, imageURL) => {
+    return await this.prisma.menu.update({
+      data: {
+        name,
+        price,
+        description,
+        imageURL,
+      },
+      where: {
+        menuId,
+      },
+      include: {
+        restaurant: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+  };
+
+  deleteMenu = async (menuId) => {
+    return await this.prisma.menu.delete({
+      where: {
+        menuId,
       },
     });
   };

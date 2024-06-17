@@ -24,7 +24,7 @@ class UserController {
     try {
       const { userId } = req.params;
       const user = await this.userService.getUserProfile(parseInt(userId));
-      return res.status(200).json({
+      return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
         message: MESSAGES.USERS.READ_USER.SUCCEED,
         data: user,
@@ -61,6 +61,7 @@ class UserController {
       next(error);
     }
   };
+
   updateMyProfile = async (req, res, next) => {
     try {
       const { userId } = req.user;

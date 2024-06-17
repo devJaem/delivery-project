@@ -88,4 +88,4 @@ class RestaurantService {
     }
 }
 
-export default RestaurantService
+export default RestaurantService;
