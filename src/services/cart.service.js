@@ -66,7 +66,7 @@ class CartService {
 
     return {
       ...foundCart,
-      cartItems,
+      menu: cartItems,
     };
   };
 
@@ -111,9 +111,9 @@ class CartService {
   //카트 아이템 전체 삭제
   deleteAllItems = async (userId) => {
     const cart = await this.cartRepository.getCartById(userId);
-    const deletedItems = await this.cartRepository.deleteAllItems(cart.cartId);
+    const deletedCart = await this.cartRepository.deleteAllItems(cart.cartId);
     return {
-      cartId: cart.cartId,
+      cartId: deletedCart.cartId,
     };
   };
 }

@@ -2,10 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { ENV } from '../constants/env.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
-import {
-  NotFoundError,
-  UnauthorizedError,
-} from '../errors/http.error.js';
+import { NotFoundError, UnauthorizedError } from '../errors/http.error.js';
 import {
   ACCESS_TOKEN_EXPIRES_IN,
   HASH_SALT_ROUNDS,
@@ -76,30 +73,32 @@ class UserService {
     if (updatedData.checkPassword) {
       delete updatedData.checkPassword;
     }
-    
+
     if (updatedData.password) {
-      updatedData.password = await bcrypt.hash(updatedData.password, HASH_SALT_ROUNDS);
+      updatedData.password = await bcrypt.hash(
+        updatedData.password,
+        HASH_SALT_ROUNDS,
+      );
     }
 
     if (profilePictureUrl) {
       updatedData.profilePicture = profilePictureUrl;
     }
-  
+
     const user = await this.userRepository.updateUser(userId, updatedData);
-  
+
     if (!user) {
       throw new NotFoundError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
     }
-  
+
     const { nickName, profilePicture, updatedAt } = user;
-  
+
     return {
       nickName,
       profilePicture,
       updatedAt,
     };
   };
-  
 
   deleteMyProfile = async (userId) => {
     const user = await this.userRepository.deleteUser(userId);

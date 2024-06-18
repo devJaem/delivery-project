@@ -7,13 +7,12 @@ import UserRepository from '../repositories/user.repository.js';
 import { authMiddleware } from '../middlewares/require-access-token.middleware.js';
 import { requireType } from '../middlewares/require-user-type.middleware.js';
 import { prisma } from '../utils/prisma.util.js';
-import { Prisma } from '@prisma/client';
 import { USER_TYPE } from '../constants/user.constant.js';
 
 const cartRouter = express.Router();
 const userRepository = new UserRepository(prisma);
 const menuRepository = new MenuRepository(prisma);
-const cartRepository = new CartRepository(prisma, Prisma);
+const cartRepository = new CartRepository(prisma);
 const cartService = new CartService(cartRepository, menuRepository);
 const cartController = new CartController(cartService);
 
