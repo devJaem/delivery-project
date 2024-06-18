@@ -21,12 +21,11 @@ const reviewController = new ReviewController(reviewService);
 reviewRouter.get('/:restaurantId/review', reviewController.getAllReview);
 // 리뷰 상세 조회
 reviewRouter.get(
-  '/:restaurantId/review/:reviewId',
-  reviewController.getReviewById,
+    '/:restaurantId/review/:reviewId',
+    reviewController.getReviewById,
 );
 // 리뷰 생성
 reviewRouter.post(
-<<<<<<< HEAD
     '/:restaurantId/review',
     imageUploadMiddleware('reviewPicture', 'reviewPicture'),
     authMiddleware(userRepository),
@@ -34,27 +33,19 @@ reviewRouter.post(
     createReviewSchema,
     reviewController.createReview
 )
-=======
-  '/:restaurantId/review',
-  imageUploadMiddleware('reviewPicture', 'reviewPicture'),
-  authMiddleware(userRepository),
-  requireType([USER_TYPE.CUSTOMER]),
-  reviewController.createReview,
-);
->>>>>>> develop
 // 리뷰 수정
 reviewRouter.put(
-  '/:restaurantId/review/:reviewId',
-  imageUploadMiddleware('reviewPicture', 'reviewPicture'),
-  authMiddleware(userRepository),
-  requireType([USER_TYPE.CUSTOMER]),
-  reviewController.putReview,
+    '/:restaurantId/review/:reviewId',
+    imageUploadMiddleware('reviewPicture', 'reviewPicture'),
+    authMiddleware(userRepository),
+    requireType([USER_TYPE.CUSTOMER]),
+    reviewController.putReview,
 );
 // 리뷰 삭제
 reviewRouter.delete(
-  '/:restaurantId/review/:reviewId',
-  authMiddleware(userRepository),
-  requireType([USER_TYPE.CUSTOMER]),
-  reviewController.deleteReview,
+    '/:restaurantId/review/:reviewId',
+    authMiddleware(userRepository),
+    requireType([USER_TYPE.CUSTOMER]),
+    reviewController.deleteReview,
 );
 export default reviewRouter;
