@@ -14,19 +14,21 @@ const reviewRepository = new ReviewRepository(prisma);
 const reviewService = new ReviewService(reviewRepository);
 const reviewController = new ReviewController(reviewService);
 
+// 구현다하고 restaurantId가 review 앞으로 오게 만들기
+// /restaurant/:restaurantId/review/:review
 // 리뷰 목록 조회
 reviewRouter.get(
-    '/',
+    '/:restaurantId/review',
     reviewController.getAllReview
 )
 // 리뷰 상세 조회
 reviewRouter.get(
-    '/:reviewId',
+    '/:restaurantId/review/:reviewId',
     reviewController.getReviewById
 )
 // 리뷰 생성
 reviewRouter.post(
-    '/',
+    '/:restaurantId/review',
     imageUploader.single('reviewPicture'),
     authMiddleware(userRepository),
     requireType([USER_TYPE.CUSTOMER]),
@@ -34,7 +36,7 @@ reviewRouter.post(
 )
 // 리뷰 수정
 reviewRouter.put(
-    '/:reviewId',
+    '/:restaurantId/review/:reviewId',
     imageUploader.single('reviewPicture'),
     authMiddleware(userRepository),
     requireType([USER_TYPE.CUSTOMER]),
@@ -42,8 +44,7 @@ reviewRouter.put(
 )
 // 리뷰 삭제
 reviewRouter.delete(
-    '/:reviewId',
-    imageUploader.single('reviewPicture'),
+    '/:restaurantId/review/:reviewId',
     authMiddleware(userRepository),
     requireType([USER_TYPE.CUSTOMER]),
     reviewController.deleteReview

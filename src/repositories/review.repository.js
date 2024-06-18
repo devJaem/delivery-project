@@ -3,8 +3,9 @@ class ReviewRepository {
         this.prisma = prisma;
     }
     // 리뷰 목록 조회
-    getAllReview = async (sort) => {
+    getAllReview = async (restaurantId, sort) => {
         const reviews = await this.prisma.Review.findMany({
+            where: { restaurantId: +restaurantId },
             orderBy: {
                 createdAt: sort,
             }
@@ -12,67 +13,71 @@ class ReviewRepository {
         return reviews
     }
     // 리뷰 상세 조회
-    getReviewById = async (reviewId) => {
+    getReviewById = async (restaurantId, reviewId) => {
         const review = await this.prisma.Review.findUnique({
-            where: { reviewId: +reviewId }
+            where: {
+                reviewId: +reviewId,
+                restaurantId: +restaurantId
+            }
         })
         return review
     }
     // 리뷰 생성
-    createReview = async (user, createreview) => {
+    createReview = async (restaurantId, user, createreview) => {
         const { comment, rating, reviewPicture } = createreview;
         const review = await this.prisma.Review.create({
             data: {
                 comment,
-                rating,
+                rating: +rating,
                 reviewPicture,
                 customer: {
                     connect: {
                         userId: user.userId,
                     }
                 },
-                // restaurant:{
-                //     connect:{
-                //         restaurantId: //파라미터 값으로 받아야하나?
-                //     }
-                // }
+                restaurant: {
+                    connect: {
+                        restaurantId: +restaurantId
+                    }
+                }
             }
         })
         return review;
     }
     // 리뷰 수정
-    putReview = async (reviewId, user, changereview) => {
+    putReview = async (restaurantId, reviewId, user, changereview) => {
         const { comment, rating, reviewPicture } = changereview;
         const review = await this.prisma.Review.update({
             where: {
-                // restaurantId: +restaurantId,
-                // ownerId: user.userId
+                restaurantId: +restaurantId,
+                customerId: user.userId,
+                reviewId: +reviewId
             },
             data: {
                 ...(comment && { comment }),
-                ...(rating && { rating }),
+                ...+(rating && { rating }),
                 ...(reviewPicture && { reviewPicture })
             },
         })
         return review;
     }
     // 리뷰 삭제
-    deleteReview = async (reviewId, user) => {
-        const review = await this.prisma.Restaurant.delete({
+    deleteReview = async (restaurantId, reviewId, user) => {
+        const review = await this.prisma.Review.delete({
             where: {
-                // restaurantId: +restaurantId,
-                // ownerId: user.userId
+                restaurantId: +restaurantId,
+                customerId: user.userId,
+                reviewId: +reviewId
             },
         })
         return review.reviewId;
     }
-
-    //유저의 중복 리뷰찾기
-    existedReview = async (user) => {
-        const review = await this.prisma.Review.count({
-            // where: { ownerId: user.userId },
+    // 음식점 존재 여부 파악
+    existedRestaurant = async (restaurantId) => {
+        const existedrestaurant = await this.prisma.Restaurant.findFirst({
+            where: { restaurantId: +restaurantId }
         })
-        return review;
+        return existedrestaurant;
     }
 }
 
