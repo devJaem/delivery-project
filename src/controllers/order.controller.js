@@ -14,7 +14,7 @@ class OrderController {
 
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,
-        message: MESSAGES.order.CREATE_order.SUCCEED,
+        message: '성공',
         data: order,
       });
     } catch (error) {

@@ -191,7 +191,7 @@ export const MESSAGES = {
       SUCCEED: '수량 수정이 완료되었습니다.',
     },
     READ: {
-      SUCCEED: '장바구니 조회강 완료되었습니다.',
+      SUCCEED: '장바구니 조회가 완료되었습니다.',
     },
     DELETE: {
       SUCCEED: '장바구니에서 삭제 완료되었습니다.',

@@ -9,7 +9,6 @@ import UserRepository from '../repositories/user.repository.js';
 import { authMiddleware } from '../middlewares/require-access-token.middleware.js';
 import { requireType } from '../middlewares/require-user-type.middleware.js';
 import { prisma } from '../utils/prisma.util.js';
-import { Prisma } from '@prisma/client';
 import { USER_TYPE } from '../constants/user.constant.js';
 
 const orderRouter = express.Router();
@@ -23,6 +22,7 @@ const orderService = new OrderService(
   cartRepository,
   restaurantRepository,
   menuRepository,
+  userRepository,
 );
 const orderController = new OrderController(orderService);
 

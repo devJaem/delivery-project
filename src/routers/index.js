@@ -12,7 +12,6 @@ const route = express.Router();
 route.use('/auth', authRouter);
 route.use('/users', usersRouter);
 route.use('/cart', cartRouter);
-route.use('/restaurants', [restaurantRouter, menuRouter]);
 route.use('/order', orderRouter);
 route.use('/restaurants', [restaurantRouter, menuRouter, reviewRouter]);
 
