@@ -78,7 +78,7 @@ class CartRepository {
     });
   };
 
-  // 카트 아이템 조회
+  // 카트 모든 아이템 조회
   getAllCartItem = async (cartId) => {
     return await this.prisma.cartItem.findMany({
       where: {
@@ -95,6 +95,7 @@ class CartRepository {
     });
   };
 
+  // 카트 아이템 조회
   getCartItemById = async (cartItemId) => {
     return await this.prisma.cartItem.findFirst({
       where: {
@@ -123,8 +124,26 @@ class CartRepository {
     });
   };
 
-  //카트 삭제
-  deleteCart = async (cartId) => {
+  //카트 아이템 삭제
+  deleteItem = async (cartItemId) => {
+    const deletedCartItem = await this.prisma.cartItem.delete({
+      where: {
+        cartItemId,
+      },
+      include: {
+        menu: {
+          select: {
+            name: true,
+            price: true,
+          },
+        },
+      },
+    });
+    return deletedCartItem;
+  };
+
+  //카트 아이템 모두 삭제
+  deleteAllItems = async (cartId) => {
     const deletedCartItem = await this.prisma.cartItem.deleteMany({
       where: {
         cartId,

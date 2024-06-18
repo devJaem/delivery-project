@@ -41,4 +41,20 @@ cartRouter.patch(
   cartController.updateQuantity,
 );
 
+//장바구니 메뉴 삭제
+cartRouter.delete(
+  '/item/:cartItemId',
+  authMiddleware(userRepository),
+  requireType([USER_TYPE.CUSTOMER]),
+  cartController.deleteCartItem,
+);
+
+// 장바구니 메뉴 모두 삭제
+cartRouter.delete(
+  '/item',
+  authMiddleware(userRepository),
+  requireType([USER_TYPE.CUSTOMER]),
+  cartController.deleteAllItems,
+);
+
 export default cartRouter;

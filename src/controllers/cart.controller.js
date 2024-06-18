@@ -6,6 +6,7 @@ class CartController {
     this.cartService = cartService;
   }
 
+  // 카트 아이템 생성
   createCartItem = async (req, res, next) => {
     try {
       const { userId } = req.user;
@@ -23,6 +24,7 @@ class CartController {
     }
   };
 
+  // 카트 모든 아이템 조회
   getAllCartItem = async (req, res, next) => {
     try {
       const { userId } = req.user;
@@ -39,6 +41,7 @@ class CartController {
     }
   };
 
+  // 카트 아이템 수량 수정
   updateQuantity = async (req, res, next) => {
     try {
       const { userId } = req.user;
@@ -57,6 +60,39 @@ class CartController {
       next(err);
     }
   };
-}
 
+  // 카트 아이템 삭제
+  deleteCartItem = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+      const { cartItemId } = req.params;
+
+      const cartItem = await this.cartService.deleteCartItem(+cartItemId);
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: '삭제완료',
+        data: cartItem,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  deleteAllItems = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+
+      const cartItem = await this.cartService.deleteAllItems(userId);
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: '모두삭제완료',
+        data: cartItem,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+}
 export default CartController;
