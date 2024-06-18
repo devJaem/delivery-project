@@ -179,7 +179,6 @@ export const MESSAGES = {
     DELETE: {
       SUCCEED: '리뷰 삭제에 성공했습니다.',
     },
-
   },
   CART: {
     COMMON: {
@@ -219,6 +218,10 @@ export const MESSAGES = {
       SUCCESS: '주문내역 조회에 성공했습니다.',
     },
     UPDATE_ORDER_STATUS: {
+      STATUS: {
+        REQUIRED: '주문상태를 입력해주세요.',
+        INVALID: '유효하지 않은 상태입니다.',
+      },
       SUCCESS: '주문상태 변경이 완료되었습니다.',
     },
   },

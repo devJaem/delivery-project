@@ -6,6 +6,7 @@ import MenuRepository from '../repositories/menu.repository.js';
 import RestaurantRepository from '../repositories/restaurant.repository.js';
 import CartRepository from '../repositories/cart.repository.js';
 import UserRepository from '../repositories/user.repository.js';
+import { updateOrderStatusSchema } from '../middlewares/vaildators/update-order-status.validation.middleware.js';
 import { authMiddleware } from '../middlewares/require-access-token.middleware.js';
 import { requireType } from '../middlewares/require-user-type.middleware.js';
 import { prisma } from '../utils/prisma.util.js';
@@ -53,6 +54,7 @@ orderRouter.patch(
   '/:orderId',
   authMiddleware(userRepository),
   requireType([USER_TYPE.OWNER]),
+  updateOrderStatusSchema,
   orderController.updateOrderStatus,
 );
 
