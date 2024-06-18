@@ -16,7 +16,7 @@ class CartController {
 
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
-        message: '카트담기성공',
+        message: MESSAGES.CART.CREATE.SUCCEED,
         data: cartItem,
       });
     } catch (error) {
@@ -33,7 +33,7 @@ class CartController {
 
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
-        message: '카트조회완료',
+        message: MESSAGES.CART.READ.SUCCEED,
         data: cartItem,
       });
     } catch (err) {
@@ -53,7 +53,7 @@ class CartController {
 
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
-        message: '업로드완료',
+        message: MESSAGES.CART.UPDATE.SUCCEED,
         data: cartItem,
       });
     } catch (err) {
@@ -71,7 +71,7 @@ class CartController {
 
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
-        message: '삭제완료',
+        message: MESSAGES.CART.DELETE.SUCCEED,
         data: cartItem,
       });
     } catch (err) {
@@ -87,7 +87,7 @@ class CartController {
 
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
-        message: '모두삭제완료',
+        message: MESSAGES.CART.DELETE_ALL.SUCCEED,
         data: cartItem,
       });
     } catch (err) {

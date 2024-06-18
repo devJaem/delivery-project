@@ -121,4 +121,24 @@ export const MESSAGES = {
       SUCCEED: '음식점 삭제에 성공했습니다.',
     },
   },
+  CART: {
+    COMMON: {
+      NOT_FOUND: '해당 매뉴가 존재하지 않습니다.',
+    },
+    CREATE: {
+      SUCCEED: '장바구니에 추가되었습니다.',
+    },
+    UPDATE: {
+      SUCCEED: '수량 수정이 완료되었습니다.',
+    },
+    READ: {
+      SUCCEED: '장바구니 조회강 완료되었습니다.',
+    },
+    DELETE: {
+      SUCCEED: '장바구니에서 삭제 완료되었습니다.',
+    },
+    DELETE_ALL: {
+      SUCCEED: '전체 삭제가 완료되었습니다.',
+    },
+  },
 };

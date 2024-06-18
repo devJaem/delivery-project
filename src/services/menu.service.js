@@ -130,7 +130,7 @@ class MenuService {
     }
 
     //데이터 수정
-    if (menuPicture==null) {
+    if (menuPicture == null) {
       menuPicture = menu.menuPicture;
     }
     const updatedMenu = await this.menuRepository.updateMenu(
@@ -140,7 +140,6 @@ class MenuService {
       updateMenu.description ? updateMenu.description : menu.description,
       menuPicture,
     );
-    
 
     const {
       name: menuName,

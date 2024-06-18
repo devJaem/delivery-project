@@ -1,9 +1,5 @@
 import { MESSAGES } from '../constants/message.constant.js';
-import {
-  NotFoundError,
-  BadRequestError,
-  ConflictError,
-} from '../errors/http.error.js';
+import { NotFoundError } from '../errors/http.error.js';
 
 class CartService {
   constructor(cartRepository, menuRepository) {
@@ -16,7 +12,7 @@ class CartService {
     //해당 가게가 존재하는지 검증
     const menu = await this.menuRepository.getMenuById(menuId);
     if (!menu) {
-      throw new NotFoundError('그런메뉴없음');
+      throw new NotFoundError(MESSAGES.CART.COMMON.NOT_FOUND);
     }
 
     //장바구니에 담긴 메뉴가 다른 가게의 메뉴일 경우 아이템 모두 삭제
@@ -79,7 +75,7 @@ class CartService {
     // 해당 아이템이 존재하는지 검증
     const item = await this.cartRepository.getCartItemById(cartItemId);
     if (!item) {
-      throw new NotFoundError('그런메뉴없음');
+      throw new NotFoundError(MESSAGES.CART.COMMON.NOT_FOUND);
     }
 
     const cartItem = await this.cartRepository.updateQuantity(
@@ -101,7 +97,7 @@ class CartService {
     // 해당 아이템이 존재하는지 검증
     const item = await this.cartRepository.getCartItemById(cartItemId);
     if (!item) {
-      throw new NotFoundError('그런메뉴없음');
+      throw new NotFoundError(MESSAGES.CART.COMMON.NOT_FOUND);
     }
 
     const deletedItem = await this.cartRepository.deleteItem(cartItemId);
