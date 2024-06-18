@@ -1,6 +1,6 @@
 import { HTTP_STATUS } from '../constants/http-status.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
-
+import { uploadToS3 } from '../middlewares/image-upload-middleware.js';
 class UserController {
   constructor(userService) {
     this.userService = userService;
@@ -48,6 +48,20 @@ class UserController {
     }
   };
 
+  logout = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+      const result = await this.userService.deleteToken(userId);
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.AUTH.SIGN_OUT.SUCCEED,
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   updateMyProfile = async (req, res, next) => {
     try {
       const { userId } = req.user;
@@ -64,5 +78,7 @@ class UserController {
     }
   };
 }
+
+
 
 export default UserController;

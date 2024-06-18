@@ -109,6 +109,7 @@ export const MESSAGES = {
     },
     GET_MORE: {
       SUCCEED: '음식점 상세조회에 성공했습니다.',
+      NOT_FOUND: '음식점 조회에 실패했습니다.'
     },
     CREATE: {
       SUCCEED: '음식점 생성에 성공했습니다.',
@@ -117,7 +118,13 @@ export const MESSAGES = {
       SUCCEED: '음식점 수정에 성공했습니다.',
     },
     DELETE: {
-      SUCCEED: '음식점 삭제에 성공했습니다.',
+      SUCCEED: '음식점 삭제에 성공했습니다.'
     },
-  },
+    MADE: {
+      FAILED: {
+        DUPLICATE: '2개 이상의 업종을 가질 수 없습니다.',
+        FORBIDDEN: '사장님만 접근할 수 있습니다.'
+      }
+    }
+  }
 };
