@@ -112,6 +112,7 @@ class CartService {
     };
   };
 
+  //카트 아이템 전체 삭제
   deleteAllItems = async (userId) => {
     const cart = await this.cartRepository.getCartById(userId);
     const deletedItems = await this.cartRepository.deleteAllItems(cart.cartId);
