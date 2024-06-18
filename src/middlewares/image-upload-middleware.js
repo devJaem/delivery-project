@@ -19,7 +19,7 @@ const defaultFileSizeLimit = 10 * 1024 * 1024; // 10MB
 
 const createImageUploader = ({
   fileSizeLimit = defaultFileSizeLimit,
-  allowedExtensions = defaultAllowedExtensions
+  allowedExtensions = defaultAllowedExtensions,
 }) => {
   const storage = multer.memoryStorage();
 

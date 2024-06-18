@@ -179,9 +179,7 @@ export const MESSAGES = {
     DELETE: {
       SUCCEED: '리뷰 삭제에 성공했습니다.',
     },
-
   },
-
   CART: {
     COMMON: {
       NOT_FOUND: '해당 매뉴가 존재하지 않습니다.',
@@ -193,13 +191,38 @@ export const MESSAGES = {
       SUCCEED: '수량 수정이 완료되었습니다.',
     },
     READ: {
-      SUCCEED: '장바구니 조회강 완료되었습니다.',
+      SUCCEED: '장바구니 조회가 완료되었습니다.',
     },
     DELETE: {
       SUCCEED: '장바구니에서 삭제 완료되었습니다.',
     },
     DELETE_ALL: {
       SUCCEED: '전체 삭제가 완료되었습니다.',
+    },
+  },
+  ORDER: {
+    COMMON: {
+      NOT_FOUND: '주문정보를 찾을 수 없습니다.',
+      RESTAURANT_NOT_FOUND: '해당 음식점을 찾을 수 없습니다.',
+    },
+    CREATE: {
+      SUCCESS: '주문이 완료되었습니다.',
+      EMPTY: '장바구니가 비어있습니다.',
+      MENU_NOT_FOUND: '해당 메뉴를 찾을 수 없습니다.',
+      INSUFFICIENT: '잔액이 부족합니다.',
+    },
+    GET_ORDER: {
+      SUCCESS: '주문정보 상세조회에 성공했습니다.',
+    },
+    GET_ALL_ORDER: {
+      SUCCESS: '주문내역 조회에 성공했습니다.',
+    },
+    UPDATE_ORDER_STATUS: {
+      STATUS: {
+        REQUIRED: '주문상태를 입력해주세요.',
+        INVALID: '유효하지 않은 상태입니다.',
+      },
+      SUCCESS: '주문상태 변경이 완료되었습니다.',
     },
   },
 };

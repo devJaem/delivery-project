@@ -70,9 +70,9 @@ class RestaurantRepository {
     return restaurant.restaurantId;
   };
   // 사장님의 중복 음식점 찾기
-  existedRestaurant = async (user) => {
+  existedRestaurant = async (userId) => {
     const restaurant = await this.prisma.Restaurant.count({
-      where: { ownerId: user.userId },
+      where: { ownerId: userId },
     });
     return restaurant;
   };
