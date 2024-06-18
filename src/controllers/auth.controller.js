@@ -50,7 +50,6 @@ class AuthController {
       next(error);
     }
   };
-
 }
 
 export default AuthController;

@@ -65,7 +65,9 @@ class UserController {
   updateMyProfile = async (req, res, next) => {
     try {
       const { userId } = req.user;
-      const profilePictureUrl = req.file ? await uploadToS3(req.file) : undefined;
+      const profilePictureUrl = req.file
+        ? await uploadToS3(req.file)
+        : undefined;
       const updatedData = { ...req.body, profilePicture: profilePictureUrl };
       const user = await this.userService.updateMyProfile(userId, updatedData);
       return res.status(HTTP_STATUS.OK).json({

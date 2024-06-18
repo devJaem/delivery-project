@@ -7,7 +7,11 @@ import {
   HASH_SALT_ROUNDS,
 } from '../constants/auth.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
-import { UnauthorizedError, ConflictError, BadRequestError } from '../errors/http.error.js';
+import {
+  UnauthorizedError,
+  ConflictError,
+  BadRequestError,
+} from '../errors/http.error.js';
 
 class AuthService {
   constructor(authRepository, userRepository) {
@@ -96,7 +100,6 @@ class AuthService {
     }
     return result;
   };
-  
 }
 
 export default AuthService;

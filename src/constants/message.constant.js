@@ -95,6 +95,7 @@ export const MESSAGES = {
     },
     UPDATE_MENU: {
       REQUIRED: '수정 내용을 입력해주세요.',
+      NAME: '가게 이름이 수정 전과 같습니다.',
       NOT_FOUND: '존재하지 않는 메뉴입니다.',
       SUCCEED: '메뉴 수정이 완료되었습니다.',
     },
@@ -126,5 +127,25 @@ export const MESSAGES = {
         FORBIDDEN: '사장님만 접근할 수 있습니다.'
       }
     }
-  }
+  },
+  CART: {
+    COMMON: {
+      NOT_FOUND: '해당 매뉴가 존재하지 않습니다.',
+    },
+    CREATE: {
+      SUCCEED: '장바구니에 추가되었습니다.',
+    },
+    UPDATE: {
+      SUCCEED: '수량 수정이 완료되었습니다.',
+    },
+    READ: {
+      SUCCEED: '장바구니 조회강 완료되었습니다.',
+    },
+    DELETE: {
+      SUCCEED: '장바구니에서 삭제 완료되었습니다.',
+    },
+    DELETE_ALL: {
+      SUCCEED: '전체 삭제가 완료되었습니다.',
+    },
+  },
 };
