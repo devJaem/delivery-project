@@ -107,7 +107,7 @@ class OrderRepository {
 
   //주문내역 상세조회 - by userId
   getOrderByUserId = async (userId, orderId) => {
-    const order = await this.prisma.order.findFirst({
+    return await this.prisma.order.findFirst({
       where: {
         orderId,
         customerId: userId,
@@ -133,12 +133,11 @@ class OrderRepository {
         },
       },
     });
-    return order;
   };
 
   //주문내역 상세조회 - by restaurantId
   getOrderByRestaurantId = async (restaurantId, orderId) => {
-    const order = await this.prisma.order.findFirst({
+    return await this.prisma.order.findFirst({
       where: {
         orderId,
         restaurantId,
@@ -159,12 +158,11 @@ class OrderRepository {
         },
       },
     });
-    return order;
   };
 
   //주문내역 조회 - by userId
   getAllOrdersByUserId = async (userId) => {
-    const order = await this.prisma.order.findMany({
+    return await this.prisma.order.findMany({
       where: {
         customerId: userId,
       },
@@ -189,12 +187,11 @@ class OrderRepository {
         },
       },
     });
-    return order;
   };
 
   //주문내역 조회 - by restaurantId
   getAllOrdersByRestaurantId = async (restaurantId) => {
-    const order = await this.prisma.order.findMany({
+    return await this.prisma.order.findMany({
       where: {
         restaurantId,
       },
@@ -214,7 +211,25 @@ class OrderRepository {
         },
       },
     });
-    return order;
+  };
+
+  //주문상태 수정
+  updateOrderStatus = async (orderId, orderStatus) => {
+    return await this.prisma.order.update({
+      where: {
+        orderId,
+      },
+      data: {
+        orderStatus,
+      },
+      include: {
+        restaurant: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
   };
 }
 

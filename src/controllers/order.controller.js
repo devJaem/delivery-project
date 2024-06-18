@@ -61,6 +61,29 @@ class OrderController {
       next(err);
     }
   };
+
+  //주문상태 수정
+  updateOrderStatus = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+      const { orderId } = req.params;
+      const { orderStatus } = req.body;
+
+      const order = await this.orderService.updateOrderStatus(
+        userId,
+        +orderId,
+        orderStatus,
+      );
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.ORDER.UPDATE_ORDER_STATUS.SUCCESS,
+        data: order,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 export default OrderController;

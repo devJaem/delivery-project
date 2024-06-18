@@ -38,7 +38,7 @@ class OrderService {
       cart.restaurantId,
     );
     if (!restaurant) {
-      throw new NotFoundError(MESSAGES.ORDER.CREATE.RESTAURANT_NOT_FOUND);
+      throw new NotFoundError(MESSAGES.ORDER.COMMON.RESTAURANT_NOT_FOUND);
     }
 
     // 2. 메뉴별 가격 더하기, 메뉴 없으면 에러
@@ -47,7 +47,7 @@ class OrderService {
       const menu = await this.menuRepository.getMenuById(item.menuId);
 
       if (!menu) {
-        throw new NotFoundError(MESSAGES.ORDER.CREATE.MENU_NOT_FOUND);
+        throw new BadRequestError(MESSAGES.ORDER.CREATE.MENU_NOT_FOUND);
       }
       totalPrice += item.quantity * menu.price;
     }
@@ -99,7 +99,7 @@ class OrderService {
       const restaurant =
         await this.restaurantRepository.existedRestaurant(userId);
       if (!restaurant) {
-        throw new NotFoundError(MESSAGES.ORDER.GET_ORDER.RESTAURANT_NOT_FOUND);
+        throw new NotFoundError(MESSAGES.ORDER.COMMON.RESTAURANT_NOT_FOUND);
       }
       order = await this.orderRepository.getOrderByRestaurantId(
         restaurant.restaurantId,
@@ -107,7 +107,7 @@ class OrderService {
       );
     }
     if (!order) {
-      throw new NotFoundError(MESSAGES.ORDER.GET_ORDER.NOT_FOUND);
+      throw new NotFoundError(MESSAGES.ORDER.COMMON.NOT_FOUND);
     }
     const orderItems = order.orderItems.map((cur) => {
       return {
@@ -130,7 +130,7 @@ class OrderService {
   };
 
   // 주문내역 조회
-  getAllOrders = async (userId, userType, orderId) => {
+  getAllOrders = async (userId, userType) => {
     //만약에 유저라면 본인의 주문정보 중, 사장이라면 가게의 주문정보 중 가져옴
     let order;
     if (userType == USER_TYPE.CUSTOMER) {
@@ -139,7 +139,7 @@ class OrderService {
       const restaurant =
         await this.restaurantRepository.existedRestaurant(userId);
       if (!restaurant) {
-        throw new NotFoundError(MESSAGES.ORDER.GET_ALL_ORDER.NOT_FOUND);
+        throw new NotFoundError(MESSAGES.ORDER.COMMON.NOT_FOUND);
       }
       order = await this.orderRepository.getAllOrdersByRestaurantId(
         restaurant.restaurantId,
@@ -166,6 +166,35 @@ class OrderService {
       };
     });
     return order;
+  };
+
+  //주문상태 수정
+  updateOrderStatus = async (userId, orderId, orderStatus) => {
+    const restaurant =
+      await this.restaurantRepository.existedRestaurant(userId);
+    if (!restaurant) {
+      throw new NotFoundError(MESSAGES.ORDER.COMMON.RESTAURANT_NOT_FOUND);
+    }
+    const order = await this.orderRepository.getOrderByRestaurantId(
+      restaurant.restaurantId,
+      orderId,
+    );
+
+    if (!order) {
+      throw new NotFoundError(MESSAGES.ORDER.COMMON.NOT_FOUND);
+    }
+    const updatedOrder = await this.orderRepository.updateOrderStatus(
+      orderId,
+      orderStatus,
+    );
+    return {
+      orderId: updatedOrder.orderId,
+      customerId: updatedOrder.customerId,
+      restaurantId: updatedOrder.restaurantId,
+      restaurantName: updatedOrder.restaurant.name,
+      totalPrice: updatedOrder.totalPrice,
+      orderStatus: updatedOrder.orderStatus,
+    };
   };
 }
 

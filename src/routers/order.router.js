@@ -48,4 +48,12 @@ orderRouter.get(
   orderController.getAllOrders,
 );
 
+// 주문 상태 수정
+orderRouter.patch(
+  '/:orderId',
+  authMiddleware(userRepository),
+  requireType([USER_TYPE.OWNER]),
+  orderController.updateOrderStatus,
+);
+
 export default orderRouter;

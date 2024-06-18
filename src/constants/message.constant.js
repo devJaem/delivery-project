@@ -178,22 +178,24 @@ export const MESSAGES = {
     },
   },
   ORDER: {
+    COMMON: {
+      NOT_FOUND: '주문정보를 찾을 수 없습니다.',
+      RESTAURANT_NOT_FOUND: '해당 음식점을 찾을 수 없습니다.',
+    },
     CREATE: {
       SUCCESS: '주문이 완료되었습니다.',
       EMPTY: '장바구니가 비어있습니다.',
-      RESTAURANT_NOT_FOUND: '해당 음식점을 찾을 수 없습니다.',
       MENU_NOT_FOUND: '해당 메뉴를 찾을 수 없습니다.',
       INSUFFICIENT: '잔액이 부족합니다.',
     },
     GET_ORDER: {
-      NOT_FOUND: '주문정보를 찾을 수 없습니다.',
-      RESTAURANT_NOT_FOUND: '해당 음식점을 찾을 수 없습니다.',
       SUCCESS: '주문정보 상세조회에 성공했습니다.',
     },
     GET_ALL_ORDER: {
-      NOT_FOUND: '주문정보를 찾을 수 없습니다.',
-      RESTAURANT_NOT_FOUND: '해당 음식점을 찾을 수 없습니다.',
       SUCCESS: '주문내역 조회에 성공했습니다.',
+    },
+    UPDATE_ORDER_STATUS: {
+      SUCCESS: '주문상태 변경이 완료되었습니다.',
     },
   },
 };
