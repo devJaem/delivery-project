@@ -14,22 +14,20 @@ const s3 = new S3Client({
   },
 });
 
-const allowedExtensions = ['.png', '.jpg', '.jpeg', '.bmp'];
+const defaultAllowedExtensions = ['.png', '.jpg', '.jpeg', '.bmp'];
+const defaultFileSizeLimit = 10 * 1024 * 1024; // 10MB
 
-const storage = multer.memoryStorage();
-
-const createImageUploader = ({
-  fileSizeLimit = 10 * 1024 * 1024,
-  allowedExtensions = ['.png', '.jpg', '.jpeg', '.bmp'],
+const createImageUploader = ({ 
+  fileSizeLimit = defaultFileSizeLimit,
+  allowedExtensions = defaultAllowedExtensions 
 }) => {
+  const storage = multer.memoryStorage();
+
   return multer({
     storage,
-    limits: {
-      fileSize: fileSizeLimit,
-    },
+    limits: { fileSize: fileSizeLimit },
     fileFilter: (req, file, callback) => {
       const extension = path.extname(file.originalname).toLowerCase();
-
       if (!allowedExtensions.includes(extension)) {
         return callback(
           new BadRequestError(MESSAGES.S3.WRONG_EXTENSION),
@@ -56,14 +54,13 @@ const uploadToS3 = async (file, directory) => {
     await s3.send(new PutObjectCommand(uploadParams));
     return `https://${ENV.AWS_BUCKET_NAME}.s3.${ENV.AWS_REGION}.amazonaws.com/${key}`;
   } catch (error) {
-    console.error('Error uploading file to S3:', error);
     throw new InternalServerError(MESSAGES.S3.UPLOADING_FAIL);
   }
 };
 
 const imageUploadMiddleware = (fieldName, directory) => (req, res, next) => {
   const upload = createImageUploader({}).single(fieldName);
-
+  
   upload(req, res, async (err) => {
     if (err) {
       return next(err);
@@ -77,9 +74,8 @@ const imageUploadMiddleware = (fieldName, directory) => (req, res, next) => {
         return next(uploadError);
       }
     }
-
     next();
   });
 };
 
-export { imageUploadMiddleware, uploadToS3 };
+export { imageUploadMiddleware };
