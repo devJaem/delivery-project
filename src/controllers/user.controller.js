@@ -1,6 +1,6 @@
 import { HTTP_STATUS } from '../constants/http-status.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
-import { uploadToS3 } from '../middlewares/image-upload-middleware.js';
+
 class UserController {
   constructor(userService) {
     this.userService = userService;
@@ -52,13 +52,9 @@ class UserController {
     try {
       const { userId } = req.user;
       const updatedData = req.body;
+      const profilePictureUrl = req.body.profilePicture;
 
-      if (req.file) {
-        const profilePictureUrl = await uploadToS3(req.file);
-        updatedData.profilePicture = profilePictureUrl; // 프로필 사진 URL을 요청 본문에 추가
-      }
-
-      const user = await this.userService.updateMyProfile(userId, updatedData);
+      const user = await this.userService.updateMyProfile(userId, updatedData, profilePictureUrl);
 
       res.status(200).json({
         status: HTTP_STATUS.OK,

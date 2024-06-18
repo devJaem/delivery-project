@@ -1,6 +1,5 @@
 import { HTTP_STATUS } from '../constants/http-status.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
-import { uploadToS3 } from '../middlewares/image-upload-middleware.js';
 
 class AuthController {
   constructor(authService) {
@@ -10,7 +9,8 @@ class AuthController {
   signUp = async (req, res, next) => {
     try {
       const createUser = req.body;
-      const profilePictureUrl = req.file ? await uploadToS3(req.file) : null;
+      const profilePictureUrl = req.body.profilePicture;
+      
       const user = await this.authService.signUp(createUser, profilePictureUrl);
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,

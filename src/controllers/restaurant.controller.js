@@ -1,6 +1,5 @@
 import { HTTP_STATUS } from '../constants/http-status.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
-import { uploadToS3 } from '../middlewares/image-upload-middleware.js';
 
 class RestaurantController {
   constructor(restaurantService) {

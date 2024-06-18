@@ -1,6 +1,6 @@
 import express from 'express';
 import { createMenuSchema } from '../middlewares/vaildators/create-menu.validation.middleware.js';
-import { imageUploader } from '../middlewares/image-upload-middleware.js';
+import { imageUploadMiddleware } from '../middlewares/image-upload-middleware.js';
 import MenuController from '../controllers/menu.controller.js';
 import MenuService from '../services/menu.service.js';
 import MenuRepository from '../repositories/menu.repository.js';
@@ -23,7 +23,7 @@ menuRouter.post(
   '/:restaurantId/menu',
   authMiddleware(userRepository),
   requireType([USER_TYPE.OWNER]),
-  imageUploader.single('menuImage'),
+  imageUploadMiddleware('menuImage', 'menu'),
   createMenuSchema,
   menuController.createMenu,
 );
@@ -47,7 +47,7 @@ menuRouter.patch(
   '/menu/:menuId',
   authMiddleware(userRepository),
   requireType([USER_TYPE.OWNER]),
-  imageUploader.single('menuImage'),
+  imageUploadMiddleware('menuImage', 'menu'),
   menuController.updateMenu,
 );
 
