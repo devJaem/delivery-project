@@ -29,6 +29,10 @@ export const userUpdateSchema = async (req, res, next) => {
       nickName: Joi.string().optional().empty('').messages({
         'any.required': MESSAGES.AUTH.COMMON.NICKNAME.REQUIRED,
       }),
+
+      profilePicture: Joi.string()
+      .uri()
+      .optional(),
     }).with('password', 'checkPassword'); // password와 checkPassword가 함께 존재해야 함
 
     await userSchema.validateAsync(req.body);
