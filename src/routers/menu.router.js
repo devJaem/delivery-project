@@ -11,6 +11,7 @@ import { requireType } from '../middlewares/require-user-type.middleware.js';
 import { prisma } from '../utils/prisma.util.js';
 import { USER_TYPE } from '../constants/user.constant.js';
 
+
 const menuRouter = express.Router();
 const userRepository = new UserRepository(prisma);
 const restaurantRepository = new RestaurantRepository(prisma);

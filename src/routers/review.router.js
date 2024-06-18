@@ -8,6 +8,7 @@ import { prisma } from '../utils/prisma.util.js';
 import { authMiddleware } from '../middlewares/require-access-token.middleware.js';
 import { USER_TYPE } from '../constants/user.constant.js';
 import { imageUploadMiddleware } from '../middlewares/image-upload-middleware.js';
+import { createReviewSchema } from '../middlewares/vaildators/create-review.validation.middleware.js'
 const reviewRouter = express.Router();
 const userRepository = new UserRepository(prisma);
 const reviewRepository = new ReviewRepository(prisma);
@@ -32,6 +33,7 @@ reviewRouter.post(
     imageUploadMiddleware('reviewPicture', 'reviewPicture'),
     authMiddleware(userRepository),
     requireType([USER_TYPE.CUSTOMER]),
+    createReviewSchema,
     reviewController.createReview
 )
 // 리뷰 수정

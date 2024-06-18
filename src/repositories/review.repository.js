@@ -55,7 +55,7 @@ class ReviewRepository {
             },
             data: {
                 ...(comment && { comment }),
-                ...+(rating && { rating }),
+                ...(rating && { rating: +rating }),
                 ...(reviewPicture && { reviewPicture })
             },
         })
