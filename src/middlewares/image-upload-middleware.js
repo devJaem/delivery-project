@@ -17,9 +17,9 @@ const s3 = new S3Client({
 const defaultAllowedExtensions = ['.png', '.jpg', '.jpeg', '.bmp'];
 const defaultFileSizeLimit = 10 * 1024 * 1024; // 10MB
 
-const createImageUploader = ({ 
+const createImageUploader = ({
   fileSizeLimit = defaultFileSizeLimit,
-  allowedExtensions = defaultAllowedExtensions 
+  allowedExtensions = defaultAllowedExtensions
 }) => {
   const storage = multer.memoryStorage();
 
@@ -60,7 +60,7 @@ const uploadToS3 = async (file, directory) => {
 
 const imageUploadMiddleware = (fieldName, directory) => (req, res, next) => {
   const upload = createImageUploader({}).single(fieldName);
-  
+
   upload(req, res, async (err) => {
     if (err) {
       return next(err);
@@ -78,4 +78,4 @@ const imageUploadMiddleware = (fieldName, directory) => (req, res, next) => {
   });
 };
 
-export { imageUploadMiddleware };
+export { imageUploadMiddleware, uploadToS3 };
