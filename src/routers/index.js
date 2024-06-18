@@ -4,6 +4,7 @@ import usersRouter from './user.router.js';
 import cartRouter from './cart.router.js';
 import menuRouter from './menu.router.js';
 import restaurantRouter from './restaurant.router.js';
+import orderRouter from './order.router.js';
 
 const route = express.Router();
 
@@ -11,5 +12,6 @@ route.use('/auth', authRouter);
 route.use('/users', usersRouter);
 route.use('/cart', cartRouter);
 route.use('/restaurants', [restaurantRouter, menuRouter]);
+route.use('/order', orderRouter);
 
 export default route;
