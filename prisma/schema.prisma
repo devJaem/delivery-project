@@ -30,8 +30,8 @@ model Cart {
   restaurantId  Int
   userId        Int          @unique
   createdAt     DateTime     @default(now())
-  restaurant    Restaurant   @relation(fields: [restaurantId], references: [restaurantId])
-  user          User         @relation(fields: [userId], references: [userId])
+  restaurant    Restaurant   @relation(fields: [restaurantId], references: [restaurantId], onDelete: Cascade)
+  user          User         @relation(fields: [userId], references: [userId], onDelete: Cascade)
   cartItems     CartItem[]
 }
 
@@ -41,8 +41,8 @@ model CartItem {
   menuId       Int
   quantity     Int
   createdAt    DateTime     @default(now())
-  cart         Cart         @relation(fields: [cartId], references: [cartId])
-  menu         Menu         @relation(fields: [menuId], references: [menuId])
+  cart         Cart         @relation(fields: [cartId], references: [cartId], onDelete: Cascade)
+  menu         Menu         @relation(fields: [menuId], references: [menuId], onDelete: Cascade)
   @@unique([cartId, menuId])
 }
 
@@ -56,7 +56,7 @@ model Restaurant {
   restaurantPicture String?
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
-  owner          User         @relation(fields: [ownerId], references: [userId])
+  owner          User         @relation(fields: [ownerId], references: [userId], onDelete: Cascade)
   menus          Menu[]
   orders         Order[]
   reviews        Review[]
@@ -74,8 +74,8 @@ model Menu {
   description   String?
   menuPicture   String?
   createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  restaurant    Restaurant     @relation(fields: [restaurantId], references: [restaurantId])
+  updatedAt     DateTime       @default(now())
+  restaurant    Restaurant     @relation(fields: [restaurantId], references: [restaurantId], onDelete: Cascade)
   orderItems    OrderItem[]
   cartItems     CartItem[]
   
@@ -89,8 +89,8 @@ model Order {
   totalPrice    Int
   orderStatus   OrderStatus
   createdAt     DateTime       @default(now())
-  customer      User           @relation(fields: [customerId], references: [userId])
-  restaurant    Restaurant     @relation(fields: [restaurantId], references: [restaurantId])
+  customer      User           @relation(fields: [customerId], references: [userId], onDelete: Cascade)
+  restaurant    Restaurant     @relation(fields: [restaurantId], references: [restaurantId], onDelete: Cascade)
   orderItems    OrderItem[]
 }
 
@@ -101,8 +101,8 @@ model OrderItem {
   quantity      Int
   price         Int
   createdAt     DateTime       @default(now())
-  order         Order          @relation(fields: [orderId], references: [orderId])
-  menu          Menu           @relation(fields: [menuId], references: [menuId])
+  order         Order          @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
+  menu          Menu           @relation(fields: [menuId], references: [menuId], onDelete: Cascade)
 }
 
 model Review {
@@ -113,9 +113,9 @@ model Review {
   comment       String
   reviewPicture String?
   createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  customer      User         @relation(fields: [customerId], references: [userId])
-  restaurant    Restaurant   @relation(fields: [restaurantId], references: [restaurantId])
+  updatedAt     DateTime     @default(now())
+  customer      User         @relation(fields: [customerId], references: [userId], onDelete: Cascade)
+  restaurant    Restaurant   @relation(fields: [restaurantId], references: [restaurantId], onDelete: Cascade)
 }
 
 model Notification {
@@ -126,8 +126,8 @@ model Notification {
   message         String
   isRead          Boolean
   createdAt       DateTime   @default(now())
-  user            User       @relation(fields: [userId], references: [userId])
-  restaurant      Restaurant @relation(fields: [restaurantId], references: [restaurantId])
+  user            User       @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  restaurant      Restaurant @relation(fields: [restaurantId], references: [restaurantId], onDelete: Cascade)
 }
 
 model RefreshToken {
@@ -135,7 +135,7 @@ model RefreshToken {
   userId         Int
   refreshToken   String    @unique
   createdAt      DateTime  @default(now())
-  user           User      @relation(fields: [userId], references: [userId])
+  user           User      @relation(fields: [userId], references: [userId], onDelete: Cascade)
 }
 
 enum UserType {
@@ -148,3 +148,4 @@ enum OrderStatus {
   DELIVERING
   COMPLETED
 }
+

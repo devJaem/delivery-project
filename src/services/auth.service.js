@@ -98,7 +98,7 @@ class AuthService {
     if (!result) {
       throw new BadRequestError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
     }
-    return result;
+    return { userId };
   };
 }
 
