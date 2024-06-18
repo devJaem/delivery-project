@@ -60,6 +60,8 @@ export const MESSAGES = {
       SUCCEED: '내 정보 수정에 성공했습니다.',
       FAIL: '변경할수 없는 정보입니다.',
     },
+    DELETE_ME: {
+      SUCCEED: '회원탈퇴가 완료 되었습니다.'},
     READ_USER: {
       SUCCEED: '사용자 정보 조회에 성공했습니다.',
     },

@@ -34,6 +34,12 @@ class UserRepository {
       data: updateData,
     });
   };
+
+  deleteUser = async (userId) => {
+    return await this.prisma.user.delete({
+      where: { userId: userId },
+    });
+  };
 }
 
 export default UserRepository;

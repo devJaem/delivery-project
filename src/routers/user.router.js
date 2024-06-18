@@ -22,15 +22,6 @@ userRouter.get(
   userController.getMyProfile,
 );
 
-/* 내 정보 수정 API */
-userRouter.patch(
-  '/me',
-  authMiddleware(userRepository),
-  imageUploader.single('profilePicture'),
-  userUpdateSchema,
-  userController.updateMyProfile,
-);
-
 /* 사용자 정보 조회 API */
 userRouter.get(
   '/:userId',
@@ -42,6 +33,23 @@ userRouter.post(
   '/token',
   refreshMiddleware(userRepository, authRepository),
   userController.refreshToken,
+);
+
+/* 내 정보 수정 API */
+userRouter.patch(
+  '/me',
+  authMiddleware(userRepository),
+  imageUploader.single('profilePicture'),
+  userUpdateSchema,
+
+  userController.updateMyProfile,
+);
+
+/* 회원 탈퇴 API */
+userRouter.delete(
+  '/me',
+  authMiddleware(userRepository),
+  userController.deleteMyProfile,
 );
 
 export default userRouter;
