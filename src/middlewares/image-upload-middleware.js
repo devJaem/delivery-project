@@ -60,7 +60,7 @@ const uploadToS3 = async (file, directory) => {
 
 const imageUploadMiddleware = (fieldName, directory) => (req, res, next) => {
   const upload = createImageUploader({}).single(fieldName);
-  
+
   upload(req, res, async (err) => {
     if (err) {
       return next(err);
@@ -79,4 +79,4 @@ const imageUploadMiddleware = (fieldName, directory) => (req, res, next) => {
   });
 };
 
-export { imageUploadMiddleware };
+export { imageUploadMiddleware, uploadToS3 };
