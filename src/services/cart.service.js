@@ -66,7 +66,7 @@ class CartService {
 
     return {
       ...foundCart,
-      cartItems,
+      menu: cartItems,
     };
   };
 
