@@ -1,6 +1,5 @@
 import { HTTP_STATUS } from '../constants/http-status.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
-import { uploadToS3 } from '../middlewares/image-upload-middleware.js';
 
 class MenuController {
   constructor(menuService) {
@@ -12,12 +11,13 @@ class MenuController {
       const { userId } = req.user;
       const { restaurantId } = req.params;
       const createMenu = req.body;
-      const imageURL = await uploadToS3(req.file);
+      const imageURL = req.body.menuImage;
+
       const menu = await this.menuService.createMenu(
         userId,
         +restaurantId,
         createMenu,
-        imageURL,
+        menuPicture,
       );
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,
@@ -68,13 +68,13 @@ class MenuController {
       const { userId } = req.user;
       const { menuId } = req.params;
       const updateMenu = req.body;
-      const imageURL = req.file ? await uploadToS3(req.file) : null;
+      const imageURL = req.body.menuImage;
 
       const menu = await this.menuService.updateMenu(
         userId,
         +menuId,
         updateMenu,
-        imageURL,
+        menuPicture,
       );
 
       return res.status(HTTP_STATUS.OK).json({

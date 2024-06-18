@@ -1,7 +1,7 @@
 import express from 'express';
 import { userCreateSchema } from '../middlewares/vaildators/sign-up.validation.middleware.js';
 import { userLoginSchema } from '../middlewares/vaildators/sign-in.validation.middleware.js';
-import { imageUploader } from '../middlewares/image-upload-middleware.js';
+import { imageUploadMiddleware } from '../middlewares/image-upload-middleware.js';
 import { authMiddleware } from '../middlewares/require-access-token.middleware.js';
 import AuthController from '../controllers/auth.controller.js';
 import AuthService from '../services/auth.service.js';
@@ -18,22 +18,18 @@ const authController = new AuthController(authService);
 /* 회원가입 API */
 authRouter.post(
   '/sign-up',
-  imageUploader.single('profilePicture'),
+  imageUploadMiddleware('profilePicture', 'profile'), // 프로필 이미지 업로드 미들웨어
   userCreateSchema,
   authController.signUp,
 );
 /* 로그인 API */
-authRouter.post(
-  '/sign-in',
-  userLoginSchema, 
-  authController.signIn
-);
+authRouter.post('/sign-in', userLoginSchema, authController.signIn);
 
 /* 로그아웃 API */
 authRouter.get(
   '/logout',
   authMiddleware(userRepository),
-  authController.logout
+  authController.logout,
 );
 
 export default authRouter;

@@ -32,7 +32,7 @@ class ReviewService {
     getReviewById = async (restaurantId, reviewId) => {
         //해당 음식점이 없을 경우
         const existedrestaurant = await this.reviewRepository.existedRestaurant(restaurantId);
-        if (!existedrestaurant) throw new NotFoundError(MESSAGES.RESTAURANT.GET_MORE.NOT_FOUND);   //에러 고치기
+        if (!existedrestaurant) throw new NotFoundError(MESSAGES.RESTAURANT.GET_MORE.NOT_FOUND);
         //해당 리뷰가 없을 시에
         const review = await this.reviewRepository.getReviewById(restaurantId, reviewId);
         if (!review) throw new NotFoundError(MESSAGES.REVIEW.GET_MORE.NOT_FOUND);
@@ -51,10 +51,7 @@ class ReviewService {
     createReview = async (restaurantId, user, createreview) => {
         //해당 음식점이 없을 경우
         const existedrestaurant = await this.reviewRepository.existedRestaurant(restaurantId);
-        if (!existedrestaurant) throw new NotFoundError(MESSAGES.RESTAURANT.GET_MORE.NOT_FOUND);   //에러 고치기
-        // const existedReview = await this.reviewRepository.existedReview(restaurantId, user);
-        // if (existedReview >= 1) throw new ConflictError(MESSAGES.REVIEW.MADE.FAILED.DUPLICATE);
-        // console.log(existedReview);
+        if (!existedrestaurant) throw new NotFoundError(MESSAGES.RESTAURANT.GET_MORE.NOT_FOUND);
         const review = await this.reviewRepository.createReview(restaurantId, user, createreview);
         return {
             reviewId: review.reviewId,
@@ -71,7 +68,7 @@ class ReviewService {
     putReview = async (restaurantId, reviewId, user, changereview) => {
         //해당 음식점이 없을 경우
         const existedrestaurant = await this.reviewRepository.existedRestaurant(restaurantId);
-        if (!existedrestaurant) throw new NotFoundError(MESSAGES.RESTAURANT.GET_MORE.NOT_FOUND);   //에러 고치기
+        if (!existedrestaurant) throw new NotFoundError(MESSAGES.RESTAURANT.GET_MORE.NOT_FOUND);
         //해당 리뷰가 없을 시에
         const reviewExisted = await this.reviewRepository.getReviewById(restaurantId, reviewId);
         if (!reviewExisted) throw new NotFoundError(MESSAGES.REVIEW.GET_MORE.NOT_FOUND);
@@ -91,7 +88,7 @@ class ReviewService {
     deleteReview = async (restaurantId, reviewId, user) => {
         //해당 음식점이 없을 경우
         const existedrestaurant = await this.reviewRepository.existedRestaurant(restaurantId);
-        if (!existedrestaurant) throw new NotFoundError(MESSAGES.RESTAURANT.GET_MORE.NOT_FOUND);   //에러 고치기
+        if (!existedrestaurant) throw new NotFoundError(MESSAGES.RESTAURANT.GET_MORE.NOT_FOUND);
         //해당 리뷰가 없을 시에
         const reviewExisted = await this.reviewRepository.getReviewById(restaurantId, reviewId);
         if (!reviewExisted) throw new NotFoundError(MESSAGES.REVIEW.GET_MORE.NOT_FOUND);
