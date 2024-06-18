@@ -82,4 +82,4 @@ const imageUploadMiddleware = (fieldName, directory) => (req, res, next) => {
   });
 };
 
-export { imageUploadMiddleware };
+export { imageUploadMiddleware, uploadToS3 };

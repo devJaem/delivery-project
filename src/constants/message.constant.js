@@ -134,6 +134,52 @@ export const MESSAGES = {
       },
     },
   },
+  REVIEW: {
+    GET_ALL: {
+      SUCCEED: '리뷰 목록조회에 성공했습니다.',
+    },
+    GET_MORE: {
+      SUCCEED: '리뷰 상세조회에 성공했습니다.',
+      NOT_FOUND: '리뷰 조회에 실패했습니다.',
+    },
+    CREATE: {
+      SUCCEED: '리뷰 생성에 성공했습니다.',
+    },
+    UPDATE: {
+      SUCCEED: '리뷰 수정에 성공했습니다.',
+    },
+    DELETE: {
+      SUCCEED: '리뷰 삭제에 성공했습니다.',
+    },
+    MADE: {
+      FAILED: {
+        DUPLICATE: '2개 이상의 리뷰를 가질 수 없습니다.',
+      },
+    },
+  },
+  REVIEW: {
+    GET_ALL: {
+      SUCCEED: '리뷰 목록조회에 성공했습니다.',
+    },
+    GET_MORE: {
+      SUCCEED: '리뷰 상세조회에 성공했습니다.',
+      NOT_FOUND: '리뷰 조회에 실패했습니다.',
+    },
+    CREATE: {
+      SUCCEED: '리뷰 생성에 성공했습니다.',
+    },
+    UPDATE: {
+      SUCCEED: '리뷰 수정에 성공했습니다.',
+    },
+    DELETE: {
+      SUCCEED: '리뷰 삭제에 성공했습니다.',
+    },
+    MADE: {
+      FAILED: {
+        DUPLICATE: '2개 이상의 리뷰를 가질 수 없습니다.',
+      },
+    },
+  },
   CART: {
     COMMON: {
       NOT_FOUND: '해당 매뉴가 존재하지 않습니다.',
