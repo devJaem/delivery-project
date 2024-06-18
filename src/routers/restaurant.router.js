@@ -21,7 +21,6 @@ restaurantRouter.get('/', restaurantController.getAllRestaurant);
 restaurantRouter.get('/:restaurantId', restaurantController.getRestaurantById);
 // 음식점 생성
 restaurantRouter.post(
-<<<<<<< HEAD
     '/',
     imageUploadMiddleware('restaurantPicture', 'restaurant'),
     authMiddleware(userRepository),
@@ -38,22 +37,6 @@ restaurantRouter.put(
     updateRestaurantSchema,
     restaurantController.putRestaurant
 )
-=======
-  '/',
-  imageUploadMiddleware('restaurantPicture', 'restaurant'),
-  authMiddleware(userRepository),
-  requireType([USER_TYPE.OWNER]),
-  restaurantController.createRestaurant,
-);
-// 음식점 수정
-restaurantRouter.put(
-  '/:restaurantId',
-  authMiddleware(userRepository),
-  imageUploadMiddleware('restaurantPicture', 'restaurant'),
-  requireType([USER_TYPE.OWNER]),
-  restaurantController.putRestaurant,
-);
->>>>>>> develop
 // 음식점 삭제
 restaurantRouter.delete(
   '/:restaurantId',
