@@ -23,15 +23,34 @@ class CartController {
     }
   };
 
-  getAllCartItemById = async (req, res, next) => {
+  getAllCartItem = async (req, res, next) => {
     try {
       const { userId } = req.user;
 
-      const cartItem = await this.cartService.getAllCartItemById(userId);
+      const cartItem = await this.cartService.getAllCartItem(userId);
 
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
         message: '카트조회완료',
+        data: cartItem,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  updateQuantity = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+      const { cartItemId, quantity } = req.params;
+      const cartItem = await this.cartService.updateQuantity(
+        +cartItemId,
+        +quantity,
+      );
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: '업로드완료',
         data: cartItem,
       });
     } catch (err) {

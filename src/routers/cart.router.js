@@ -25,12 +25,20 @@ cartRouter.post(
   cartController.createCartItem,
 );
 
-//장바구니 조회
+// 장바구니 조회
 cartRouter.get(
   '/',
   authMiddleware(userRepository),
   requireType([USER_TYPE.CUSTOMER]),
-  cartController.getAllCartItemById,
+  cartController.getAllCartItem,
+);
+
+// 장바구니 메뉴 수량 수정
+cartRouter.patch(
+  '/item/:cartItemId/:quantity',
+  authMiddleware(userRepository),
+  requireType([USER_TYPE.CUSTOMER]),
+  cartController.updateQuantity,
 );
 
 export default cartRouter;

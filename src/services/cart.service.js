@@ -40,9 +40,9 @@ class CartService {
     };
   };
 
-  getAllCartItemById = async (userId) => {
+  getAllCartItem = async (userId) => {
     const cart = await this.cartRepository.getCartById(userId);
-    const item = await this.cartRepository.getAllCartItemById(cart.cartId);
+    const item = await this.cartRepository.getAllCartItem(cart.cartId);
     const foundCart = {
       cartId: cart.cartId,
       restaurantName: cart.restaurant.name,
@@ -60,6 +60,27 @@ class CartService {
     return {
       ...foundCart,
       cartItems,
+    };
+  };
+
+  updateQuantity = async (cartItemId, quantity) => {
+    // 해당 가게가 존재하는지 검증
+    const item = await this.cartRepository.getCartItemById(cartItemId);
+    if (!item) {
+      throw new NotFoundError('그런메뉴없음');
+    }
+
+    const cartItem = await this.cartRepository.updateQuantity(
+      cartItemId,
+      quantity,
+    );
+    return {
+      cartId: cartItem.cartId,
+      cartItemId: cartItem.cartItemId,
+      menuName: cartItem.menu.name,
+      price: cartItem.menu.price,
+      quantity: cartItem.quantity,
+      createdAt: cartItem.createdAt,
     };
   };
 }

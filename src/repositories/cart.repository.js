@@ -79,10 +79,38 @@ class CartRepository {
   };
 
   // 카트 아이템 조회
-  getAllCartItemById = async (cartId) => {
+  getAllCartItem = async (cartId) => {
     return await this.prisma.cartItem.findMany({
       where: {
         cartId,
+      },
+      include: {
+        menu: {
+          select: {
+            name: true,
+            price: true,
+          },
+        },
+      },
+    });
+  };
+
+  getCartItemById = async (cartItemId) => {
+    return await this.prisma.cartItem.findFirst({
+      where: {
+        cartItemId,
+      },
+    });
+  };
+
+  // 카트 메뉴 수량 수정
+  updateQuantity = async (cartItemId, quantity) => {
+    return await this.prisma.cartItem.update({
+      where: {
+        cartItemId,
+      },
+      data: {
+        quantity,
       },
       include: {
         menu: {
