@@ -31,7 +31,7 @@ class OrderRepository {
           },
         });
 
-        //업장 포인트 증가
+        //사장 포인트 증가
         const ownerPoint = await tx.user.update({
           where: {
             userId: ownerId,
@@ -102,6 +102,62 @@ class OrderRepository {
         isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted,
       },
     );
+    return order;
+  };
+
+  //주문내역 상세조회 - CUSTOMER
+  getOrderByUserId = async (userId, orderId) => {
+    const order = await this.prisma.order.findFirst({
+      where: {
+        orderId,
+        customerId: userId,
+      },
+      include: {
+        restaurant: {
+          select: {
+            name: true,
+          },
+        },
+        orderItems: {
+          select: {
+            orderItemId: true,
+            menu: {
+              select: {
+                menuId: true,
+                name: true,
+              },
+            },
+            price: true,
+            quantity: true,
+          },
+        },
+      },
+    });
+    return order;
+  };
+
+  getOrderByRestaurantId = async (restaurantId, orderId) => {
+    const order = await this.prisma.order.findFirst({
+      where: {
+        orderId,
+        restaurantId,
+      },
+      include: {
+        restaurant: {
+          select: {
+            name: true,
+          },
+        },
+        orderItems: {
+          select: {
+            orderItemId: true,
+            menuId: true,
+            price: true,
+            quantity: true,
+          },
+        },
+      },
+    });
     return order;
   };
 }

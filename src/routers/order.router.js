@@ -34,4 +34,11 @@ orderRouter.post(
   orderController.createOrder,
 );
 
+// 주문내역 상세 조회
+orderRouter.get(
+  '/:orderId',
+  authMiddleware(userRepository),
+  orderController.getOrderById,
+);
+
 export default orderRouter;
