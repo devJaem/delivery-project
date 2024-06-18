@@ -187,7 +187,13 @@ export const MESSAGES = {
     },
     GET_ORDER: {
       NOT_FOUND: '주문정보를 찾을 수 없습니다.',
+      RESTAURANT_NOT_FOUND: '해당 음식점을 찾을 수 없습니다.',
       SUCCESS: '주문정보 상세조회에 성공했습니다.',
+    },
+    GET_ALL_ORDER: {
+      NOT_FOUND: '주문정보를 찾을 수 없습니다.',
+      RESTAURANT_NOT_FOUND: '해당 음식점을 찾을 수 없습니다.',
+      SUCCESS: '주문내역 조회에 성공했습니다.',
     },
   },
 };

@@ -44,6 +44,23 @@ class OrderController {
       next(err);
     }
   };
+
+  //주문내역 조회
+  getAllOrders = async (req, res, next) => {
+    try {
+      const { userId, userType } = req.user;
+
+      const order = await this.orderService.getAllOrders(userId, userType);
+
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.ORDER.GET_ALL_ORDER.SUCCESS,
+        data: order,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 export default OrderController;

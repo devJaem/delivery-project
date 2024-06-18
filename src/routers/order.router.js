@@ -41,4 +41,11 @@ orderRouter.get(
   orderController.getOrderById,
 );
 
+// 주문내역 조회
+orderRouter.get(
+  '/',
+  authMiddleware(userRepository),
+  orderController.getAllOrders,
+);
+
 export default orderRouter;

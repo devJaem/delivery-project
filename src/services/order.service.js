@@ -43,7 +43,7 @@ class OrderService {
 
     // 2. 메뉴별 가격 더하기, 메뉴 없으면 에러
     let totalPrice = 0;
-    for (let item of cartItems) {
+    for (const item of cartItems) {
       const menu = await this.menuRepository.getMenuById(item.menuId);
 
       if (!menu) {
@@ -99,7 +99,7 @@ class OrderService {
       const restaurant =
         await this.restaurantRepository.existedRestaurant(userId);
       if (!restaurant) {
-        throw new NotFoundError(MESSAGES.ORDER.GET_ORDER.NOT_FOUND);
+        throw new NotFoundError(MESSAGES.ORDER.GET_ORDER.RESTAURANT_NOT_FOUND);
       }
       order = await this.orderRepository.getOrderByRestaurantId(
         restaurant.restaurantId,
@@ -127,6 +127,45 @@ class OrderService {
       createdAt: order.createdAt,
       orderItems: orderItems,
     };
+  };
+
+  // 주문내역 조회
+  getAllOrders = async (userId, userType, orderId) => {
+    //만약에 유저라면 본인의 주문정보 중, 사장이라면 가게의 주문정보 중 가져옴
+    let order;
+    if (userType == USER_TYPE.CUSTOMER) {
+      order = await this.orderRepository.getAllOrdersByUserId(userId);
+    } else {
+      const restaurant =
+        await this.restaurantRepository.existedRestaurant(userId);
+      if (!restaurant) {
+        throw new NotFoundError(MESSAGES.ORDER.GET_ALL_ORDER.NOT_FOUND);
+      }
+      order = await this.orderRepository.getAllOrdersByRestaurantId(
+        restaurant.restaurantId,
+      );
+    }
+    order = order.map((cur) => {
+      const orderItems = cur.orderItems.map((cur) => {
+        return {
+          orderItemId: cur.orderItemId,
+          menuId: cur.menu.menuId,
+          menuName: cur.menu.name,
+          price: cur.price,
+          quantity: cur.quantity,
+        };
+      });
+      return {
+        orderId: cur.orderId,
+        restaurantId: cur.restaurantId,
+        restaurantName: cur.restaurant.name,
+        totalPrice: cur.totalPrice,
+        orderStatus: cur.orderStatus,
+        createdAt: cur.createdAt,
+        orderItems: orderItems,
+      };
+    });
+    return order;
   };
 }
 
