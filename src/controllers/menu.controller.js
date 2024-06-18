@@ -11,8 +11,8 @@ class MenuController {
       const { userId } = req.user;
       const { restaurantId } = req.params;
       const createMenu = req.body;
-      const imageURL = req.body.menuImage;
-
+      const menuPicture = req.body.menuImage;
+      console.log(menuPicture);
       const menu = await this.menuService.createMenu(
         userId,
         +restaurantId,
@@ -68,7 +68,7 @@ class MenuController {
       const { userId } = req.user;
       const { menuId } = req.params;
       const updateMenu = req.body;
-      const imageURL = req.body.menuImage;
+      const menuPicture = req.body.menuImage;
 
       const menu = await this.menuService.updateMenu(
         userId,

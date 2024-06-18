@@ -61,7 +61,7 @@ export const MESSAGES = {
       FAIL: '변경할수 없는 정보입니다.',
     },
     DELETE_ME: {
-      SUCCEED: '회원탈퇴가 완료 되었습니다.'
+      SUCCEED: '회원탈퇴가 완료 되었습니다.',
     },
     READ_USER: {
       SUCCEED: '사용자 정보 조회에 성공했습니다.',
@@ -82,6 +82,9 @@ export const MESSAGES = {
       DESCRIPTION: {
         REQUIRED: '메뉴 설명 입력해주세요.',
         MAX: '메뉴 설명은 50자 이내로 입력해주세요.',
+      },
+      MENU_IMAGE: {
+        REQUIRED: '메뉴 사진을 첨부해주세요.',
       },
     },
     CREATE_MENU: {
@@ -131,7 +134,7 @@ export const MESSAGES = {
     },
     GET_MORE: {
       SUCCEED: '음식점 상세조회에 성공했습니다.',
-      NOT_FOUND: '음식점 조회에 실패했습니다.'
+      NOT_FOUND: '음식점 조회에 실패했습니다.',
     },
     CREATE: {
       SUCCEED: '음식점 생성에 성공했습니다.',
@@ -140,14 +143,14 @@ export const MESSAGES = {
       SUCCEED: '음식점 수정에 성공했습니다.',
     },
     DELETE: {
-      SUCCEED: '음식점 삭제에 성공했습니다.'
+      SUCCEED: '음식점 삭제에 성공했습니다.',
     },
     MADE: {
       FAILED: {
         DUPLICATE: '2개 이상의 업종을 가질 수 없습니다.',
-        FORBIDDEN: '사장님만 접근할 수 있습니다.'
-      }
-    }
+        FORBIDDEN: '사장님만 접근할 수 있습니다.',
+      },
+    },
   },
   REVIEW: {
     COMMON: {
@@ -165,7 +168,7 @@ export const MESSAGES = {
     },
     GET_MORE: {
       SUCCEED: '리뷰 상세조회에 성공했습니다.',
-      NOT_FOUND: '리뷰 조회에 실패했습니다.'
+      NOT_FOUND: '리뷰 조회에 실패했습니다.',
     },
     CREATE: {
       SUCCEED: '리뷰 생성에 성공했습니다.',
@@ -174,14 +177,11 @@ export const MESSAGES = {
       SUCCEED: '리뷰 수정에 성공했습니다.',
     },
     DELETE: {
-      SUCCEED: '리뷰 삭제에 성공했습니다.'
+      SUCCEED: '리뷰 삭제에 성공했습니다.',
     },
-    MADE: {
-      FAILED: {
-        DUPLICATE: '2개 이상의 리뷰를 가질 수 없습니다.',
-      }
-    }
+
   },
+
   CART: {
     COMMON: {
       NOT_FOUND: '해당 매뉴가 존재하지 않습니다.',
