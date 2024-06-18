@@ -42,8 +42,6 @@ class OrderRepository {
             },
           },
         });
-        console.log('-------' + ownerPoint.points);
-        console.log('----------------' + customerPoint.points);
 
         //order 생성
         const order = await tx.order.create({
@@ -86,7 +84,7 @@ class OrderRepository {
           orderItems.push(item);
         }
 
-        //cart, cartItem 삭제
+        // cart, cartItem 삭제
         const deletedCartItem = await tx.cartItem.deleteMany({
           where: {
             cartId,

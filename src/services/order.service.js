@@ -42,13 +42,14 @@ class OrderService {
 
     // 2. 메뉴별 가격 더하기, 메뉴 없으면 에러
     let totalPrice = 0;
-    cartItems.forEach(async (item) => {
+    for (let item of cartItems) {
       const menu = await this.menuRepository.getMenuById(item.menuId);
-      totalPrice += item.quantity * menu.price;
+
       if (!menu) {
         throw new BadRequestError('메뉴 사라짐');
       }
-    });
+      totalPrice += item.quantity * menu.price;
+    }
 
     // 3. 포인트 있는지 확인 - 모자라면 에러
     const user = await this.userRepository.findById(userId);
