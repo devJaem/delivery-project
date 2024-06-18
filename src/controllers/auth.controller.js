@@ -10,7 +10,6 @@ class AuthController {
     try {
       const createUser = req.body;
       const profilePictureUrl = req.body.profilePicture;
-
       const user = await this.authService.signUp(createUser, profilePictureUrl);
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,

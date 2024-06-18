@@ -111,6 +111,24 @@ export const MESSAGES = {
     },
   },
   RESTAURANT: {
+    COMMON: {
+      RESTAURANT_NAME: {
+        REQUIRED: '음식점 이름을 입력해주세요.',
+        MAX: '음식점 이름은 20자 이내로 입력해주세요.',
+      },
+      ADDRESS: {
+        REQUIRED: '음식점 주소를 입력해주세요.',
+        MAX: '음식점 주소는 20자 이내로 입력해주세요.',
+      },
+      CATEGORY: {
+        REQUIRED: '음식점 분류에 대해 입력해주세요.',
+        MAX: '음식점 분류은 10자 이내로 입력해주세요.',
+      },
+      DESCRIPTION: {
+        REQUIRED: '음식점 설명에 대해 입력해주세요.',
+        MAX: '음식점 설명은 50자 이내로 입력해주세요.',
+      },
+    },
     GET_ALL: {
       SUCCEED: '음식점 목록조회에 성공했습니다.',
     },
@@ -135,6 +153,16 @@ export const MESSAGES = {
     },
   },
   REVIEW: {
+    COMMON: {
+      COMMENT_NAME: {
+        REQUIRED: '리뷰 내용을 입력해주세요.',
+        MAX: '리뷰; 내용은 50자 이내로 입력해주세요.',
+      },
+      RATING: {
+        REQUIRED: '별점을 입력해주세요.',
+        IS_NOT_NUM: '숫자로만 입력해주세요',
+      },
+    },
     GET_ALL: {
       SUCCEED: '리뷰 목록조회에 성공했습니다.',
     },
@@ -151,35 +179,9 @@ export const MESSAGES = {
     DELETE: {
       SUCCEED: '리뷰 삭제에 성공했습니다.',
     },
-    MADE: {
-      FAILED: {
-        DUPLICATE: '2개 이상의 리뷰를 가질 수 없습니다.',
-      },
-    },
+
   },
-  REVIEW: {
-    GET_ALL: {
-      SUCCEED: '리뷰 목록조회에 성공했습니다.',
-    },
-    GET_MORE: {
-      SUCCEED: '리뷰 상세조회에 성공했습니다.',
-      NOT_FOUND: '리뷰 조회에 실패했습니다.',
-    },
-    CREATE: {
-      SUCCEED: '리뷰 생성에 성공했습니다.',
-    },
-    UPDATE: {
-      SUCCEED: '리뷰 수정에 성공했습니다.',
-    },
-    DELETE: {
-      SUCCEED: '리뷰 삭제에 성공했습니다.',
-    },
-    MADE: {
-      FAILED: {
-        DUPLICATE: '2개 이상의 리뷰를 가질 수 없습니다.',
-      },
-    },
-  },
+
   CART: {
     COMMON: {
       NOT_FOUND: '해당 매뉴가 존재하지 않습니다.',
