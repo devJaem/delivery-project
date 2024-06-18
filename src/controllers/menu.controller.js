@@ -17,7 +17,7 @@ class MenuController {
         userId,
         +restaurantId,
         createMenu,
-        imageURL,
+        menuPicture,
       );
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,
@@ -74,7 +74,7 @@ class MenuController {
         userId,
         +menuId,
         updateMenu,
-        imageURL,
+        menuPicture,
       );
 
       return res.status(HTTP_STATUS.OK).json({

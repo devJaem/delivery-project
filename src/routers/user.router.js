@@ -23,10 +23,7 @@ userRouter.get(
 );
 
 /* 사용자 정보 조회 API */
-userRouter.get(
-  '/:userId',
-  userController.getUserProfile
-);
+userRouter.get('/:userId', userController.getUserProfile);
 
 /* RefreshToken 재발급 API */
 userRouter.post(

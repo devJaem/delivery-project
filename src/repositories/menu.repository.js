@@ -4,14 +4,14 @@ class MenuRepository {
   }
 
   // 메뉴 생성
-  createMenu = async (restaurantId, name, price, description, imageURL) => {
+  createMenu = async (restaurantId, name, price, description, menuPicture) => {
     return await this.prisma.menu.create({
       data: {
         restaurantId,
         name,
         price,
         description,
-        imageURL,
+        menuPicture,
       },
       include: {
         restaurant: {
@@ -49,13 +49,13 @@ class MenuRepository {
     });
   };
 
-  updateMenu = async (menuId, name, price, description, imageURL) => {
+  updateMenu = async (menuId, name, price, description, menuPicture) => {
     return await this.prisma.menu.update({
       data: {
         name,
         price,
         description,
-        imageURL,
+        menuPicture,
       },
       where: {
         menuId,

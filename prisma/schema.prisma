@@ -22,19 +22,17 @@ model User {
   reviews         Review[]
   notifications   Notification[]
   refreshTokens   RefreshToken[]
-  carts           Cart[]
+  carts           Cart?
 }
 
 model Cart {
   cartId        Int          @id @default(autoincrement())
   restaurantId  Int
-  userId        Int
+  userId        Int          @unique
   createdAt     DateTime     @default(now())
   restaurant    Restaurant   @relation(fields: [restaurantId], references: [restaurantId], onDelete: Cascade)
   user          User         @relation(fields: [userId], references: [userId], onDelete: Cascade)
   cartItems     CartItem[]
-  
-  @@unique([restaurantId, userId])
 }
 
 model CartItem {
@@ -45,6 +43,7 @@ model CartItem {
   createdAt    DateTime     @default(now())
   cart         Cart         @relation(fields: [cartId], references: [cartId], onDelete: Cascade)
   menu         Menu         @relation(fields: [menuId], references: [menuId], onDelete: Cascade)
+  @@unique([cartId, menuId])
 }
 
 model Restaurant {

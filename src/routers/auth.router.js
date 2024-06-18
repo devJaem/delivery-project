@@ -23,17 +23,13 @@ authRouter.post(
   authController.signUp,
 );
 /* 로그인 API */
-authRouter.post(
-  '/sign-in',
-  userLoginSchema, 
-  authController.signIn
-);
+authRouter.post('/sign-in', userLoginSchema, authController.signIn);
 
 /* 로그아웃 API */
 authRouter.get(
   '/logout',
   authMiddleware(userRepository),
-  authController.logout
+  authController.logout,
 );
 
 export default authRouter;

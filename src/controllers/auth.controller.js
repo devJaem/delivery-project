@@ -10,7 +10,7 @@ class AuthController {
     try {
       const createUser = req.body;
       const profilePictureUrl = req.body.profilePicture;
-      
+     
       const user = await this.authService.signUp(createUser, profilePictureUrl);
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,
@@ -37,7 +37,7 @@ class AuthController {
   };
 
   logout = async (req, res, next) => {
-    try{
+    try {
       const { userId } = req.user;
       const result = await this.authService.deleteToken(userId);
       return res.status(HTTP_STATUS.OK).json({
@@ -45,11 +45,10 @@ class AuthController {
         message: MESSAGES.AUTH.SIGN_OUT.SUCCEED,
         data: result,
       });
-    }catch (error) {
+    } catch (error) {
       next(error);
     }
   };
-
 }
 
 export default AuthController;
