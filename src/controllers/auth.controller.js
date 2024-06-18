@@ -10,6 +10,7 @@ class AuthController {
   signUp = async (req, res, next) => {
     try {
       const createUser = req.body;
+
       const profilePictureUrl = req.file ? await uploadToS3(req.file) : null;
       const user = await this.authService.signUp(createUser, profilePictureUrl);
       return res.status(HTTP_STATUS.CREATED).json({
