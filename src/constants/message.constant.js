@@ -181,7 +181,6 @@ export const MESSAGES = {
     },
 
   },
-
   CART: {
     COMMON: {
       NOT_FOUND: '해당 매뉴가 존재하지 않습니다.',
