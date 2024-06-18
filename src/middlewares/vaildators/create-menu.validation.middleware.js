@@ -18,6 +18,7 @@ export const createMenuSchema = async (req, res, next) => {
         'string.empty': MESSAGES.MENU.COMMON.DESCRIPTION.REQUIRED,
         'string.max': MESSAGES.MENU.COMMON.DESCRIPTION.MAX,
       }),
+      menuImage: Joi.string().uri().optional(),
     });
     await menuSchema.validateAsync(req.body);
     next();

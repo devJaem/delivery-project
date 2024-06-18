@@ -68,7 +68,11 @@ class UserController {
       const updatedData = req.body;
       const profilePictureUrl = req.body.profilePicture;
 
-      const user = await this.userService.updateMyProfile(userId, updatedData, profilePictureUrl);
+      const user = await this.userService.updateMyProfile(
+        userId,
+        updatedData,
+        profilePictureUrl,
+      );
 
       res.status(200).json({
         status: HTTP_STATUS.OK,
@@ -93,7 +97,5 @@ class UserController {
     }
   };
 }
-
-
 
 export default UserController;

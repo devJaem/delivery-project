@@ -9,7 +9,7 @@ class OrderController {
   createOrder = async (req, res, next) => {
     try {
       const { userId } = req.user;
-      
+
       const order = await this.orderService.createOrder(userId);
 
       return res.status(HTTP_STATUS.CREATED).json({

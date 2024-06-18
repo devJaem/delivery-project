@@ -152,8 +152,8 @@ class CartRepository {
     const deletedCart = await this.prisma.cart.delete({
       where: {
         cartId,
-      }
-    })
+      },
+    });
     return deletedCart;
   };
 }

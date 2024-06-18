@@ -3,7 +3,7 @@ import OrderController from '../controllers/order.controller.js';
 import OrderService from '../services/order.service.js';
 import OrderRepository from '../repositories/order.repository.js';
 import MenuRepository from '../repositories/menu.repository.js';
-import RestaurantRepository from '../repositories/restaurant.repository.js'
+import RestaurantRepository from '../repositories/restaurant.repository.js';
 import CartRepository from '../repositories/cart.repository.js';
 import UserRepository from '../repositories/user.repository.js';
 import { authMiddleware } from '../middlewares/require-access-token.middleware.js';
@@ -18,7 +18,12 @@ const cartRepository = new CartRepository(prisma);
 const orderRepository = new OrderRepository(prisma);
 const menuRepository = new MenuRepository(prisma);
 const restaurantRepository = new RestaurantRepository(prisma);
-const orderService = new OrderService(orderRepository, cartRepository, restaurantRepository, menuRepository);
+const orderService = new OrderService(
+  orderRepository,
+  cartRepository,
+  restaurantRepository,
+  menuRepository,
+);
 const orderController = new OrderController(orderService);
 
 // 주문
@@ -28,6 +33,5 @@ orderRouter.post(
   requireType([USER_TYPE.CUSTOMER]),
   orderController.createOrder,
 );
-
 
 export default orderRouter;

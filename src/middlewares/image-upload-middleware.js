@@ -18,11 +18,14 @@ const allowedExtensions = ['.png', '.jpg', '.jpeg', '.bmp'];
 
 const storage = multer.memoryStorage();
 
-const createImageUploader = ({ fileSizeLimit = 10 * 1024 * 1024, allowedExtensions = ['.png', '.jpg', '.jpeg', '.bmp'] }) => {
+const createImageUploader = ({
+  fileSizeLimit = 10 * 1024 * 1024,
+  allowedExtensions = ['.png', '.jpg', '.jpeg', '.bmp'],
+}) => {
   return multer({
     storage,
     limits: {
-      fileSize: fileSizeLimit
+      fileSize: fileSizeLimit,
     },
     fileFilter: (req, file, callback) => {
       const extension = path.extname(file.originalname).toLowerCase();
@@ -60,7 +63,7 @@ const uploadToS3 = async (file, directory) => {
 
 const imageUploadMiddleware = (fieldName, directory) => (req, res, next) => {
   const upload = createImageUploader({}).single(fieldName);
-  
+
   upload(req, res, async (err) => {
     if (err) {
       return next(err);

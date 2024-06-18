@@ -45,9 +45,7 @@ export const userCreateSchema = async (req, res, next) => {
           'any.required': MESSAGES.AUTH.COMMON.USER_TYPE.REQUIRED,
         }),
 
-      profilePicture: Joi.string()
-      .uri()
-      .optional(),
+      profilePicture: Joi.string().uri().optional(),
     });
 
     await userSchema.validateAsync(req.body);
