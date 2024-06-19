@@ -20,6 +20,7 @@ export const updateRestaurantSchema = async (req, res, next) => {
         'string.empty': MESSAGES.RESTAURANT.COMMON.DESCRIPTION.REQUIRED,
         'string.max': MESSAGES.RESTAURANT.COMMON.DESCRIPTION.MAX,
       }),
+
       restaurantPicture: Joi.string().uri().optional(),
     });
 
