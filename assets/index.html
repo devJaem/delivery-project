@@ -18,17 +18,18 @@
       socket.on('notification', (data) => {
         console.log('Notification received:', data.message);
         const time = new Date(data.order.createdAt);
-        console.log(time.toLocaleString())
         // 새로운 알림 요소 생성
         let orderElement = `
         <h2>${time.toLocaleString()}</h2>
         <h3> 주문정보 </h3>
-        <p> 주문자 ID: ${data.order.customerId} </p>
         <p> 주문 ID: ${data.order.orderId} </p>
+        <p> 주문자 ID: ${data.order.customerId} </p>
+        <p> 주문자 닉네임: ${data.order.customerNickName} </p>
         <p> 총액: ${data.order.totalPrice} </p>
         <h3> 주문 메뉴 </h3>`
         for (let i = 0; i < data.order.orderItems.length; i++) {
-          orderElement += `<p> ${data.order.orderItems[i].menuName} * ${data.order.orderItems[i].quantity}</p>`;
+          orderElement += `<p> ${data.order.orderItems[i].menuName}
+            &nbsp;&nbsp;*&nbsp;&nbsp;${data.order.orderItems[i].quantity}</p>`;
         }
         orderElement+=`<br>`;
 

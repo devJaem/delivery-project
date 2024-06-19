@@ -52,6 +52,11 @@ class OrderRepository {
             totalPrice,
           },
           include: {
+            customer: {
+              select: {
+                nickName: true,
+              },
+            },
             restaurant: {
               select: {
                 name: true,

@@ -83,6 +83,7 @@ class OrderService {
         order: {
           customerId: order.customerId,
           orderId: order.orderId,
+          customerNickName: order.customer.nickName,
           restaurantName: order.restaurant.name,
           orderStatus: order.orderStatus,
           createdAt: order.createdAt,
@@ -94,6 +95,7 @@ class OrderService {
       return {
         customerId: order.customerId,
         orderId: order.orderId,
+        customerNickName: order.customer.nickName,
         restaurantName: order.restaurant.name,
         orderStatus: order.orderStatus,
         createdAt: order.createdAt,
