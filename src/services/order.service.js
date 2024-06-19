@@ -13,12 +13,14 @@ class OrderService {
     restaurantRepository,
     menuRepository,
     userRepository,
+    io
   ) {
     this.orderRepository = orderRepository;
     this.cartRepository = cartRepository;
     this.restaurantRepository = restaurantRepository;
     this.menuRepository = menuRepository;
     this.userRepository = userRepository;
+    this.io = io;
   }
 
   createOrder = async (userId) => {
@@ -77,6 +79,7 @@ class OrderService {
         quantity: item.quantity,
       };
     });
+    io.emit('notification', { message: 'Order accessed!' });
     return {
       customerId: order.customerId,
       orderId: order.orderId,

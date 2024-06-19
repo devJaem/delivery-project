@@ -24,6 +24,7 @@ const orderService = new OrderService(
   restaurantRepository,
   menuRepository,
   userRepository,
+  io
 );
 const orderController = new OrderController(orderService);
 
