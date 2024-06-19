@@ -59,11 +59,15 @@ ACCESS_SECRET_KEY="key_value"
 # Refresh Token key
 REFRESH_SECRET_KEY="key_value"
 # E-mail 서비스
-email_service="gmail"
+EMAIL_SERVICE="naver"
+# SMTP 주소
+EMAIL_HOST="smtp.naver.com"
+# EMAIL PORT
+EMAIL_PORT=465
 # 메일주소
-user="mail@mail.com"
+USER_EMAIL="mail@mail.com"
 # password
-pass="password"
+USER_PASSWORD="password"
 # 사용자 키_ID
 AWS_ACCESS_KEY_ID="key_value"
 # 사용자 비밀_ID
