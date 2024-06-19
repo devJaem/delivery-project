@@ -32,4 +32,16 @@ authRouter.get(
   authController.logout,
 );
 
+/* 이메일 발송 API */
+authRouter.post(
+  '/email', 
+  authController.sendVerificationEmail
+);
+
+/* 이메일 인증 API */
+authRouter.post(
+  '/verify-email', 
+  authController.verifyEmail
+);
+
 export default authRouter;
