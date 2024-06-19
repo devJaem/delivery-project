@@ -7,9 +7,9 @@ import {
   NotFoundError,
 } from '../errors/http.error.js';
 
-const validateToken = async (token, secretKey) => {
+const validateToken = async (accessToken, secretKey) => {
   try {
-    const payload = jwt.verify(token, secretKey);
+    const payload = jwt.verify(accessToken, secretKey);
     return payload;
   } catch (err) {
     if (err.name === 'TokenExpiredError') {
@@ -24,16 +24,17 @@ const validateToken = async (token, secretKey) => {
 const authMiddleware = (userRepository) => async (req, res, next) => {
   try {
     const authorizationHeader = req.headers.authorization;
+
     if (!authorizationHeader) {
       throw new BadRequestError(MESSAGES.AUTH.COMMON.JWT.NO_TOKEN);
     }
 
-    const token = authorizationHeader.split('Bearer ')[1];
-    if (!token) {
+    const accessToken = authorizationHeader.split('Bearer ')[1];
+    if (!accessToken) {
       throw new UnauthorizedError(MESSAGES.AUTH.COMMON.JWT.NOT_SUPPORTED_TYPE);
     }
 
-    const payload = await validateToken(token, ENV.ACCESS_KEY);
+    const payload = await validateToken(accessToken, ENV.ACCESS_KEY);
     if (payload === 'expired') {
       throw new UnauthorizedError(MESSAGES.AUTH.COMMON.JWT.EXPIRED);
     } else if (payload === 'JsonWebTokenError') {
@@ -44,10 +45,7 @@ const authMiddleware = (userRepository) => async (req, res, next) => {
     if (!user) {
       throw new NotFoundError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
     }
-    req.user = {
-      ...user,
-      role: payload.role,
-    };
+    req.user = user;
 
     next();
   } catch (error) {

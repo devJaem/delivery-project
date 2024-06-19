@@ -15,14 +15,55 @@ model User {
   profilePicture  String?
   userType        UserType
   points          Int
+  emailVerified   Boolean      @default(false)
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
   restaurants     Restaurant[]
   orders          Order[]
-  dibs            Dibs[]
   reviews         Review[]
   notifications   Notification[]
   refreshTokens   RefreshToken[]
+  emailAuthCodes  EmailAuthCode[]
+  carts           Cart?
+}
+
+model EmailAuthCode {
+  emailCodeId Int      @id @default(autoincrement())
+  token       String   @unique
+  expires     DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      Int
+  user        User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+}
+
+model RefreshToken {
+  refreshTokenId Int       @id @default(autoincrement())
+  userId         Int
+  refreshToken   String    @unique
+  createdAt      DateTime  @default(now())
+  user           User      @relation(fields: [userId], references: [userId], onDelete: Cascade)
+}
+
+model Cart {
+  cartId        Int          @id @default(autoincrement())
+  restaurantId  Int
+  userId        Int          @unique
+  createdAt     DateTime     @default(now())
+  restaurant    Restaurant   @relation(fields: [restaurantId], references: [restaurantId], onDelete: Cascade)
+  user          User         @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  cartItems     CartItem[]
+}
+
+model CartItem {
+  cartItemId   Int          @id @default(autoincrement())
+  cartId       Int
+  menuId       Int
+  quantity     Int
+  createdAt    DateTime     @default(now())
+  cart         Cart         @relation(fields: [cartId], references: [cartId], onDelete: Cascade)
+  menu         Menu         @relation(fields: [menuId], references: [menuId], onDelete: Cascade)
+  @@unique([cartId, menuId])
 }
 
 model Restaurant {
@@ -32,80 +73,56 @@ model Restaurant {
   address        String
   category       String
   description    String?
+  restaurantPicture String?
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
-  owner          User         @relation(fields: [ownerId], references: [userId])
+  owner          User         @relation(fields: [ownerId], references: [userId], onDelete: Cascade)
   menus          Menu[]
   orders         Order[]
-  dibs           Dibs[]
   reviews        Review[]
   notifications  Notification[]
-}
-
-model Dibs {
-  dibsId        Int          @id @default(autoincrement())
-  customerId    Int
-  restaurantId  Int
-  islike        Boolean
-  createdAt     DateTime     @default(now())
-  customer      User         @relation(fields: [customerId], references: [userId])
-  restaurant    Restaurant   @relation(fields: [restaurantId], references: [restaurantId])
+  carts          Cart[]
+  
+  @@unique([ownerId, name])
 }
 
 model Menu {
-  menuId        Int          @id @default(autoincrement())
+  menuId        Int            @id @default(autoincrement())
   restaurantId  Int
   name          String
-  imageURL      String
   price         Int
   description   String?
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  restaurant    Restaurant   @relation(fields: [restaurantId], references: [restaurantId])
-  options       Option[]
+  menuPicture   String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @default(now())
+  restaurant    Restaurant     @relation(fields: [restaurantId], references: [restaurantId], onDelete: Cascade)
   orderItems    OrderItem[]
-}
-
-model Option {
-  optionId      Int          @id @default(autoincrement())
-  menuId        Int
-  name          String
-  description   String?
-  menu          Menu         @relation(fields: [menuId], references: [menuId])
-  selects       Select[]
-}
-
-model Select {
-  selectId      Int          @id @default(autoincrement())
-  optionId      Int
-  name          String
-  option        Option       @relation(fields: [optionId], references: [optionId])
-  orderItems    OrderItem[]
+  cartItems     CartItem[]
+  
+  @@unique([restaurantId, name])
 }
 
 model Order {
-  orderId       Int          @id @default(autoincrement())
+  orderId       Int            @id @default(autoincrement())
   customerId    Int
   restaurantId  Int
   totalPrice    Int
   orderStatus   OrderStatus
-  createdAt     DateTime     @default(now())
-  customer      User         @relation(fields: [customerId], references: [userId])
-  restaurant    Restaurant   @relation(fields: [restaurantId], references: [restaurantId])
+  createdAt     DateTime       @default(now())
+  customer      User           @relation(fields: [customerId], references: [userId], onDelete: Cascade)
+  restaurant    Restaurant     @relation(fields: [restaurantId], references: [restaurantId], onDelete: Cascade)
   orderItems    OrderItem[]
 }
 
 model OrderItem {
-  orderItemId   Int          @id @default(autoincrement())
+  orderItemId   Int            @id @default(autoincrement())
   orderId       Int
   menuId        Int
-  selectId      Int
   quantity      Int
   price         Int
-  createdAt     DateTime     @default(now())
-  order         Order        @relation(fields: [orderId], references: [orderId])
-  menu          Menu         @relation(fields: [menuId], references: [menuId])
-  select        Select       @relation(fields: [selectId], references: [selectId])
+  createdAt     DateTime       @default(now())
+  order         Order          @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
+  menu          Menu           @relation(fields: [menuId], references: [menuId], onDelete: Cascade)
 }
 
 model Review {
@@ -114,11 +131,11 @@ model Review {
   restaurantId  Int
   rating        Int
   comment       String
-  reviewImage   String?
+  reviewPicture String?
   createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  customer      User         @relation(fields: [customerId], references: [userId])
-  restaurant    Restaurant   @relation(fields: [restaurantId], references: [restaurantId])
+  updatedAt     DateTime     @default(now())
+  customer      User         @relation(fields: [customerId], references: [userId], onDelete: Cascade)
+  restaurant    Restaurant   @relation(fields: [restaurantId], references: [restaurantId], onDelete: Cascade)
 }
 
 model Notification {
@@ -129,16 +146,8 @@ model Notification {
   message         String
   isRead          Boolean
   createdAt       DateTime   @default(now())
-  user            User       @relation(fields: [userId], references: [userId])
-  restaurant      Restaurant @relation(fields: [restaurantId], references: [restaurantId])
-}
-
-model RefreshToken {
-  refreshTokenId      Int       @id @default(autoincrement())
-  userId       Int
-  refreshToken String    @unique
-  createdAt    DateTime  @default(now())
-  user         User      @relation(fields: [userId], references: [userId])
+  user            User       @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  restaurant      Restaurant @relation(fields: [restaurantId], references: [restaurantId], onDelete: Cascade)
 }
 
 enum UserType {

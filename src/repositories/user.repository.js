@@ -27,6 +27,28 @@ class UserRepository {
       },
     });
   };
+
+  updateUser = async (userId, updateData) => {
+    return await this.prisma.user.update({
+      where: { userId: userId },
+      data: updateData,
+    });
+  };
+
+  deleteUser = async (userId) => {
+    return await this.prisma.user.delete({
+      where: { userId: userId },
+    });
+  };
+
+  verifyUserEmail = async (email) => {
+    return await this.prisma.user.update({
+      where: { email: email},
+      data: {
+        emailVerified: true,
+      },
+    });
+  };
 }
 
 export default UserRepository;

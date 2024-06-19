@@ -1,11 +1,11 @@
 import { MESSAGES } from '../constants/message.constant.js';
 import { ForbiddenError } from '../errors/http.error.js';
 
-const requireRoles = (allowedRoles) => {
+const requireType = (allowedRoles) => {
   return (req, res, next) => {
     try {
-      const userRole = req.user.role;
-      if (!allowedRoles.includes(userRole)) {
+      const userType = req.user.userType;
+      if (!allowedRoles.includes(userType)) {
         throw new ForbiddenError(MESSAGES.AUTH.COMMON.FORBIDDEN);
       }
       next();
@@ -15,4 +15,4 @@ const requireRoles = (allowedRoles) => {
   };
 };
 
-export { requireRoles };
+export { requireType };
