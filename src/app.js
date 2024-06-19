@@ -17,7 +17,6 @@ const io = new Server(server);
 // socket.io에서 namespace 설정
 const order = io.of('/order');
 
-
 app.use(cors());
 app.use((req, res, next) => {
   req.io = { order }; // io 객체를 req 객체에 추가하여 라우터에서 사용할 수 있도록 함
@@ -36,13 +35,13 @@ app.get('/', async (req, res) => {
 app.use(express.static(path.join(__dirname, 'assets')));
 
 // 로그인 페이지 (알림 기능 사용시 토큰 필요 => 웹에서 로그인 과정도 필요..)
-app.get('/auth/sign-in', (req, res,next) => {
+app.get('/auth/sign-in', (req, res, next) => {
   try {
     res.sendFile(__dirname + '/assets/sign-in.html');
   } catch (err) {
     next(err);
   }
-})
+});
 
 // 주문시 사장에게 알림
 app.get('/order/owner', (req, res, next) => {

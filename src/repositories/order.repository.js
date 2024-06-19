@@ -178,6 +178,12 @@ class OrderRepository {
             name: true,
           },
         },
+        customer: {
+          select: {
+            userId: true,
+            nickName: true,
+          },
+        },
         orderItems: {
           select: {
             orderItemId: true,
@@ -208,6 +214,12 @@ class OrderRepository {
         restaurant: {
           select: {
             name: true,
+          },
+        },
+        customer: {
+          select: {
+            userId: true,
+            nickName: true,
           },
         },
         orderItems: {

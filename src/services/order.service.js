@@ -181,13 +181,18 @@ class OrderService {
         orderId: cur.orderId,
         restaurantId: cur.restaurantId,
         restaurantName: cur.restaurant.name,
+        customerId: cur.customer.userId,
+        customerNickName: cur.customer.nickName,
         totalPrice: cur.totalPrice,
         orderStatus: cur.orderStatus,
         createdAt: cur.createdAt,
         orderItems: orderItems,
       };
     });
-    return order;
+    return {
+      userId,
+      order: order,
+    };
   };
 
   //주문상태 수정
