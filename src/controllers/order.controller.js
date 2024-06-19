@@ -10,8 +10,8 @@ class OrderController {
   createOrder = async (req, res, next) => {
     try {
       const { userId } = req.user;
-
-      const order = await this.orderService.createOrder(userId);
+      const io = req.io;
+      const order = await this.orderService.createOrder(io, userId);
 
       return res.status(HTTP_STATUS.CREATED).json({
         status: HTTP_STATUS.CREATED,

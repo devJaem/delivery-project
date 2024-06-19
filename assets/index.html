@@ -1,0 +1,48 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socket.IO Notification</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      const socket = io();
+
+      // 알림을 표시할 div 요소 생성
+      const orderDiv = document.createElement('div');
+      orderDiv.id = 'notifications';
+      document.body.appendChild(orderDiv);
+
+      // 서버로부터 알림을 받을 때
+      socket.on('notification', (data) => {
+        console.log('Notification received:', data.message);
+        const time = new Date(data.order.createdAt);
+        console.log(time.toLocaleString())
+        // 새로운 알림 요소 생성
+        let orderElement = `
+        <h2>${time.toLocaleString()}</h2>
+        <h3> 주문정보 </h3>
+        <p> 주문자 ID: ${data.order.customerId} </p>
+        <p> 주문 ID: ${data.order.orderId} </p>
+        <p> 총액: ${data.order.totalPrice} </p>
+        <h3> 주문 메뉴 </h3>`
+        for (let i = 0; i < data.order.orderItems.length; i++) {
+          orderElement += `<p> ${data.order.orderItems[i].menuName} * ${data.order.orderItems[i].quantity}</p>`;
+        }
+        orderElement+=`<br>`;
+
+
+        alert(data.message);
+        // 알림을 notificationsDiv에 추가
+        orderDiv.insertAdjacentHTML("afterbegin", orderElement);
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <h1>Socket.IO Notification Example</h1>
+</body>
+
+</html>

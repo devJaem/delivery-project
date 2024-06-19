@@ -188,7 +188,7 @@ class OrderRepository {
       },
       orderBy: {
         createdAt: 'desc',
-      }
+      },
     });
   };
 
@@ -215,7 +215,7 @@ class OrderRepository {
       },
       orderBy: {
         createdAt: 'desc',
-      }
+      },
     });
   };
 
