@@ -225,4 +225,13 @@ export const MESSAGES = {
       SUCCESS: '주문상태 변경이 완료되었습니다.',
     },
   },
+  SEARCH: {
+    COMMON: {
+      REQUIRED: '검색유형과 검색내용을 입력해주세요.',
+      INVALID: '유효하지 않은 검색유형 입니다.',
+      SUCCEED: '검색을 완료했습니다',
+      MAX: '글자수 20자를 미만으로 입력해주세요'
+    },
+
+  }
 };
