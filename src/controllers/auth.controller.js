@@ -48,6 +48,33 @@ class AuthController {
       next(error);
     }
   };
+
+  sendVerificationEmail = async (req, res, next) => {
+    try {
+      const { email } = req.body;
+      await this.authService.sendVerificationEmail(email);
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.AUTH.EMAIL.SEND_SUCCESS,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  verifyEmail = async (req, res, next) => {
+    try {
+      const { token } = req.body;
+      await this.authService.verifyEmail(token);
+      return res.status(HTTP_STATUS.OK).json({
+        status: HTTP_STATUS.OK,
+        message: MESSAGES.AUTH.EMAIL.VERIFY_SUCCESS,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+  
 }
 
 export default AuthController;

@@ -40,6 +40,15 @@ class UserRepository {
       where: { userId: userId },
     });
   };
+
+  verifyUserEmail = async (email) => {
+    return await this.prisma.user.update({
+      where: { email: email},
+      data: {
+        emailVerified: true,
+      },
+    });
+  };
 }
 
 export default UserRepository;

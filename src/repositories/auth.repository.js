@@ -45,6 +45,40 @@ class AuthRepository {
       create: { userId, refreshToken },
     });
   };
+
+  upsertEmailVerification = async (userId, token, expires) => {
+    const existingToken = await this.prisma.emailAuthCode.findFirst({
+      where: { token },
+    });
+
+    if (existingToken) {
+      return await this.prisma.emailAuthCode.update({
+        where: { emailCodeId: existingToken.emailCodeId },
+        data: { token, expires },
+      });
+    } else {
+      return await this.prisma.emailAuthCode.create({
+        data: { userId, token, expires },
+      });
+    }
+  };
+
+  findEmailVerificationTokenWithUser = async (token) => {
+    return await this.prisma.emailAuthCode.findFirst({
+      where: { token },
+      include: { user: true },
+    });
+  };
+
+  deleteEmailVerificationToken = async (token) => {
+    const existingToken = await this.prisma.emailAuthCode.findFirst({
+      where: { token },
+    });
+
+    return await this.prisma.emailAuthCode.delete({
+      where: { emailCodeId: existingToken.emailCodeId },
+    });
+  }
 }
 
 export default AuthRepository;
