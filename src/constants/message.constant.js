@@ -6,11 +6,17 @@ export const MESSAGES = {
     UPLOADING_FAIL: '업로드 실패, 관리자에게 문의해 주세요.',
   },
   AUTH: {
+    EMAIL: {
+      SEND_SUCCESS: '이메일 전송 성공',
+      VERIFY_SUCCESS: '이메일 인증 성공',
+    },
+
     COMMON: {
       EMAIL: {
         REQUIRED: '이메일을 입력해 주세요.',
         INVALID_FORMAT: '이메일 형식이 올바르지 않습니다.',
         DUPLICATED: '이미 가입 된 사용자입니다.',
+        NOT_VERIFIED: '이메일 인증을 해주세요',
       },
       PASSWORD: {
         REQUIRED: '비밀번호를 입력해 주세요.',
