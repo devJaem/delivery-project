@@ -78,8 +78,9 @@ class OrderService {
           quantity: item.quantity,
         };
       });
-      io.emit('order', {
+      io.order.emit('order', {
         message: '새로운 주문이 접수되었습니다!',
+        restaurantId: order.restaurantId,
         order: {
           customerId: order.customerId,
           orderId: order.orderId,
@@ -164,6 +165,7 @@ class OrderService {
         restaurant.restaurantId,
       );
     }
+    console.log(order.length);
     order = order.map((cur) => {
       const orderItems = cur.orderItems.map((cur) => {
         return {
@@ -175,6 +177,7 @@ class OrderService {
         };
       });
       return {
+        ownerId: cur.restaurant.ownerId,
         orderId: cur.orderId,
         restaurantId: cur.restaurantId,
         restaurantName: cur.restaurant.name,

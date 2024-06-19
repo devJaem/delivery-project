@@ -174,6 +174,7 @@ class OrderRepository {
       include: {
         restaurant: {
           select: {
+            ownerId: true,
             name: true,
           },
         },
@@ -212,7 +213,12 @@ class OrderRepository {
         orderItems: {
           select: {
             orderItemId: true,
-            menuId: true,
+            menu: {
+              select: {
+                menuId: true,
+                name: true,
+              },
+            },
             price: true,
             quantity: true,
           },

@@ -6,8 +6,19 @@
   <title>Socket.IO Notification</title>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-      const socket = io();
+    document.addEventListener('DOMContentLoaded', async (event) => {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:3000/api/v1/order', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+
+      const socket = io('/order');
 
       // 알림을 표시할 div 요소 생성
       const orderDiv = document.createElement('div');
@@ -16,6 +27,9 @@
 
       // 서버로부터 알림을 받을 때
       socket.on('order', (data) => {
+        if (data.restaurantId!=1) {
+          return;
+        }
         console.log('order received:', data.message);
         const time = new Date(data.order.createdAt);
         // 새로운 알림 요소 생성
