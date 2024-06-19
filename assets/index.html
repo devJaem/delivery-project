@@ -11,12 +11,12 @@
 
       // 알림을 표시할 div 요소 생성
       const orderDiv = document.createElement('div');
-      orderDiv.id = 'notifications';
+      orderDiv.id = 'order';
       document.body.appendChild(orderDiv);
 
       // 서버로부터 알림을 받을 때
-      socket.on('notification', (data) => {
-        console.log('Notification received:', data.message);
+      socket.on('order', (data) => {
+        console.log('order received:', data.message);
         const time = new Date(data.order.createdAt);
         // 새로운 알림 요소 생성
         let orderElement = `

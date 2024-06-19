@@ -78,7 +78,7 @@ class OrderService {
           quantity: item.quantity,
         };
       });
-      io.emit('notification', {
+      io.emit('order', {
         message: '새로운 주문이 접수되었습니다!',
         order: {
           customerId: order.customerId,
