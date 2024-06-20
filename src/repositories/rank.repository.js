@@ -22,5 +22,4 @@ class RankRepository {
         return rank.revenue;
     }
 }
-
 export default RankRepository;
