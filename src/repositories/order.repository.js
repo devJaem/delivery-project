@@ -9,7 +9,6 @@ class OrderRepository {
   createOrder = async (
     customerId,
     totalPrice,
-    ownerId,
     restaurantId,
     cartItems,
     cartId,
@@ -31,32 +30,18 @@ class OrderRepository {
           },
         });
 
-        //사장 포인트 증가
-        /*
-        const ownerPoint = await tx.user.update({
-          where: {
-            userId: ownerId,
-          },
-          data: {
-            points: {
-              increment: +totalPrice,
-            },
-          },
-        });
-        */
-
         //음식점 포인트 증가
         const restaurantPoint = await tx.restaurant.update({
           where: {
             restaurantId: restaurantId,
           },
           data: {
-            revenue: {
+            revenues: {
               increment: +totalPrice,
             },
           },
           select: {
-            revenue: true,
+            revenues: true,
           },
         });
 

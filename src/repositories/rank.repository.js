@@ -6,19 +6,19 @@ class RankRepository {
     const rank = await this.prisma.Restaurant.findMany({
       take: 3,
       orderBy: {
-        revenue: 'desc', // 평점 내림차순으로 정렬
+        revenues: 'desc', // 평점 내림차순으로 정렬
       },
     });
 
     return rank;
   };
-  getHighRevenue = async () => {
+  getHighRevenues = async () => {
     const rank = await this.prisma.Restaurant.findFirst({
       orderBy: {
-        revenue: 'desc', // 평점 내림차순으로 정렬
+        revenues: 'desc', // 평점 내림차순으로 정렬
       },
     });
-    return rank.revenue;
+    return rank.revenues;
   };
 }
 
