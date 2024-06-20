@@ -238,6 +238,11 @@ export const MESSAGES = {
       SUCCEED: '검색을 완료했습니다',
       MAX: '글자수 20자를 미만으로 입력해주세요'
     },
-
+  },
+  RANK: {
+    COMMON: {
+      SUCCEED: '랭킹정보를 성공적으로 불러왔습니다',
+      NOT_FOUND: '랭킹정보가 없습니다.'
+    }
   }
 };
