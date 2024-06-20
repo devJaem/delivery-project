@@ -75,7 +75,6 @@ class RestaurantRepository {
     const restaurant = await this.prisma.Restaurant.findFirst({
       where: { ownerId: userId },
     });
-    console.log(restaurant.restaurantId);
     return restaurant;
   };
 }

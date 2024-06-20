@@ -93,15 +93,12 @@ class OrderRepository {
               price: cartItems[i].menu.price,
               quantity: cartItems[i].quantity,
             },
-            select: {
-              orderItemId: true,
+            include: {
               menu: {
                 select: {
                   name: true,
                 },
               },
-              price: true,
-              quantity: true,
             },
           });
           orderItems.push(item);
@@ -175,6 +172,11 @@ class OrderRepository {
           select: {
             orderItemId: true,
             menuId: true,
+            menu: {
+              select: {
+                name: true,
+              },
+            },
             price: true,
             quantity: true,
           },
