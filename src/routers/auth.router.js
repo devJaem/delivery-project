@@ -7,17 +7,13 @@ import AuthController from '../controllers/auth.controller.js';
 import AuthService from '../services/auth.service.js';
 import UserRepository from '../repositories/user.repository.js';
 import AuthRepository from '../repositories/auth.repository.js';
-import RankService from '../services/rank.service.js';
-import RankRepository from '../repositories/rank.repository.js';
 import { prisma } from '../utils/prisma.util.js';
 
 const authRouter = express.Router();
-const rankRepository = new RankRepository(prisma);
-const rankService = new RankService(rankRepository);
 const userRepository = new UserRepository(prisma);
 const authRepository = new AuthRepository(prisma);
 const authService = new AuthService(authRepository, userRepository);
-const authController = new AuthController(authService, rankService);
+const authController = new AuthController(authService);
 
 
 /* 회원가입 API */

@@ -26,11 +26,11 @@ class AuthController {
     try {
       const loginUser = req.body;
       const tokens = await this.authService.signIn(loginUser);
-      const ranking = await this.rankService.getRank();
+
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
         message: MESSAGES.AUTH.SIGN_IN.SUCCEED,
-        data: tokens, ranking
+        data: tokens
       });
     } catch (error) {
       next(error);

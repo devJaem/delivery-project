@@ -241,6 +241,7 @@ export const MESSAGES = {
   },
   RANK: {
     COMMON: {
+      SUCCEED: '랭킹정보를 성공적으로 불러왔습니다',
       NOT_FOUND: '랭킹정보가 없습니다.'
     }
   }
