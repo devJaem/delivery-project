@@ -45,20 +45,18 @@ class OrderRepository {
         });
         */
 
-        // //음식점 포인트 증가
-        // const restaurantPoint = await tx.restaurant.update({
-        //   where: {
-        //     restaurantId: restaurantId,
-        //   },
-        //   data: {
-        //     revenue: {
-        //       increment: +totalPrice,
-        //     },
-        //   },
-        //   select: {
-        //     revenue: true,
-        //   },
-        // });
+        //음식점 포인트 증가
+        const restaurantPoint = await tx.restaurant.update({
+          where: {
+            restaurantId: restaurantId,
+          },
+          data: {
+            revenue: 100,
+          },
+          select: {
+            revenue: true,
+          },
+        });
 
         //order 생성
         const order = await tx.order.create({
