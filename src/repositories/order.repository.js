@@ -39,15 +39,15 @@ class OrderRepository {
               restaurantId: restaurantId,
             },
             data: {
-              revenue: {
+              revenues: {
                 increment: +totalPrice,
               },
             },
             select: {
-              revenue: true,
+              revenues: true,
             },
           });
-          console.log('Restaurant revenue updated:', restaurantPoint);
+          console.log('Restaurant revenues updated:', restaurantPoint);
 
           // 주문 생성
           const order = await tx.order.create({
