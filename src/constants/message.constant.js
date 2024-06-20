@@ -238,6 +238,5 @@ export const MESSAGES = {
       SUCCEED: '검색을 완료했습니다',
       MAX: '글자수 20자를 미만으로 입력해주세요'
     },
-
   }
 };
