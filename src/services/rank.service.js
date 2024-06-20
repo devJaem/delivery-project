@@ -7,7 +7,7 @@ class RankService {
   }
   getRank = async () => {
     //만약 전부 0원이라면 랭킹정보가 없다고 나오게 하길
-    const revenueAllzero = await this.rankRepository.getHighRevenue();
+    const revenueAllzero = await this.rankRepository.getHighrevenue();
     if (revenueAllzero == 0) return MESSAGES.RANK.COMMON.NOT_FOUND;
     const rank = await this.rankRepository.getRank();
     return rank.map((restaurant, index) => {

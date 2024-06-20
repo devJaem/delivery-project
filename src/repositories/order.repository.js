@@ -116,7 +116,7 @@ class OrderRepository {
           },
         });
 
-        return { ...customerPoint, ...order, orderItems, ...restaurantPoint };
+        return { ...customerPoint, ...order, orderItems };
       },
       {
         isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted,

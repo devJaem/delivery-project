@@ -68,13 +68,13 @@ model CartItem {
 
 model Restaurant {
   restaurantId   Int          @id @default(autoincrement())
-  ownerId        Int
+  ownerId        Int          @unique
   name           String
   address        String
   category       String
   description    String?
   restaurantPicture String?
-  revenue        Int
+  revenue        Int          @default(0)
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   owner          User         @relation(fields: [ownerId], references: [userId], onDelete: Cascade)
