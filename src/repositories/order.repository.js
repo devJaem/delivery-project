@@ -32,21 +32,21 @@ class OrderRepository {
           });
           console.log('Customer points updated:', customerPoint);
 
-          // 음식점 포인트 증가
-          const restaurantPoint = await this.prisma.restaurant.update({
-            where: {
-              restaurantId: restaurantId,
-            },
-            data: {
-              revenues: {
-                increment: +totalPrice,
-              },
-            },
-            select: {
-              revenues: true,
-            },
-          });
-          console.log('Restaurant revenues updated:', restaurantPoint);
+          // // 음식점 포인트 증가
+          // const restaurantPoint = await this.prisma.restaurant.update({
+          //   where: {
+          //     restaurantId: restaurantId,
+          //   },
+          //   data: {
+          //     revenues: {
+          //       increment: +totalPrice,
+          //     },
+          //   },
+          //   select: {
+          //     revenues: true,
+          //   },
+          // });
+          // console.log('Restaurant revenues updated:', restaurantPoint);
 
           // 주문 생성
           const order = await this.prisma.order.create({
