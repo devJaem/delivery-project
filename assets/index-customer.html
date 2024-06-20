@@ -22,9 +22,9 @@
 
       const userType = data.data.userType;
       if (userType!="CUSTOMER") {
-        alert("접근 권한이 업습니다.");
+        alert("접근 권한이 없습니다.");
       }
-
+      console.log(data.data);
       const ownerId = data.data.userId;
       for (let i = 0; i < data.data.order.length; i++) {
         const orderDiv = document.createElement('div');
@@ -53,7 +53,7 @@
 
       // 서버로부터 알림을 받을 때
       socket.on('orderStatus', (data) => {
-        if (data.customerId != userId) {
+        if (data.customerId != ownerId) {
           return;
         }
         console.log('order received:', data.message);
