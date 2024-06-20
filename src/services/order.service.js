@@ -179,6 +179,7 @@ class OrderService {
     });
     return {
       userId,
+      userType,
       order: order,
     };
   };

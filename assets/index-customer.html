@@ -19,8 +19,13 @@
       if (data.status!=200) {
         alert(data.message);
       }
-      const ownerId = data.data.userId;
 
+      const userType = data.data.userType;
+      if (userType!="CUSTOMER") {
+        alert("접근 권한이 업습니다.");
+      }
+
+      const ownerId = data.data.userId;
       for (let i = 0; i < data.data.order.length; i++) {
         const orderDiv = document.createElement('div');
         orderDiv.id = 'order';
