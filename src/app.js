@@ -27,9 +27,9 @@ app.use(express.json());
 app.use('/', [router]);
 app.use(globalErrorHandler);
 
-// app.get('/', async (req, res) => {
-//   res.status(200).json({ message: '서버 정상 동작중' });
-// });
+app.get('/health-check', async (req, res) => {
+  res.status(200).json({ message: '서버 정상 동작중' });
+});
 
 // 정적 파일을 서빙하기 위한 설정
 app.use('/static', express.static(path.join(__dirname, 'public')));
