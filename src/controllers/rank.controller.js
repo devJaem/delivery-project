@@ -8,7 +8,6 @@ class RankController {
 
     getRank = async (req, res, next) => {
         try {
-            console.log("hello");
             const ranking = await this.rankService.getRank();
             return res.status(HTTP_STATUS.OK).json({
                 status: HTTP_STATUS.OK,
