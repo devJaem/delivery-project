@@ -14,11 +14,10 @@ class OrderRepository {
     cartItems,
     cartId,
   ) => {
-    const order = await this.prisma.$transaction(
-      async (tx) => {
-        try {
+    // const order = await this.prisma.$transaction(
+    //   async (tx) => {
           // 고객 포인트 차감
-          const customerPoint = await tx.user.update({
+          const customerPoint = await this.prisma.user.update({
             where: {
               userId: customerId,
             },
@@ -34,7 +33,7 @@ class OrderRepository {
           console.log('Customer points updated:', customerPoint);
 
           // 음식점 포인트 증가
-          const restaurantPoint = await tx.restaurant.update({
+          const restaurantPoint = await this.prisma.restaurant.update({
             where: {
               restaurantId: restaurantId,
             },
@@ -50,7 +49,7 @@ class OrderRepository {
           console.log('Restaurant revenues updated:', restaurantPoint);
 
           // 주문 생성
-          const order = await tx.order.create({
+          const order = await this.prisma.order.create({
             data: {
               orderStatus: 'PREPARING',
               restaurantId,
@@ -76,7 +75,7 @@ class OrderRepository {
           // 주문 항목 생성
           let orderItems = [];
           for (let i = 0; i < cartItems.length; i++) {
-            const item = await tx.orderItem.create({
+            const item = await this.prisma.orderItem.create({
               data: {
                 orderId: order.orderId,
                 menuId: cartItems[i].menuId,
@@ -96,12 +95,12 @@ class OrderRepository {
           }
 
           // 카트 및 카트 항목 삭제
-          await tx.cartItem.deleteMany({
+          await this.prisma.cartItem.deleteMany({
             where: {
               cartId,
             },
           });
-          await tx.cart.delete({
+          await this.prisma.cart.delete({
             where: {
               cartId,
             },
@@ -109,16 +108,6 @@ class OrderRepository {
           console.log('Cart and cart items deleted');
 
           return { ...customerPoint, ...order, orderItems, ...restaurantPoint };
-        } catch (error) {
-          console.error('Transaction error:', error);
-          throw error;
-        }
-      },
-      {
-        isolationLevel: 'ReadCommitted',
-      },
-    );
-    return order;
   };
 
 
