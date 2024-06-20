@@ -16,7 +16,9 @@
         },
       });
       const data = await response.json();
-      console.log(data.data);
+      if (data.status!=200) {
+        alert(data.message);
+      }
       const ownerId = data.data.userId;
 
       for (let i = 0; i < data.data.order.length; i++) {
