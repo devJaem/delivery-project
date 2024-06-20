@@ -17,6 +17,8 @@ export const MESSAGES = {
         INVALID_FORMAT: '이메일 형식이 올바르지 않습니다.',
         DUPLICATED: '이미 가입 된 사용자입니다.',
         NOT_VERIFIED: '이메일 인증을 해주세요',
+        NOT_FOUND:
+          '이메일이 존재하지 않습니다. 해당 이메일로 회원가입을 먼저 진행해주세요.',
       },
       PASSWORD: {
         REQUIRED: '비밀번호를 입력해 주세요.',

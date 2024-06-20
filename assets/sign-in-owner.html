@@ -40,19 +40,19 @@
                     alert(data.message);
                 }
 
-                if (data.data.userType != 'CUSTOMER') {
+                if (data.data.userType != 'OWNER') {
+                    alert('접근 권한이 없습니다.');
+                } else {
                     alert(data.message);
+                    const accessToken = data.data.accessToken; // 응답에서 accessToken 추출
+                    const refreshToken = data.data.refreshToken;
+                    // 토큰을 로컬 스토리지에 저장
+                    localStorage.setItem('accessToken', accessToken);
+                    localStorage.setItem('refreshToken', refreshToken);
+
+                    // 로그인 성공 후 다른 페이지로 이동 (예: 메인 페이지)
+                    window.location.href = '/order/customer';
                 }
-
-                alert(data.message);
-                const accessToken = data.data.accessToken; // 응답에서 accessToken 추출
-                const refreshToken = data.data.refreshToken;
-                // 토큰을 로컬 스토리지에 저장
-                localStorage.setItem('accessToken', accessToken);
-                localStorage.setItem('refreshToken', refreshToken);
-
-                // 로그인 성공 후 다른 페이지로 이동 (예: 메인 페이지)
-                window.location.href = '/order/owner';
 
             });
     </script>
