@@ -120,7 +120,7 @@ class OrderRepository {
     );
     return order;
   };
-}
+
 
   //주문내역 상세조회 - by userId
   getOrderByUserId = async (userId, orderId) => {
