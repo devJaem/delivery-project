@@ -31,6 +31,7 @@ class RestaurantRepository {
         category,
         description,
         restaurantPicture,
+        revenue: 0,
         owner: {
           connect: {
             userId: user.userId,
@@ -71,7 +72,7 @@ class RestaurantRepository {
   };
   // 사장님의 중복 음식점 찾기
   existedRestaurant = async (userId) => {
-    const restaurant = await this.prisma.Restaurant.count({
+    const restaurant = await this.prisma.Restaurant.findFirst({
       where: { ownerId: userId },
     });
     return restaurant;

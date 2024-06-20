@@ -1,0 +1,65 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주문자 알림창</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async (event) => {
+      const token = localStorage.getItem('accessToken');
+      const response = await fetch('http://localhost:3000/api/v1/order', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
+        },
+      });
+      const data = await response.json();
+      console.log(data.data);
+      const userId = data.data.userId;
+
+      for (let i = 0; i < data.data.order.length; i++) {
+        const orderDiv = document.createElement('div');
+        orderDiv.id = 'order';
+        document.body.appendChild(orderDiv);
+        const time = new Date(data.data.order[i].createdAt);
+        let orderElement = `
+        <div id="order${i}">
+        <h2>${time.toLocaleString()}</h2>
+        <h3> 주문정보 </h3>
+        <p> 주문 ID: ${data.data.order[i].orderId} </p>
+        <p> 레스토랑 이름: ${data.data.order[i].restaurantName} </p>
+        <p> 총액: ${data.data.order[i].totalPrice} </p>
+        <p> 주문상태: ${data.data.order[i].orderStatus} </p> 
+        <h3> 주문 메뉴 </h3>`
+        for (let j = 0; j < data.data.order[i].orderItems.length; j++) {
+          orderElement += `<p> ${data.data.order[i].orderItems[j].menuName}
+            &nbsp;&nbsp;*&nbsp;&nbsp;${data.data.order[i].orderItems[j].quantity}</p>`;
+        }
+        orderElement += `</div> <br>`;
+
+        orderDiv.insertAdjacentHTML("afterbegin", orderElement);
+      }
+
+      const socket = io('/order');
+
+      // 서버로부터 알림을 받을 때
+      socket.on('orderStatus', (data) => {
+        if (data.customerId != userId) {
+          return;
+        }
+        console.log('order received:', data.message);
+        alert(data.message);
+        location.reload();
+        // 알림을 notificationsDiv에 추가
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <h1>주문자 알림창</h1>
+</body>
+
+</html>

@@ -20,6 +20,7 @@ class RestaurantService {
         address: restaurant.address,
         category: restaurant.category,
         description: restaurant.description,
+        revenue: restaurant.revenue,
         restaurantPicture: restaurant.restaurantPicture,
         createdAt: restaurant.createdAt,
         updatedAt: restaurant.updatedAt,
@@ -39,6 +40,7 @@ class RestaurantService {
       address: restaurant.address,
       category: restaurant.category,
       description: restaurant.description,
+      revenue: restaurant.revenue,
       restaurantPicture: restaurant.restaurantPicture,
       createdAt: restaurant.createdAt,
       updatedAt: restaurant.updatedAt,
@@ -46,11 +48,11 @@ class RestaurantService {
   };
   // 생성
   createRestaurant = async (user, createrestaurant) => {
-    //사장님의 이름(아이디)을 가진 음식점이 2개 이상이라면 에러처리
+    //사장님의 이름(아이디)을 가진 음식점이 있다면 에러처리
     const existedRestaurant = await this.restaurantRepository.existedRestaurant(
       user.userId,
     );
-    if (existedRestaurant >= 1)
+    if (existedRestaurant != undefined)
       throw new ConflictError(MESSAGES.RESTAURANT.MADE.FAILED.DUPLICATE);
     const restaurant = await this.restaurantRepository.createRestaurant(
       user,
@@ -79,6 +81,7 @@ class RestaurantService {
       user,
       changeRestaurant,
     );
+    console.log(restaurant.restaurantPicture);
     return {
       restaurantId: restaurant.restaurantId,
       ownerId: restaurant.ownerId,
@@ -86,7 +89,7 @@ class RestaurantService {
       address: restaurant.address,
       category: restaurant.category,
       description: restaurant.description,
-      restaurantProfile: restaurant.restaurantProfile,
+      restaurantPicture: restaurant.restaurantPicture,
       createdAt: restaurant.createdAt,
       updatedAt: restaurant.updatedAt,
     };

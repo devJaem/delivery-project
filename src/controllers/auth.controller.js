@@ -2,8 +2,9 @@ import { HTTP_STATUS } from '../constants/http-status.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
 
 class AuthController {
-  constructor(authService) {
+  constructor(authService, rankService) {
     this.authService = authService;
+    this.rankService = rankService;
   }
 
   signUp = async (req, res, next) => {
@@ -25,6 +26,7 @@ class AuthController {
     try {
       const loginUser = req.body;
       const tokens = await this.authService.signIn(loginUser);
+
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
         message: MESSAGES.AUTH.SIGN_IN.SUCCEED,
@@ -74,7 +76,6 @@ class AuthController {
       next(error);
     }
   };
-  
 }
 
 export default AuthController;

@@ -32,6 +32,7 @@ class OrderRepository {
         });
 
         //사장 포인트 증가
+        /*
         const ownerPoint = await tx.user.update({
           where: {
             userId: ownerId,
@@ -40,6 +41,22 @@ class OrderRepository {
             points: {
               increment: +totalPrice,
             },
+          },
+        });
+        */
+
+        //음식점 포인트 증가
+        const restaurantPoint = await tx.restaurant.update({
+          where: {
+            restaurantId: restaurantId,
+          },
+          data: {
+            revenue: {
+              increment: +totalPrice,
+            },
+          },
+          select: {
+            revenue: true,
           },
         });
 
@@ -52,8 +69,14 @@ class OrderRepository {
             totalPrice,
           },
           include: {
+            customer: {
+              select: {
+                nickName: true,
+              },
+            },
             restaurant: {
               select: {
+                ownerId: true,
                 name: true,
               },
             },
@@ -70,15 +93,12 @@ class OrderRepository {
               price: cartItems[i].menu.price,
               quantity: cartItems[i].quantity,
             },
-            select: {
-              orderItemId: true,
+            include: {
               menu: {
                 select: {
                   name: true,
                 },
               },
-              price: true,
-              quantity: true,
             },
           });
           orderItems.push(item);
@@ -96,7 +116,7 @@ class OrderRepository {
           },
         });
 
-        return { ...customerPoint, ...order, orderItems };
+        return { ...customerPoint, ...order, orderItems, ...restaurantPoint };
       },
       {
         isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted,
@@ -152,6 +172,11 @@ class OrderRepository {
           select: {
             orderItemId: true,
             menuId: true,
+            menu: {
+              select: {
+                name: true,
+              },
+            },
             price: true,
             quantity: true,
           },
@@ -169,7 +194,14 @@ class OrderRepository {
       include: {
         restaurant: {
           select: {
+            ownerId: true,
             name: true,
+          },
+        },
+        customer: {
+          select: {
+            userId: true,
+            nickName: true,
           },
         },
         orderItems: {
@@ -186,6 +218,9 @@ class OrderRepository {
           },
         },
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   };
 
@@ -201,14 +236,28 @@ class OrderRepository {
             name: true,
           },
         },
+        customer: {
+          select: {
+            userId: true,
+            nickName: true,
+          },
+        },
         orderItems: {
           select: {
             orderItemId: true,
-            menuId: true,
+            menu: {
+              select: {
+                menuId: true,
+                name: true,
+              },
+            },
             price: true,
             quantity: true,
           },
         },
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
     });
   };
