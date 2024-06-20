@@ -8,14 +8,18 @@ import orderRouter from './order.router.js';
 import searchRouter from './search.router.js';
 import reviewRouter from './review.router.js';
 import rankRouter from './rank.router.js';
+import signInFrontRouter from './sign-in.front.router.js';
+import orderFrontRouter from './order.front.router.js';
 const route = express.Router();
 
-route.use('/auth', authRouter);
-route.use('/users', usersRouter);
-route.use('/cart', cartRouter);
-route.use('/order', orderRouter);
-route.use('/search', searchRouter);
-route.use('/rank', rankRouter);
-route.use('/restaurants', [restaurantRouter, menuRouter, reviewRouter]);
+route.use('/api/v1/auth', authRouter);
+route.use('/api/v1/users', usersRouter);
+route.use('/api/v1/cart', cartRouter);
+route.use('/api/v1/order', orderRouter);
+route.use('/api/v1/search', searchRouter);
+route.use('/api/v1/rank', rankRouter);
+route.use('/api/v1/restaurants', [restaurantRouter, menuRouter, reviewRouter]);
+route.use('/auth', signInFrontRouter);
+route.use('/order', orderFrontRouter);
 
 export default route;

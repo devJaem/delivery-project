@@ -78,7 +78,6 @@ class OrderService {
           quantity: item.quantity,
         };
       });
-      console.log(orderItems);
       io.order.emit('order', {
         message: '새로운 주문이 접수되었습니다!',
         ownerId: order.restaurant.ownerId,
@@ -178,9 +177,9 @@ class OrderService {
         orderItems: orderItems,
       };
     });
-    console.log(order);
     return {
       userId,
+      userType,
       order: order,
     };
   };
