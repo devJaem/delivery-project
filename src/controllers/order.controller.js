@@ -68,8 +68,9 @@ class OrderController {
       const { userId } = req.user;
       const { orderId } = req.params;
       const { orderStatus } = req.body;
-
+      const io = req.io;
       const order = await this.orderService.updateOrderStatus(
+        io,
         userId,
         +orderId,
         orderStatus,

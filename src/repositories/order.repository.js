@@ -59,6 +59,7 @@ class OrderRepository {
             },
             restaurant: {
               select: {
+                ownerId: true,
                 name: true,
               },
             },

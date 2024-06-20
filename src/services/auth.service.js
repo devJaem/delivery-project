@@ -88,6 +88,7 @@ class AuthService {
     await this.authRepository.updateOrCreateToken(user.userId, refreshToken);
 
     return {
+      userType: user.userType,
       accessToken,
       refreshToken,
     };

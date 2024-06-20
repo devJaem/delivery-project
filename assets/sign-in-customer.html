@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1>Login</h1>
+    <h1>Login-Owner</h1>
     <form id="login-form">
         <label for="email">email:</label>
         <input type="text" id="email" name="email" required>
@@ -35,23 +35,28 @@
                         },
                         body: JSON.stringify({ email, password }),
                     });
-
                     if (!response.ok) {
                         throw new Error('Login failed');
                     }
 
                     const data = await response.json();
+
+                    if (data.data.userType != 'CUSTOMER') {
+                        throw new Error('Login failed');
+                    }
+                    
                     alert(data.message);
                     const accessToken = data.data.accessToken; // 응답에서 accessToken 추출
-
+                    const refreshToken = data.data.refreshToken;
                     // 토큰을 로컬 스토리지에 저장
-                    localStorage.setItem('token', accessToken);
+                    localStorage.setItem('accessToken', accessToken);
+                    localStorage.setItem('refreshToken', refreshToken);
 
                     // 로그인 성공 후 다른 페이지로 이동 (예: 메인 페이지)
-                    window.location.href = '/order/owner';
+                    window.location.href = '/order/customer';
                 } catch (error) {
                     console.error('Error:', error);
-                    alert('Login failed');
+                    alert(error);
                 }
             });
     </script>

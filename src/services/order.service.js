@@ -80,18 +80,7 @@ class OrderService {
       });
       io.order.emit('order', {
         message: '새로운 주문이 접수되었습니다!',
-        restaurantId: order.restaurantId,
-        order: {
-          customerId: order.customerId,
-          orderId: order.orderId,
-          customerNickName: order.customer.nickName,
-          restaurantName: order.restaurant.name,
-          orderStatus: order.orderStatus,
-          createdAt: order.createdAt,
-          totalPrice,
-          balance: order.points,
-          orderItems,
-        },
+        ownerId: order.restaurant.ownerId,
       });
       return {
         customerId: order.customerId,
@@ -165,7 +154,6 @@ class OrderService {
         restaurant.restaurantId,
       );
     }
-    console.log(order.length);
     order = order.map((cur) => {
       const orderItems = cur.orderItems.map((cur) => {
         return {
@@ -196,7 +184,7 @@ class OrderService {
   };
 
   //주문상태 수정
-  updateOrderStatus = async (userId, orderId, orderStatus) => {
+  updateOrderStatus = async (io, userId, orderId, orderStatus) => {
     const restaurant =
       await this.restaurantRepository.existedRestaurant(userId);
     if (!restaurant) {
@@ -214,6 +202,10 @@ class OrderService {
       orderId,
       orderStatus,
     );
+    io.order.emit('orderStatus', {
+      message: `주문번호 [${updatedOrder.orderId}]의 주문 상태가 ${updatedOrder.orderStatus}로 변경되었습니다!`,
+      customerId: updatedOrder.customerId,
+    });
     return {
       orderId: updatedOrder.orderId,
       customerId: updatedOrder.customerId,

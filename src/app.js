@@ -34,28 +34,31 @@ app.get('/', async (req, res) => {
 // 정적 파일을 서빙하기 위한 설정
 app.use(express.static(path.join(__dirname, 'assets')));
 
-// 로그인 페이지 (알림 기능 사용시 토큰 필요 => 웹에서 로그인 과정도 필요..)
-app.get('/auth/sign-in', (req, res, next) => {
+//프론트로 접속 가능한 api, 파일 분리를 어디로 해야할지 몰라 일단 app.js에 넣어놨음
+app.get('/auth/sign-in/owner', (req, res, next) => {
   try {
-    res.sendFile(__dirname + '/assets/sign-in.html');
+    res.sendFile(__dirname + '/assets/sign-in-owner.html');
   } catch (err) {
     next(err);
   }
 });
-
-// 주문시 사장에게 알림
+app.get('/auth/sign-in/customer', (req, res, next) => {
+  try {
+    res.sendFile(__dirname + '/assets/sign-in-customer.html');
+  } catch (err) {
+    next(err);
+  }
+});
 app.get('/order/owner', (req, res, next) => {
   try {
-    res.sendFile(__dirname + '/assets/index.html');
+    res.sendFile(__dirname + '/assets/index-owner.html');
   } catch (err) {
     next(err);
   }
 });
-
-// 주문상태 변경 시 고객에게 알림
 app.get('/order/customer', (req, res, next) => {
   try {
-    res.sendFile(__dirname + '/assets/index.html');
+    res.sendFile(__dirname + '/assets/index-customer.html');
   } catch (err) {
     next(err);
   }

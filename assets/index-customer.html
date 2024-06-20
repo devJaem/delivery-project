@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Socket.IO Notification</title>
+  <title>주문자 알림창</title>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async (event) => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('accessToken');
       const response = await fetch('http://localhost:3000/api/v1/order', {
         method: 'GET',
         headers: {
@@ -20,7 +20,6 @@
       const userId = data.data.userId;
 
       for (let i = 0; i < data.data.order.length; i++) {
-        // 알림을 표시할 div 요소 생성
         const orderDiv = document.createElement('div');
         orderDiv.id = 'order';
         document.body.appendChild(orderDiv);
@@ -30,9 +29,9 @@
         <h2>${time.toLocaleString()}</h2>
         <h3> 주문정보 </h3>
         <p> 주문 ID: ${data.data.order[i].orderId} </p>
-        <p> 주문자 ID: ${data.data.order[i].customerId} </p>
-        <p> 주문자 닉네임: ${data.data.order[i].customerNickName} </p>
+        <p> 레스토랑 이름: ${data.data.order[i].restaurantName} </p>
         <p> 총액: ${data.data.order[i].totalPrice} </p>
+        <p> 주문상태: ${data.data.order[i].orderStatus} </p> 
         <h3> 주문 메뉴 </h3>`
         for (let j = 0; j < data.data.order[i].orderItems.length; j++) {
           orderElement += `<p> ${data.data.order[i].orderItems[j].menuName}
@@ -46,8 +45,8 @@
       const socket = io('/order');
 
       // 서버로부터 알림을 받을 때
-      socket.on('order', (data) => {
-        if (data.restaurantId != userId) {
+      socket.on('orderStatus', (data) => {
+        if (data.customerId != userId) {
           return;
         }
         console.log('order received:', data.message);
@@ -60,7 +59,7 @@
 </head>
 
 <body>
-  <h1>Socket.IO Notification Example</h1>
+  <h1>주문자 알림창</h1>
 </body>
 
 </html>
