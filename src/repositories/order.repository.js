@@ -51,7 +51,12 @@ class OrderRepository {
             restaurantId: restaurantId,
           },
           data: {
-            name: 'test1'
+            revenue: {
+              increment: +totalPrice,
+            },
+          },
+          select: {
+            revenue: true,
           },
         });
 
@@ -111,7 +116,7 @@ class OrderRepository {
           },
         });
 
-        return { ...customerPoint, ...order, orderItems, ...restaurantPoint };
+        return { ...customerPoint, ...order, orderItems };
       },
       {
         isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted,

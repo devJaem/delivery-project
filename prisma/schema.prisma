@@ -68,7 +68,7 @@ model CartItem {
 
 model Restaurant {
   restaurantId   Int          @id @default(autoincrement())
-  ownerId        Int
+  ownerId        Int          @unique
   name           String
   address        String
   category       String

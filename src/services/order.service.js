@@ -69,7 +69,6 @@ class OrderService {
         cartItems,
         cart.cartId,
       );
-      console.log(order);
       const orderItems = order.orderItems.map((item) => {
         return {
           orderItemId: item.orderItemId,
