@@ -31,7 +31,6 @@ class RestaurantRepository {
         category,
         description,
         restaurantPicture,
-        revenue: 0,
         owner: {
           connect: {
             userId: user.userId,
