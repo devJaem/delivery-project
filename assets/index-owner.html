@@ -8,7 +8,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', async (event) => {
       const token = localStorage.getItem('accessToken');
-      const response = await fetch('http://localhost:3000/api/v1/order', {
+      const response = await fetch('http://devjaem.shop/api/v1/order', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -16,9 +16,16 @@
         },
       });
       const data = await response.json();
-      console.log(data.data);
-      const ownerId = data.data.userId;
+      if (data.status!=200) {
+        alert(data.message);
+      }
 
+      const userType = data.data.userType;
+      if (userType!="OWNER") {
+        alert("접근 권한이 없습니다.");
+      }
+
+      const ownerId = data.data.userId;
       for (let i = 0; i < data.data.order.length; i++) {
         const orderDiv = document.createElement('div');
         orderDiv.id = 'order';
@@ -58,7 +65,7 @@
 </head>
 
 <body>
-  <h1>사장 알림창</h1>
+  <h1>Order List : Owner</h1>
 </body>
 
 </html>

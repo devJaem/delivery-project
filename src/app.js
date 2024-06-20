@@ -24,46 +24,15 @@ app.use((req, res, next) => {
 });
 app.use(requestLogger);
 app.use(express.json());
-app.use('/api/v1', [router]);
+app.use('/', [router]);
 app.use(globalErrorHandler);
 
-app.get('/', async (req, res) => {
-  res.status(200).json({ message: '서버 정상 동작중' });
-});
+// app.get('/', async (req, res) => {
+//   res.status(200).json({ message: '서버 정상 동작중' });
+// });
 
 // 정적 파일을 서빙하기 위한 설정
-app.use(express.static(path.join(__dirname, 'assets')));
-
-//프론트로 접속 가능한 api, 파일 분리를 어디로 해야할지 몰라 일단 app.js에 넣어놨음
-app.get('/auth/sign-in/owner', (req, res, next) => {
-  try {
-    res.sendFile(__dirname + '/assets/sign-in-owner.html');
-  } catch (err) {
-    next(err);
-  }
-});
-app.get('/auth/sign-in/customer', (req, res, next) => {
-  try {
-    res.sendFile(__dirname + '/assets/sign-in-customer.html');
-  } catch (err) {
-    next(err);
-  }
-});
-app.get('/order/owner', (req, res, next) => {
-  try {
-    res.sendFile(__dirname + '/assets/index-owner.html');
-  } catch (err) {
-    next(err);
-  }
-});
-app.get('/order/customer', (req, res, next) => {
-  try {
-    res.sendFile(__dirname + '/assets/index-customer.html');
-  } catch (err) {
-    next(err);
-  }
-});
-
+app.use('/static', express.static(path.join(__dirname, 'public')));
 // 클라이언트가 소켓 서버에 연결될 때
 order.on('connection', (socket) => {
   console.log('A user connected');
