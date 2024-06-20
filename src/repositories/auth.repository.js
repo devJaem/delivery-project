@@ -78,7 +78,7 @@ class AuthRepository {
     return await this.prisma.emailAuthCode.delete({
       where: { emailCodeId: existingToken.emailCodeId },
     });
-  }
+  };
 }
 
 export default AuthRepository;

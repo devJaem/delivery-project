@@ -43,7 +43,7 @@ class UserRepository {
 
   verifyUserEmail = async (email) => {
     return await this.prisma.user.update({
-      where: { email: email},
+      where: { email: email },
       data: {
         emailVerified: true,
       },

@@ -13,10 +13,6 @@ const rankController = new RankController(rankService);
 
 // 랭킹 조회
 
-rankRouter.get(
-    '/',
-    authMiddleware(userRepository),
-    rankController.getRank
-);
+rankRouter.get('/', authMiddleware(userRepository), rankController.getRank);
 
 export default rankRouter;

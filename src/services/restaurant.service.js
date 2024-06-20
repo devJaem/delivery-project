@@ -48,11 +48,11 @@ class RestaurantService {
   };
   // 생성
   createRestaurant = async (user, createrestaurant) => {
-    //사장님의 이름(아이디)을 가진 음식점이 2개 이상이라면 에러처리
+    //사장님의 이름(아이디)을 가진 음식점이 있다면 에러처리
     const existedRestaurant = await this.restaurantRepository.existedRestaurant(
       user.userId,
     );
-    if (existedRestaurant >= 1)
+    if (existedRestaurant != undefined)
       throw new ConflictError(MESSAGES.RESTAURANT.MADE.FAILED.DUPLICATE);
     const restaurant = await this.restaurantRepository.createRestaurant(
       user,

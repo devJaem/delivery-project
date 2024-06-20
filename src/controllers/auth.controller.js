@@ -30,7 +30,7 @@ class AuthController {
       return res.status(HTTP_STATUS.OK).json({
         status: HTTP_STATUS.OK,
         message: MESSAGES.AUTH.SIGN_IN.SUCCEED,
-        data: tokens
+        data: tokens,
       });
     } catch (error) {
       next(error);
@@ -76,7 +76,6 @@ class AuthController {
       next(error);
     }
   };
-
 }
 
 export default AuthController;

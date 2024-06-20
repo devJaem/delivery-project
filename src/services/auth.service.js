@@ -12,10 +12,7 @@ import {
   ConflictError,
   BadRequestError,
 } from '../errors/http.error.js';
-import {
-  generateEmailVerificationToken,
-  sendEmail
-} from '../utils/email.js'
+import { generateEmailVerificationToken, sendEmail } from '../utils/email.js';
 
 class AuthService {
   constructor(authRepository, userRepository) {
@@ -68,9 +65,7 @@ class AuthService {
     }
 
     if (!user.emailVerified) {
-      throw new UnauthorizedError(
-        MESSAGES.AUTH.COMMON.EMAIL.NOT_VERIFIED,
-      );
+      throw new UnauthorizedError(MESSAGES.AUTH.COMMON.EMAIL.NOT_VERIFIED);
     }
 
     const accessToken = jwt.sign(
@@ -98,6 +93,7 @@ class AuthService {
     await this.authRepository.updateOrCreateToken(user.userId, refreshToken);
 
     return {
+      userType: user.userType,
       accessToken,
       refreshToken,
     };
@@ -118,7 +114,11 @@ class AuthService {
       throw new BadRequestError(MESSAGES.AUTH.COMMON.EMAIL.NOT_FOUND);
     }
 
-    await this.authRepository.upsertEmailVerification(user.userId, token, expires);
+    await this.authRepository.upsertEmailVerification(
+      user.userId,
+      token,
+      expires,
+    );
 
     const mailOptions = {
       from: ENV.EMAIL_ADDRESS,
@@ -132,7 +132,8 @@ class AuthService {
   };
 
   verifyEmail = async (token) => {
-    const validToken = await this.authRepository.findEmailVerificationTokenWithUser(token);
+    const validToken =
+      await this.authRepository.findEmailVerificationTokenWithUser(token);
     if (!validToken || validToken.expires < new Date()) {
       throw new UnauthorizedError(MESSAGES.AUTH.COMMON.JWT.DISCARDED_TOKEN);
     }

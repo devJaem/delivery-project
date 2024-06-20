@@ -69,8 +69,14 @@ class OrderRepository {
             totalPrice,
           },
           include: {
+            customer: {
+              select: {
+                nickName: true,
+              },
+            },
             restaurant: {
               select: {
+                ownerId: true,
                 name: true,
               },
             },
@@ -87,15 +93,12 @@ class OrderRepository {
               price: cartItems[i].menu.price,
               quantity: cartItems[i].quantity,
             },
-            select: {
-              orderItemId: true,
+            include: {
               menu: {
                 select: {
                   name: true,
                 },
               },
-              price: true,
-              quantity: true,
             },
           });
           orderItems.push(item);
@@ -169,6 +172,11 @@ class OrderRepository {
           select: {
             orderItemId: true,
             menuId: true,
+            menu: {
+              select: {
+                name: true,
+              },
+            },
             price: true,
             quantity: true,
           },
@@ -186,7 +194,14 @@ class OrderRepository {
       include: {
         restaurant: {
           select: {
+            ownerId: true,
             name: true,
+          },
+        },
+        customer: {
+          select: {
+            userId: true,
+            nickName: true,
           },
         },
         orderItems: {
@@ -203,6 +218,9 @@ class OrderRepository {
           },
         },
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   };
 
@@ -218,14 +236,28 @@ class OrderRepository {
             name: true,
           },
         },
+        customer: {
+          select: {
+            userId: true,
+            nickName: true,
+          },
+        },
         orderItems: {
           select: {
             orderItemId: true,
-            menuId: true,
+            menu: {
+              select: {
+                menuId: true,
+                name: true,
+              },
+            },
             price: true,
             quantity: true,
           },
         },
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
     });
   };
