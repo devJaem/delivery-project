@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1>Login-Owner</h1>
+    <h1>LogIn-Owner</h1>
     <form id="login-form">
         <label for="email">email:</label>
         <input type="text" id="email" name="email" required>
@@ -18,7 +18,7 @@
         <br>
         <button type="submit">Login</button>
     </form>
-    <script>
+    <script type="module">
         document
             .getElementById('login-form')
             .addEventListener('submit', async function (event) {
@@ -26,7 +26,6 @@
 
                 const email = document.getElementById('email').value;
                 const password = document.getElementById('password').value;
-
                 try {
                     const response = await fetch('http://localhost:3000/api/v1/auth/sign-in', {
                         method: 'POST',
