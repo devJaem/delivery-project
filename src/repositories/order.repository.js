@@ -33,7 +33,8 @@ class OrderRepository {
           console.log('Customer points updated:', customerPoint);
 
           // // 음식점 포인트 증가
-          // const restaurantPoint = await this.prisma.restaurant.update({
+          // const restaurantPoint =
+          //  await this.prisma.restaurant.update({
           //   where: {
           //     restaurantId: restaurantId,
           //   },
@@ -107,7 +108,7 @@ class OrderRepository {
           });
           console.log('Cart and cart items deleted');
 
-          return { ...customerPoint, ...order, orderItems, ...restaurantPoint };
+          return { ...customerPoint, ...order, orderItems };
   };
 
 
