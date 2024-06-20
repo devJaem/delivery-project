@@ -12,6 +12,10 @@ import {
   ConflictError,
   BadRequestError,
 } from '../errors/http.error.js';
+import {
+  generateEmailVerificationToken,
+  sendEmail
+} from '../utils/email.js'
 
 class AuthService {
   constructor(authRepository, userRepository) {
@@ -63,6 +67,12 @@ class AuthService {
       );
     }
 
+    if (!user.emailVerified) {
+      throw new UnauthorizedError(
+        MESSAGES.AUTH.COMMON.EMAIL.NOT_VERIFIED,
+      );
+    }
+
     const accessToken = jwt.sign(
       {
         userId: user.userId,
@@ -100,6 +110,37 @@ class AuthService {
       throw new BadRequestError(MESSAGES.AUTH.COMMON.JWT.NO_USER);
     }
     return { userId };
+  };
+
+  sendVerificationEmail = async (email) => {
+    const { token, expires } = generateEmailVerificationToken();
+    const user = await this.userRepository.findOne(email);
+    if (!user) {
+      throw new BadRequestError(MESSAGES.AUTH.COMMON.EMAIL.NOT_FOUND);
+    }
+
+    await this.authRepository.upsertEmailVerification(user.userId, token, expires);
+
+    const mailOptions = {
+      from: ENV.EMAIL_ADDRESS,
+      to: email,
+      subject: 'Verify your email address',
+      html: `<p>Your verification code is: ${token}</p>
+              <p>This code will expire on ${expires}.</p>`,
+    };
+
+    await sendEmail(mailOptions);
+  };
+
+  verifyEmail = async (token) => {
+    const validToken = await this.authRepository.findEmailVerificationTokenWithUser(token);
+    if (!validToken || validToken.expires < new Date()) {
+      throw new UnauthorizedError(MESSAGES.AUTH.COMMON.JWT.DISCARDED_TOKEN);
+    }
+
+    await this.userRepository.verifyUserEmail(validToken.user.email);
+
+    await this.authRepository.deleteEmailVerificationToken(token);
   };
 }
 

@@ -6,11 +6,17 @@ export const MESSAGES = {
     UPLOADING_FAIL: '업로드 실패, 관리자에게 문의해 주세요.',
   },
   AUTH: {
+    EMAIL: {
+      SEND_SUCCESS: '이메일 전송 성공',
+      VERIFY_SUCCESS: '이메일 인증 성공',
+    },
+
     COMMON: {
       EMAIL: {
         REQUIRED: '이메일을 입력해 주세요.',
         INVALID_FORMAT: '이메일 형식이 올바르지 않습니다.',
         DUPLICATED: '이미 가입 된 사용자입니다.',
+        NOT_VERIFIED: '이메일 인증을 해주세요',
       },
       PASSWORD: {
         REQUIRED: '비밀번호를 입력해 주세요.',
@@ -225,4 +231,18 @@ export const MESSAGES = {
       SUCCESS: '주문상태 변경이 완료되었습니다.',
     },
   },
+  SEARCH: {
+    COMMON: {
+      REQUIRED: '검색유형과 검색내용을 입력해주세요.',
+      INVALID: '유효하지 않은 검색유형 입니다.',
+      SUCCEED: '검색을 완료했습니다',
+      MAX: '글자수 20자를 미만으로 입력해주세요'
+    },
+  },
+  RANK: {
+    COMMON: {
+      SUCCEED: '랭킹정보를 성공적으로 불러왔습니다',
+      NOT_FOUND: '랭킹정보가 없습니다.'
+    }
+  }
 };

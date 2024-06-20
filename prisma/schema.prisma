@@ -15,6 +15,7 @@ model User {
   profilePicture  String?
   userType        UserType
   points          Int
+  emailVerified   Boolean      @default(false)
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
   restaurants     Restaurant[]
@@ -22,7 +23,26 @@ model User {
   reviews         Review[]
   notifications   Notification[]
   refreshTokens   RefreshToken[]
+  emailAuthCodes  EmailAuthCode[]
   carts           Cart?
+}
+
+model EmailAuthCode {
+  emailCodeId Int      @id @default(autoincrement())
+  token       String   @unique
+  expires     DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      Int
+  user        User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+}
+
+model RefreshToken {
+  refreshTokenId Int       @id @default(autoincrement())
+  userId         Int
+  refreshToken   String    @unique
+  createdAt      DateTime  @default(now())
+  user           User      @relation(fields: [userId], references: [userId], onDelete: Cascade)
 }
 
 model Cart {
@@ -54,6 +74,7 @@ model Restaurant {
   category       String
   description    String?
   restaurantPicture String?
+  revenue        Int
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   owner          User         @relation(fields: [ownerId], references: [userId], onDelete: Cascade)
@@ -130,14 +151,6 @@ model Notification {
   restaurant      Restaurant @relation(fields: [restaurantId], references: [restaurantId], onDelete: Cascade)
 }
 
-model RefreshToken {
-  refreshTokenId Int       @id @default(autoincrement())
-  userId         Int
-  refreshToken   String    @unique
-  createdAt      DateTime  @default(now())
-  user           User      @relation(fields: [userId], references: [userId], onDelete: Cascade)
-}
-
 enum UserType {
   CUSTOMER
   OWNER
@@ -148,4 +161,3 @@ enum OrderStatus {
   DELIVERING
   COMPLETED
 }
-

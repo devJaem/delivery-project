@@ -15,6 +15,7 @@ const authRepository = new AuthRepository(prisma);
 const authService = new AuthService(authRepository, userRepository);
 const authController = new AuthController(authService);
 
+
 /* 회원가입 API */
 authRouter.post(
   '/sign-up',
@@ -30,6 +31,18 @@ authRouter.get(
   '/logout',
   authMiddleware(userRepository),
   authController.logout,
+);
+
+/* 이메일 발송 API */
+authRouter.post(
+  '/email',
+  authController.sendVerificationEmail
+);
+
+/* 이메일 인증 API */
+authRouter.post(
+  '/verify-email',
+  authController.verifyEmail
 );
 
 export default authRouter;

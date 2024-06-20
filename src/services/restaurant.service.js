@@ -20,6 +20,7 @@ class RestaurantService {
         address: restaurant.address,
         category: restaurant.category,
         description: restaurant.description,
+        revenue: restaurant.revenue,
         restaurantPicture: restaurant.restaurantPicture,
         createdAt: restaurant.createdAt,
         updatedAt: restaurant.updatedAt,
@@ -39,6 +40,7 @@ class RestaurantService {
       address: restaurant.address,
       category: restaurant.category,
       description: restaurant.description,
+      revenue: restaurant.revenue,
       restaurantPicture: restaurant.restaurantPicture,
       createdAt: restaurant.createdAt,
       updatedAt: restaurant.updatedAt,
@@ -79,6 +81,7 @@ class RestaurantService {
       user,
       changeRestaurant,
     );
+    console.log(restaurant.restaurantPicture);
     return {
       restaurantId: restaurant.restaurantId,
       ownerId: restaurant.ownerId,
@@ -86,7 +89,7 @@ class RestaurantService {
       address: restaurant.address,
       category: restaurant.category,
       description: restaurant.description,
-      restaurantProfile: restaurant.restaurantProfile,
+      restaurantPicture: restaurant.restaurantPicture,
       createdAt: restaurant.createdAt,
       updatedAt: restaurant.updatedAt,
     };

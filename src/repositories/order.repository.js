@@ -32,6 +32,7 @@ class OrderRepository {
         });
 
         //사장 포인트 증가
+        /*
         const ownerPoint = await tx.user.update({
           where: {
             userId: ownerId,
@@ -40,6 +41,22 @@ class OrderRepository {
             points: {
               increment: +totalPrice,
             },
+          },
+        });
+        */
+
+        //음식점 포인트 증가
+        const restaurantPoint = await tx.restaurant.update({
+          where: {
+            restaurantId: restaurantId,
+          },
+          data: {
+            revenue: {
+              increment: +totalPrice,
+            },
+          },
+          select: {
+            revenue: true,
           },
         });
 
@@ -102,7 +119,7 @@ class OrderRepository {
           },
         });
 
-        return { ...customerPoint, ...order, orderItems };
+        return { ...customerPoint, ...order, orderItems, ...restaurantPoint };
       },
       {
         isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted,
