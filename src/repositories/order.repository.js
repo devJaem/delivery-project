@@ -5,7 +5,7 @@ class OrderRepository {
   constructor(prisma) {
     this.prisma = prisma;
   }
-  // 주문 > 포인트 변경 / 주문 생성 / 카트 삭제
+  // 주문 > 포인트 변경 / 주문 생성 / 카트 삭제(미완료)
   createOrder = async (
     customerId,
     totalPrice,
@@ -14,103 +14,116 @@ class OrderRepository {
     cartItems,
     cartId,
   ) => {
-    // const order = await this.prisma.$transaction(
-    //   async (tx) => {
-          // 고객 포인트 차감
-          const customerPoint = await this.prisma.user.update({
-            where: {
-              userId: customerId,
+    const order = await this.prisma.$transaction(
+      async (tx) => {
+        //고객 포인트 차감
+        const customerPoint = await tx.user.update({
+          where: {
+            userId: customerId,
+          },
+          data: {
+            points: {
+              decrement: +totalPrice,
             },
-            data: {
-              points: {
-                decrement: +totalPrice,
+          },
+          select: {
+            points: true,
+          },
+        });
+
+        //사장 포인트 증가
+        /*
+        const ownerPoint = await tx.user.update({
+          where: {
+            userId: ownerId,
+          },
+          data: {
+            points: {
+              increment: +totalPrice,
+            },
+          },
+        });
+        */
+
+        // //음식점 포인트 증가
+        // const restaurantPoint = await tx.restaurant.update({
+        //   where: {
+        //     restaurantId: restaurantId,
+        //   },
+        //   data: {
+        //     revenue: {
+        //       increment: +totalPrice,
+        //     },
+        //   },
+        //   select: {
+        //     revenue: true,
+        //   },
+        // });
+
+        //order 생성
+        const order = await tx.order.create({
+          data: {
+            orderStatus: ORDER_STATUS.PREPARING,
+            restaurantId,
+            customerId,
+            totalPrice,
+          },
+          include: {
+            customer: {
+              select: {
+                nickName: true,
               },
             },
-            select: {
-              points: true,
+            restaurant: {
+              select: {
+                ownerId: true,
+                name: true,
+              },
             },
-          });
-          console.log('Customer points updated:', customerPoint);
+          },
+        });
 
-          // // 음식점 포인트 증가
-          // const restaurantPoint =
-          //  await this.prisma.restaurant.update({
-          //   where: {
-          //     restaurantId: restaurantId,
-          //   },
-          //   data: {
-          //     revenues: {
-          //       increment: +totalPrice,
-          //     },
-          //   },
-          //   select: {
-          //     revenues: true,
-          //   },
-          // });
-          // console.log('Restaurant revenues updated:', restaurantPoint);
-
-          // 주문 생성
-          const order = await this.prisma.order.create({
+        //orderItem 생성
+        let orderItems = [];
+        for (let i = 0; i < cartItems.length; i++) {
+          const item = await tx.orderItem.create({
             data: {
-              orderStatus: 'PREPARING',
-              restaurantId,
-              customerId,
-              totalPrice,
+              orderId: order.orderId,
+              menuId: cartItems[i].menuId,
+              price: cartItems[i].menu.price,
+              quantity: cartItems[i].quantity,
             },
             include: {
-              customer: {
+              menu: {
                 select: {
-                  nickName: true,
-                },
-              },
-              restaurant: {
-                select: {
-                  ownerId: true,
                   name: true,
                 },
               },
             },
           });
-          console.log('Order created:', order);
+          orderItems.push(item);
+        }
 
-          // 주문 항목 생성
-          let orderItems = [];
-          for (let i = 0; i < cartItems.length; i++) {
-            const item = await this.prisma.orderItem.create({
-              data: {
-                orderId: order.orderId,
-                menuId: cartItems[i].menuId,
-                price: cartItems[i].menu.price,
-                quantity: cartItems[i].quantity,
-              },
-              include: {
-                menu: {
-                  select: {
-                    name: true,
-                  },
-                },
-              },
-            });
-            console.log('Order item created:', item);
-            orderItems.push(item);
-          }
+        // cart, cartItem 삭제
+        const deletedCartItem = await tx.cartItem.deleteMany({
+          where: {
+            cartId,
+          },
+        });
+        const deletedCart = await tx.cart.delete({
+          where: {
+            cartId,
+          },
+        });
 
-          // 카트 및 카트 항목 삭제
-          await this.prisma.cartItem.deleteMany({
-            where: {
-              cartId,
-            },
-          });
-          await this.prisma.cart.delete({
-            where: {
-              cartId,
-            },
-          });
-          console.log('Cart and cart items deleted');
-
-          return { ...customerPoint, ...order, orderItems };
+        return { ...customerPoint, ...order, orderItems };
+      },
+      {
+        isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted,
+      },
+    );
+    return order;
   };
-
 
   //주문내역 상세조회 - by userId
   getOrderByUserId = async (userId, orderId) => {
